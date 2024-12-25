@@ -1,6 +1,15 @@
+import Constants.{WINDOW_HEIGHT, WINDOW_WIDTH}
+import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
-class Sprite(var imagePath: String, var scale: Double = 1, var angle: Double = 0, var layerZ: Int = 0) {
+import java.awt.Color
+
+class Sprite(var imagePath: String,
+             var pos: (Int, Int),
+             var scale: Double = 1,
+             var angle: Double = 0,
+             var layerZ: Int = 0
+            ) {
   var bm = new GraphicsBitmap(imagePath)
 
   def changeImage(newImagePath: String): Unit = {
@@ -30,5 +39,29 @@ class Layer(var z: Int){
   var spritesArray: Array[Sprite] = Array.ofDim(0)
   def addSprite(sprite: Sprite): Unit = {
     spritesArray :+= sprite
+  }
+}
+
+object Renderer {
+  def render(fg: FunGraphics, layers: Layers): Unit = {
+    // Rendering (note the synchronized)
+    fg.frontBuffer.synchronized {
+      fg.clear(Color.white)
+      for (layer <- layers.layerArray) {
+        for (sprite <- layer.spritesArray) {
+          val x = sprite.pos._1
+          val y = sprite.pos._2
+          val angle = sprite.angle
+          val scale = sprite.scale
+          val bm = sprite.bm
+          fg.drawTransformedPicture(x, y, angle, scale, bm)
+        }
+      }
+    }
+
+    /**
+     * Pause for constant frame rate
+     * */
+    fg.syncGameLogic(60)
   }
 }
