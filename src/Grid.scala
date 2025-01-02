@@ -26,7 +26,17 @@ class Cell(val pos: (Int, Int),
            var state: CellStates.CellState)
 {
   val sprite: Sprite = new Sprite("/res/cellEmpty.png", pos)
+  val box2D: Box = new Box(pos._1, pos._2, size, size)
+  val collisionBox: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(box2D)
+  collisionBox.onMouseEnter(() => startHover())
+  collisionBox.onMouseLeave(() => endHover())
 
+  def startHover(): Unit = {
+    this.sprite.changeImage("/res/cellEmpty2.png")
+  }
+  def endHover(): Unit = {
+    this.sprite.changeImage("/res/cellEmpty.png")
+  }
 }
 
 

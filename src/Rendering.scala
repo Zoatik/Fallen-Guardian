@@ -49,8 +49,8 @@ object Renderer {
       fg.clear(Color.white)
       for (layer <- layers.layerArray) {
         for (sprite <- layer.spritesArray) {
-          val x = sprite.pos._1
-          val y = sprite.pos._2
+          val x = sprite.pos._1 + sprite.bm.getWidth/2
+          val y = sprite.pos._2 + sprite.bm.getHeight/2
           val angle = sprite.angle
           val scale = sprite.scale
           val bm = sprite.bm
