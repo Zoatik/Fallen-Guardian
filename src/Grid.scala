@@ -12,7 +12,6 @@ object Grid {
   private var cellSize: Int = 10
   private var initialized: Boolean = false
   var cells: Array[Array[Cell]] = Array.ofDim(size._1, size._2)
-
   def init(size: (Int, Int), cellsize: Int): Unit = {
     this.size = size
     this.cellSize = cellsize
@@ -137,7 +136,7 @@ class Cell(val pos: (Int, Int),
 
 
   def startHover(): Unit = {
-    this.sprite.changeImage("/res/cellEmpty2.png")
+    this.sprite.changeImage("/res/cellEmpty_2.png")
   }
 
   def endHover(): Unit = {
@@ -149,7 +148,7 @@ class Cell(val pos: (Int, Int),
     val path = Grid.findPath(this, Grid.cells(2)(2))
     if (path.isDefined)
       for (el <- path.get) {
-        el.sprite.changeImage("/res/cellEmpty2.png")
+        el.sprite.changeImage("/res/cellTest.png")
       }
   }
 

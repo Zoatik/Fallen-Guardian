@@ -9,7 +9,8 @@ object Main extends App {
 
   // Window and Grid setup
   val fg = new FunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Lost In Hell", false)
-  Grid.init((GRID_SIZE,GRID_SIZE), 32)
+
+  Grid.init((GRID_SIZE,GRID_SIZE), CELL_SIZE)
   var layers: Layers = new Layers(3)
   var mouseX: Int = 0
   var mouseY: Int = 0
