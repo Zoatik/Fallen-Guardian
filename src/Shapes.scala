@@ -1,6 +1,6 @@
 import scala.collection.mutable
 
-// Représentation d'une boîte en 2D
+// Box 2D representation
 case class Box(x: Int, y: Int, width: Int, height: Int) {
 
   def containsPoint(px: Int, py: Int): Boolean = {
@@ -8,7 +8,7 @@ case class Box(x: Int, y: Int, width: Int, height: Int) {
   }
 }
 
-// Classe 2DBoxCollision
+// 2DBoxCollision Class
 class CollisionBox2D (val id: String, initialBox: Box) {
   private var box: Box = initialBox
   private val mouseEnterListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
@@ -32,6 +32,7 @@ class CollisionBox2D (val id: String, initialBox: Box) {
   def onMouseLeave(listener: () => Unit): Unit = {
     mouseLeaveListeners += listener
   }
+
   def checkMouseCollision(mouseX: Int, mouseY: Int): Unit = {
     if (box.containsPoint(mouseX, mouseY) && !isMouseOver) {
       isMouseOver = true
@@ -45,7 +46,7 @@ class CollisionBox2D (val id: String, initialBox: Box) {
 
   def getBox: Box = box
 }
-  // Gestionnaire de collisions global
+  // Global collision Manager
   object CollisionBox2DManager {
     private val boxes: mutable.ListBuffer[CollisionBox2D] = mutable.ListBuffer()
     private var boxesCounter: Int = 0

@@ -43,14 +43,24 @@ class Layer(var z: Int){
 }
 
 object Renderer {
+  var offsetX: Int = 0
+  var offsetY: Int = 0
+
+  // Moves the cells by a delta
+  def move(deltaX: Int, deltaY: Int): Unit = {
+    this.offsetX += deltaX
+    this.offsetY += deltaY
+  }
+
+  // Main rendering function
   def render(fg: FunGraphics, layers: Layers): Unit = {
     // Rendering (note the synchronized)
     fg.frontBuffer.synchronized {
       fg.clear(Color.white)
       for (layer <- layers.layerArray) {
         for (sprite <- layer.spritesArray) {
-          val x = sprite.pos._1 + sprite.bm.getWidth/2
-          val y = sprite.pos._2 + sprite.bm.getHeight/2
+          val x = sprite.pos._1 + sprite.bm.getWidth/2 + offsetX
+          val y = sprite.pos._2 + sprite.bm.getHeight/2 + offsetY
           val angle = sprite.angle
           val scale = sprite.scale
           val bm = sprite.bm
