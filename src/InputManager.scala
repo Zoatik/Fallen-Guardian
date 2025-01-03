@@ -1,6 +1,6 @@
 import scala.collection.mutable
 
-class InputManager {
+object InputManager {
   private val bindings: mutable.Map[Int, mutable.ListBuffer[() => Unit]] = mutable.Map()
   private val keysDown: mutable.ListBuffer[Int]  = mutable.ListBuffer()
   private val keysEventBuffer: mutable.Queue[(Int, Boolean)] = mutable.Queue()

@@ -2,13 +2,14 @@ import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import java.awt.{Color, MouseInfo}
 import hevs.graphics.FunGraphics
 import Constants._
+import InputManager._
 import Renderer._
 
 object Main extends App {
 
   // Window and Grid setup
   val fg = new FunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Lost In Hell", false)
-  val im = new InputManager()
+  //val im = new InputManager()
   val grid: Grid = new Grid((GRID_SIZE,GRID_SIZE), 32)
   var layers: Layers = new Layers(3)
   var mouseX: Int = 0
@@ -20,24 +21,24 @@ object Main extends App {
   }
 
   // Camera behaviour
-  im.bind(KeyEvent.VK_A, Renderer.move(10,0))
-  im.bind(KeyEvent.VK_D, Renderer.move(-10,0))
-  im.bind(KeyEvent.VK_S, Renderer.move(0,-10))
-  im.bind(KeyEvent.VK_W, Renderer.move(0,10))
-  im.bind(KeyEvent.VK_A, CollisionBox2DManager.checkMouseCollisions(mouseX - Renderer.offsetX, mouseY - Renderer.offsetY))
-  im.bind(KeyEvent.VK_D, CollisionBox2DManager.checkMouseCollisions(mouseX - Renderer.offsetX, mouseY - Renderer.offsetY))
-  im.bind(KeyEvent.VK_S, CollisionBox2DManager.checkMouseCollisions(mouseX - Renderer.offsetX, mouseY - Renderer.offsetY))
-  im.bind(KeyEvent.VK_W, CollisionBox2DManager.checkMouseCollisions(mouseX - Renderer.offsetX, mouseY - Renderer.offsetY))
+  bind(KeyEvent.VK_A, Renderer.move(10,0))
+  bind(KeyEvent.VK_D, Renderer.move(-10,0))
+  bind(KeyEvent.VK_S, Renderer.move(0,-10))
+  bind(KeyEvent.VK_W, Renderer.move(0,10))
+  bind(KeyEvent.VK_A, CollisionBox2DManager.checkMouseCollisions(mouseX - Renderer.offsetX, mouseY - Renderer.offsetY))
+  bind(KeyEvent.VK_D, CollisionBox2DManager.checkMouseCollisions(mouseX - Renderer.offsetX, mouseY - Renderer.offsetY))
+  bind(KeyEvent.VK_S, CollisionBox2DManager.checkMouseCollisions(mouseX - Renderer.offsetX, mouseY - Renderer.offsetY))
+  bind(KeyEvent.VK_W, CollisionBox2DManager.checkMouseCollisions(mouseX - Renderer.offsetX, mouseY - Renderer.offsetY))
 
   // Input listeners
   fg.setKeyManager(new KeyAdapter() { // Will be called when a key has been pressed
     override def keyPressed(e: KeyEvent): Unit = {
 
-      im.handleKeyPressed(e.getKeyCode)
+      handleKeyPressed(e.getKeyCode)
     }
 
     override def keyReleased(e: KeyEvent): Unit = {
-      im.handleKeyReleased(e.getKeyCode)
+      handleKeyReleased(e.getKeyCode)
     }
   })
 
@@ -56,7 +57,7 @@ object Main extends App {
 
   /** Main Loop **/
   while (true) {
-    im.handleKeys()
+    handleKeys()
     render(fg, layers)
   }
 }
