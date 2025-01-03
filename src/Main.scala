@@ -9,12 +9,11 @@ object Main extends App {
 
   // Window and Grid setup
   val fg = new FunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Lost In Hell", false)
-  //val im = new InputManager()
-  val grid: Grid = new Grid((GRID_SIZE,GRID_SIZE), 32)
+  Grid.init((GRID_SIZE,GRID_SIZE), 32)
   var layers: Layers = new Layers(3)
   var mouseX: Int = 0
   var mouseY: Int = 0
-  for( el <- grid.cells){ // Adds sprite for each cell
+  for( el <- Grid.cells){ // Adds sprite for each cell
     for(cell <- el){
       layers.layerArray(0).addSprite(cell.sprite)
     }
@@ -42,15 +41,27 @@ object Main extends App {
     }
   })
 
+  fg.addMouseListener(new MouseAdapter {
+    override def mousePressed(e: MouseEvent): Unit = {
+      CollisionBox2DManager.handleMousePressed()
+    }
+
+    override def mouseReleased(e: MouseEvent): Unit = {
+      CollisionBox2DManager.handleMouseReleased()
+    }
+  })
+
   fg.addMouseMotionListener(new MouseAdapter() {
     override def mouseMoved(e: MouseEvent): Unit = {
-      val event = e
-
       // Get the mouse position from the event
-      mouseX = event.getX
-      mouseY = event.getY
+      mouseX = e.getX
+      mouseY = e.getY
 
       CollisionBox2DManager.checkMouseCollisions(mouseX - Renderer.offsetX, mouseY - Renderer.offsetY)
+    }
+
+    override def mouseDragged(e: MouseEvent): Unit = {
+      mouseMoved(e)
     }
   })
 

@@ -13,8 +13,11 @@ class CollisionBox2D (val id: String, initialBox: Box) {
   private var box: Box = initialBox
   private val mouseEnterListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
   private val mouseLeaveListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
+  private val mousePressedListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
+  private val mouseReleasedListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
 
-  private var isMouseOver: Boolean = false
+  var isMouseOver: Boolean = false
+  var isMouseDown: Boolean = false
 
   def setPosition(newX: Int, newY: Int): Unit = {
     box = box.copy(x = newX, y = newY)
@@ -33,6 +36,14 @@ class CollisionBox2D (val id: String, initialBox: Box) {
     mouseLeaveListeners += listener
   }
 
+  def onMousePressed(listener: () => Unit): Unit = {
+    mousePressedListeners += listener
+  }
+
+  def onMouseReleased(listener: () => Unit): Unit = {
+    mouseReleasedListeners += listener
+  }
+
   def checkMouseCollision(mouseX: Int, mouseY: Int): Unit = {
     if (box.containsPoint(mouseX, mouseY) && !isMouseOver) {
       isMouseOver = true
@@ -44,12 +55,29 @@ class CollisionBox2D (val id: String, initialBox: Box) {
     }
   }
 
+
+  def mousePressed(): Unit = {
+    if(isMouseOver && !isMouseDown) {
+      mousePressedListeners.foreach(_())
+      isMouseDown = true
+    }
+  }
+
+  def mouseReleased(): Unit = {
+    if(isMouseOver && isMouseDown) {
+      mouseReleasedListeners.foreach(_())
+      isMouseDown = false
+    }
+  }
+
   def getBox: Box = box
 }
   // Global collision Manager
   object CollisionBox2DManager {
     private val boxes: mutable.ListBuffer[CollisionBox2D] = mutable.ListBuffer()
     private var boxesCounter: Int = 0
+    var isMouseDown: Boolean = false
+
     def newCollisionBox2D(initialBox: Box): CollisionBox2D = {
       val newBox = new CollisionBox2D(s"Box$boxesCounter", initialBox)
       register(newBox)
@@ -66,6 +94,14 @@ class CollisionBox2D (val id: String, initialBox: Box) {
 
     def checkMouseCollisions(mouseX: Int, mouseY: Int): Unit = {
       boxes.foreach(_.checkMouseCollision(mouseX, mouseY))
+    }
+
+    def handleMousePressed(): Unit = {
+      boxes.foreach(_.mousePressed())
+    }
+
+    def handleMouseReleased(): Unit = {
+      boxes.foreach(_.mouseReleased())
     }
   }
 
