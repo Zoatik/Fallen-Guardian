@@ -47,9 +47,9 @@ object Renderer {
   var offsetY: Int = 0
 
   // Moves the cells by a delta
-  def move(deltaX: Int, deltaY: Int): Unit = {
-    this.offsetX += deltaX
-    this.offsetY += deltaY
+  def move(deltaX: Int, deltaY: Int, deltaT: Int): Unit = {
+    this.offsetX += deltaX * deltaT
+    this.offsetY += deltaY * deltaT
   }
 
   // Main rendering function

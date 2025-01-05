@@ -1,26 +1,32 @@
 import scala.collection.mutable
 
 
-/**
- * Creates a Grid with the given sizes
- *
- * @param size      Size of the grid (number of cells x,y)
- * @param cellSize  Size of one cell in pixels
- */
+
 object Grid {
   private var size: (Int, Int) = (10, 10)
   private var cellSize: Int = 10
   private var initialized: Boolean = false
   var cells: Array[Array[Cell]] = Array.ofDim(size._1, size._2)
+
   def init(size: (Int, Int), cellsize: Int): Unit = {
+    val rand = new scala.util.Random
     this.size = size
     this.cellSize = cellsize
+
+
 
     cells = Array.ofDim(size._1, size._2)
     for(i <- cells.indices){
       for(j <- cells(0).indices){
-        val cellPos: (Int, Int) = (cellSize * i, cellSize * j)
-        cells(i)(j) = new Cell(cellPos, cellSize, CellStates.EMPTY)
+        var baseImagePath: String = "/res/ground/TX_grass_0.png"
+        val randNum: Int = rand.nextInt(100)
+        if (randNum > 50 && randNum <= 80)
+          baseImagePath = "/res/ground/TX_grass_1.png"
+        else if (randNum > 80 && randNum <= 90)
+          baseImagePath = "/res/ground/TX_flower_0.png"
+
+        val cellPos: (Int, Int) = (i , j )
+        cells(i)(j) = new Cell(cellPos, cellSize, CellStates.EMPTY, baseImagePath)
       }
     }
 
@@ -34,6 +40,15 @@ object Grid {
   }
 
 
+  def getCellFromPoint(x: Int, y: Int): Option[Cell] = {
+    val i: Int = x / 32
+    val j: Int = y / 32
+    if(!isInGrid(i,j))
+      return None
+
+    Some(this.cells(i)(j))
+
+  }
 
   private def isInGrid(x: Int, y: Int): Boolean = {
     x >= 0 && y >= 0 && x < cells.length && y < cells(0).length
@@ -44,8 +59,8 @@ object Grid {
     val neighbours = mutable.ListBuffer[(Cell, Double)]()
     for (i <- -1 to 1; j <- -1 to 1) {
       if (!(i == 0 && j == 0)) { // Ignorer la cellule elle-même
-        val otherX: Int = cell.pos._1 / cell.size + i
-        val otherY: Int = cell.pos._2 / cell.size + j
+        val otherX: Int = cell.pos._1  + i
+        val otherY: Int = cell.pos._2  + j
         val cost: Double = if (i != 0 && j != 0) math.sqrt(2) else 1.0 // Diagonaux coûtent sqrt(2)
         if (isInGrid(otherX, otherY) && cells(otherX)(otherY).state != CellStates.BLOCK_PATH) {
           neighbours += ((cells(otherX)(otherY), cost))
@@ -125,35 +140,37 @@ object Grid {
  */
 class Cell(val pos: (Int, Int),
            val size: Int,
-           var state: CellStates.CellState) {
-  val sprite: Sprite = new Sprite("/res/cellEmpty.png", pos)
-  val box2D: Box = new Box(pos._1, pos._2, size, size)
+           var state: CellStates.CellState,
+           var defaultImagePath: String = "/res/ground/TX_grass_0.png") {
+  val absolutePos: (Int, Int) = (pos._1 * size, pos._2 * size)
+  val sprite: Sprite = new Sprite(defaultImagePath, absolutePos)
+  val box2D: Box = Box(absolutePos._1, absolutePos._2, size, size)
   val collisionBox: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(box2D)
-  collisionBox.onMouseEnter(() => startHover())
-  collisionBox.onMouseLeave(() => endHover())
-  collisionBox.onMousePressed(() => mousePressed())
+  //collisionBox.onMouseEnter(() => startHover())
+  //collisionBox.onMouseLeave(() => endHover())
+  //collisionBox.onMousePressed(() => mousePressed())
   collisionBox.onMouseReleased(() => mouseReleased())
 
 
   def startHover(): Unit = {
-    this.sprite.changeImage("/res/cellEmpty_2.png")
+    this.sprite.changeImage("/res/ground/cellEmpty.png")
   }
 
   def endHover(): Unit = {
-    this.sprite.changeImage("/res/cellEmpty.png")
+    this.sprite.changeImage(defaultImagePath)
   }
 
   def mousePressed(): Unit = {
-    this.sprite.changeImage("/res/cellTest.png")
-    val path = Grid.findPath(this, Grid.cells(2)(2))
-    if (path.isDefined)
-      for (el <- path.get) {
-        el.sprite.changeImage("/res/cellTest.png")
-      }
+    println("pressed")
+
   }
 
   def mouseReleased(): Unit = {
-    this.sprite.changeImage("/res/cellEmpty.png")
+    val path = Grid.findPath(this, Grid.cells(2)(2))
+    if (path.isDefined)
+      for (el <- path.get) {
+        el.sprite.changeImage("/res/ground/TX_stone_0.png")
+      }
   }
 
   def distanceTo(other: Cell): Double = {
