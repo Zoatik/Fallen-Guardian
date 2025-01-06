@@ -16,6 +16,10 @@ class Sprite(var imagePath: String,
     this.imagePath = newImagePath
     this.bm = new GraphicsBitmap(newImagePath)
   }
+
+  def setPosition(newPos: (Int, Int)): Unit = {
+    this.pos = newPos
+  }
 }
 
 
