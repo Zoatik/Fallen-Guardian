@@ -1,9 +1,10 @@
 class Entity(
               var pos: (Int, Int),          // Position de l'entité (x, y)
               var hp: Int,                  // Points de vie
+              var armor: Int,
               val sprite: Sprite,           // Sprite de l'entité
-              val boxCollision2D: CollisionBox2D, // Boîte de collision associée
-              var armor: Int
+              val boxCollision2D: CollisionBox2D // Boîte de collision associée
+
 ) {
   def isAlive: Boolean = hp > 0
 
@@ -20,5 +21,9 @@ class Entity(
     sprite.setPosition(absolutePosX, absolutePosY)
     boxCollision2D.setPosition(absolutePosX, absolutePosY)
   }
+
+  def setPos(newPos: (Int, Int)): Unit = this.pos = newPos
+  def getPos(): (Int, Int) = pos
+
 }
 

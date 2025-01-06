@@ -9,7 +9,8 @@ class Camera2D {
   bindKey(KeyEvent.VK_S, isPressed => handleInputs(KeyEvent.VK_S, isPressed))
   bindKey(KeyEvent.VK_W, isPressed => handleInputs(KeyEvent.VK_W, isPressed))
 
-  def handleInputs(keyCode: Int, isPressed: Boolean): Unit = {
+
+  private def handleInputs(keyCode: Int, isPressed: Boolean): Unit = {
     if(!isPressed)
       return
     keyCode match {
