@@ -29,6 +29,8 @@ class Layers(var size: Int) {
     layerArray(i) = new Layer(i)
   }
 
+  def addSprite(z: Int, sprite: Sprite): Unit = layerArray(z).addSprite(sprite)
+
   def addLayer(): Unit = {
     layerArray :+= new Layer(size)
     size += 1
@@ -41,9 +43,7 @@ class Layers(var size: Int) {
 
 class Layer(var z: Int){
   var spritesArray: Array[Sprite] = Array.ofDim(0)
-  def addSprite(sprite: Sprite): Unit = {
-    spritesArray :+= sprite
-  }
+  def addSprite(sprite: Sprite): Unit = spritesArray :+= sprite
 }
 
 object Renderer {

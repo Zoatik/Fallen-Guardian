@@ -6,6 +6,8 @@ import InputManager._
 import Renderer._
 
 import java.time.Instant
+import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 object Main extends App {
 
@@ -65,13 +67,24 @@ object Main extends App {
     }
   })
 
+  /** TEST Animation **/
+  var images = AnimationsResources.ANIM_SOLDIER_IDLE
+  val testSprite: Sprite = new Sprite(images.head, (100, 100))
+  layers.addSprite(1, testSprite)
+  var anim: Animation = new Animation(testSprite, images, 1000, true)
 
+
+
+  bindKey(KeyEvent.VK_C, pressed => anim.play())
+  bindKey(KeyEvent.VK_V, pressed => anim.stop())
   /** Main Loop **/
   fg.displayFPS(true)
   var prevTime: Long = System.currentTimeMillis()
   while (true) {
     handleKeys()
     handleMouse()
+
+    AnimationsManager.run()
 
     render(fg, layers)
     val currTime = System.currentTimeMillis()
