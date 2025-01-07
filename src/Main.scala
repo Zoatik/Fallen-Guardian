@@ -15,12 +15,12 @@ object Main extends App {
   val fg = new FunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Lost In Hell", false)
 
   Grid.init((GRID_SIZE,GRID_SIZE), CELL_SIZE)
-  var layers: Layers = new Layers(3)
+  var layers: Layers = new Layers(NUMBER_OF_LAYERS)
   val camera2D: Camera2D = new Camera2D
   var mouseX: Int = 0
   var mouseY: Int = 0
   var deltaT: Long = 0
-  for( el <- Grid.cells){ // Adds sprite for each cell
+  for( el <- Grid.cells){ // Adds sprite to layer for each cell
     for(cell <- el){
       layers.layerArray(0).addSprite(cell.sprite)
     }

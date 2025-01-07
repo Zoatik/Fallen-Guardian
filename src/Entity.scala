@@ -14,6 +14,10 @@ class Entity(
     if (hp < 0) hp = 0
   }
 
+  /**
+   * Sets the retlative position to the grid
+   * @param newPos new position relative to the grid
+   */
   def setPosition(newPos: (Int, Int)): Unit = {
     pos = newPos
     val absolutePosX = Constants.CELL_SIZE * newPos._1
@@ -22,8 +26,28 @@ class Entity(
     boxCollision2D.setPosition(absolutePosX, absolutePosY)
   }
 
-  def setPos(newPos: (Int, Int)): Unit = this.pos = newPos
-  def getPos(): (Int, Int) = pos
+  /**
+   * Sets the absolute position in the 2D space (pixels)
+   * @param newAbsPos new absolute position
+   */
+  def setAbsPosition(newAbsPos: (Int, Int)): Unit ={
+    val newPos = (newAbsPos._1 / Constants.CELL_SIZE, newAbsPos._2 / Constants.CELL_SIZE)
+    this.pos = newPos
+    sprite.setPosition(newAbsPos._1, newAbsPos._2)
+    boxCollision2D.setPosition(newAbsPos._1, newAbsPos._2)
+  }
+
+  /**
+   *
+   * @return Relative position to the grid
+   */
+  def getPosition(): (Int, Int) = pos
+
+  /**
+   *
+   * @return Absolute position in 2D space (pixels)
+   */
+  def getAbsPosition(): (Int, Int) = (Constants.CELL_SIZE * this.pos._1, Constants.CELL_SIZE * this.pos._2)
 
 }
 

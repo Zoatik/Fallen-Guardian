@@ -129,7 +129,8 @@ class CollisionBox2D (val id: String, initialBox: Box) {
  * Collision Manager object - handles all collision detections when specific events are fired
  */
 object CollisionBox2DManager {
-    private val layers: Array[mutable.ListBuffer[CollisionBox2D]] = Array.fill(3)(mutable.ListBuffer[CollisionBox2D]())
+    private val layers: Array[mutable.ListBuffer[CollisionBox2D]] =
+                          Array.fill(Constants.NUMBER_OF_LAYERS)(mutable.ListBuffer[CollisionBox2D]())
     private var boxesCounter: Int = 0
     private var prevTime: Long = 0
     private var isMouseDown: Boolean = false

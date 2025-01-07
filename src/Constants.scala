@@ -5,6 +5,7 @@ object Constants {
   val CELL_SIZE: Int = 32
   val MAX_INPUT_BUFFER_SIZE: Int = 10
   val COLLISION_TIME_DELAY: Int = 10
+  val NUMBER_OF_LAYERS: Int = 3
 
   //* ------------------------* */
     // Player spawn constants

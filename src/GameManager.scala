@@ -38,13 +38,13 @@ object GameManager {
   //** -------------------------------------------------------------------------------------------------------------* */
                                                 //Movement Tests
   /** Player creation * */
-  var aled: Player = new Player((160, 160), 3, 3, defaultSprite, defaultBoxCollision2D, (6, 6), 26)
-  var testSprite: Sprite = new Sprite("/res/Characters/Soldier/idle/soldierIdle0.png", (aled.getPos()._1, aled.getPos()._2))
+  var aled: Player = new Player((20, 20), 3, 3, defaultSprite, defaultBoxCollision2D, (6, 6), 26)
+  var testSprite: Sprite = new Sprite("/res/Characters/Soldier/idle/soldierIdle0.png", (aled.getPosition()._1, aled.getPosition()._2))
   layers.addSprite(1, testSprite)
 
   /** TEST Animation * */
   var images = AnimationsResources.ANIM_SOLDIER_IDLE
-  val animTestSprite: Sprite = new Sprite(images.head, (aled.getPos()._1, aled.getPos()._2))
+  val animTestSprite: Sprite = new Sprite(images.head, (aled.getPosition()._1, aled.getPosition()._2))
   layers.addSprite(1, animTestSprite)
   var anim: Animation = new Animation(animTestSprite, images, 1000, true)
 
@@ -58,8 +58,8 @@ object GameManager {
     aled.setPosition(sign*compteur, sign*compteur)
       //en supprimant le code ci-dessous, ca l'a optimisé 100x plus (logique bro)
     //val testSprite1: Sprite = new Sprite("/res/cellEmpty_2.png", (aled.getPos()._1, aled.getPos()._2))
-    testSprite.setPosition((aled.getPos()._1, aled.getPos()._2))
-    animTestSprite.setPosition((aled.getPos()._1, aled.getPos()._2))
+    testSprite.setPosition((aled.getPosition()._1, aled.getPosition()._2))
+    animTestSprite.setPosition((aled.getPosition()._1, aled.getPosition()._2))
   }
 
   def update() : Unit = {
