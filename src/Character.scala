@@ -1,9 +1,9 @@
 class Character(
                  pos: (Int, Int),
                  hp: Int,
+                 armor: Int,
                  sprite: Sprite,
                  boxCollision2D: CollisionBox2D,
-                 armor: Int,
                  var velocity: (Int, Int),    // Vitesse de déplacement (dx, dy)
                  var damage: Int             // Quantité de dégâts infligés
                ) extends Entity(pos, hp, armor, sprite, boxCollision2D) {

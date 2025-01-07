@@ -67,16 +67,24 @@ object Main extends App {
     }
   })
 
-  /** TEST Animation **/
+  """
+  /** TEST Animation * */
   var images = AnimationsResources.ANIM_SOLDIER_IDLE
-  val testSprite: Sprite = new Sprite(images.head, (100, 100))
+  val testSprite: Sprite = new Sprite(images.head, (defaultPos._1, defaultPos._2))
   layers.addSprite(1, testSprite)
   var anim: Animation = new Animation(testSprite, images, 1000, true)
 
-
-
+  anim.play()
   bindKey(KeyEvent.VK_C, pressed => anim.play())
   bindKey(KeyEvent.VK_V, pressed => anim.stop())
+  """
+
+
+  // Player initial spawn (found out that I don't actually need it)
+  //GameManager.spawnPlayer()
+  //GameManager.aled()
+
+
   /** Main Loop **/
   fg.displayFPS(true)
   var prevTime: Long = System.currentTimeMillis()
@@ -84,7 +92,9 @@ object Main extends App {
     handleKeys()
     handleMouse()
 
+    GameManager.update()
     AnimationsManager.run()
+    //GameManager.changeAled()
 
     render(fg, layers)
     val currTime = System.currentTimeMillis()
