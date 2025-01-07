@@ -1,15 +1,31 @@
 import java.awt.event.MouseEvent
 import scala.collection.mutable
 
-// Box 2D representation
+/**
+ * 2D Box representation
+ * @param x       absolute pos x
+ * @param y       absolute pos y
+ * @param width   width of the 2D box
+ * @param height  height of the 2D box
+ */
 case class Box(x: Int, y: Int, width: Int, height: Int) {
 
+  /**
+   * Check if a given point is inside the 2D Box
+   * @param px  point absolute X
+   * @param py  point absolute Y
+   * @return true if the point is in the 2D Box - false otherwise
+   */
   def containsPoint(px: Int, py: Int): Boolean = {
     px >= x && px < x + width && py >= y && py < y + height
   }
 }
 
-// 2DBoxCollision Class
+/**
+ * Collision Area with mouse Events
+ * @param id          unique id of the Collision Area
+ * @param initialBox  shape of the Area
+ */
 class CollisionBox2D (val id: String, initialBox: Box) {
   private var box: Box = initialBox
   private val mouseEnterListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
@@ -27,23 +43,46 @@ class CollisionBox2D (val id: String, initialBox: Box) {
     box = box.copy(width = newWidth, height = newHeight)
   }
 
-
+  /**
+   * Binds a function to the mouse enter event
+   * @param listener function to trigger
+   */
   def onMouseEnter(listener: () => Unit): Unit = {
     mouseEnterListeners += listener
   }
 
+  /**
+   * Binds a function to the mouse leave event
+   * @param listener function to trigger
+   */
   def onMouseLeave(listener: () => Unit): Unit = {
     mouseLeaveListeners += listener
   }
 
+  /**
+   * Binds a function to the mouse pressed event
+   * @param listener function to trigger
+   */
   def onMousePressed(listener: () => Unit): Unit = {
     mousePressedListeners += listener
   }
 
+  /**
+   * Binds a function to the mouse released event
+   * @param listener function to trigger
+   */
   def onMouseReleased(listener: () => Unit): Unit = {
     mouseReleasedListeners += listener
   }
 
+  /**
+   * Checks if the mouse is on the Collision Area
+   *
+   * Should only be called by the Collision Manager
+   * @param mouseX absolute X mouse position
+   * @param mouseY absolute Y mouse position
+   * @return true if collision - false otherwise
+   */
   def checkMouseCollision(mouseX: Int, mouseY: Int): Boolean = {
     if (box.containsPoint(mouseX, mouseY) && !isMouseOver) {
       isMouseOver = true
@@ -57,13 +96,10 @@ class CollisionBox2D (val id: String, initialBox: Box) {
     false
   }
 
-  private def mouseAction(isPressed: Boolean): Unit = {
-    if (isPressed)
-      mousePressed()
-    else
-      mouseReleased()
-  }
-
+  /**
+   * Calls all listeners when mouse is pressed
+   * @return true if the event is fired - false otherwise
+   */
   def mousePressed(): Boolean = {
     if(!isMouseOver)
       return false
@@ -71,6 +107,10 @@ class CollisionBox2D (val id: String, initialBox: Box) {
     true
   }
 
+  /**
+   * Calls all listeners when mouse is released
+   * @return true if the event is fired - false otherwise
+   */
   def mouseReleased(): Boolean = {
     if(!isMouseOver)
       return false
@@ -78,10 +118,17 @@ class CollisionBox2D (val id: String, initialBox: Box) {
     true
   }
 
+  /**
+   * returns the Box shape
+   * @return box shape : Box
+   */
   def getBox: Box = box
 }
-  // Global collision Manager
-  object CollisionBox2DManager {
+
+/**
+ * Collision Manager object - handles all collision detections when specific events are fired
+ */
+object CollisionBox2DManager {
     private val layers: Array[mutable.ListBuffer[CollisionBox2D]] = Array.fill(3)(mutable.ListBuffer[CollisionBox2D]())
     private var boxesCounter: Int = 0
     private var prevTime: Long = 0
@@ -90,7 +137,12 @@ class CollisionBox2D (val id: String, initialBox: Box) {
     InputManager.bindMouseMotion((x,y) => checkMouseCollisions(x,y))
     InputManager.bindMouseButton(MouseEvent.BUTTON1, isPressed => handleMouseAction(isPressed))
 
-    // Ajouter une nouvelle boîte à un layer spécifique
+  /**
+   * Adds a new collision Area to the Manager
+   * @param initialBox  Box shape
+   * @param layer       Collision layer height - 0 if empty
+   * @return new Collision Area : collisionBox2D
+   */
     def newCollisionBox2D(initialBox: Box, layer: Int = 0): CollisionBox2D = {
       require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
       val newBox = new CollisionBox2D(s"Box$boxesCounter", initialBox)
@@ -98,20 +150,34 @@ class CollisionBox2D (val id: String, initialBox: Box) {
       newBox
     }
 
-    // Enregistrer une boîte dans un layer spécifique
+  /**
+   * Adds a new Collision Area to a specific layer
+   * @param box   Collision Area: CollisionBox2D
+   * @param layer Collision layer height
+   */
     def register(box: CollisionBox2D, layer: Int): Unit = {
       require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
       layers(layer) += box
       boxesCounter += 1
     }
 
-    // Désenregistrer une boîte d'un layer spécifique
+  /**
+   * Removes the given Collision Area from a layer
+   * @param box   CollisionArea to remove
+   * @param layer targeted layer height
+   */
     def unregister(box: CollisionBox2D, layer: Int): Unit = {
       require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
       layers(layer) -= box
     }
 
-    // Vérifier les collisions avec la souris sur le layer le plus haut
+  /**
+   * Checks mouse collision with the first heighest Collision layer
+   *
+   * Triggers events when collision found
+   * @param mouseX  Absolute mouse position X
+   * @param mouseY  Absolute mouse position Y
+   */
     def checkMouseCollisions(mouseX: Int, mouseY: Int): Unit = {
       if(System.currentTimeMillis() - prevTime < Constants.COLLISION_TIME_DELAY)
         return
@@ -126,8 +192,16 @@ class CollisionBox2D (val id: String, initialBox: Box) {
       prevTime = System.currentTimeMillis()
     }
 
-    // Gérer les événements de souris pressée pour tous les layers
-    private def handleMouseAction(isPressed: Boolean): Unit = {
+  /**
+   * Handles mouse actions - Must be bound to mouse related events
+   *
+   * 1. mouse pressed
+   *
+   * 2. mouse released
+   *
+   * @param isPressed true if mouse is pressed - false if mouse is released
+   */
+  private def handleMouseAction(isPressed: Boolean): Unit = {
       if(isPressed && !isMouseDown) {
         isMouseDown = true
         for (layer <- layers.indices.reverse) {
@@ -150,15 +224,5 @@ class CollisionBox2D (val id: String, initialBox: Box) {
       }
     }
 
-    // Gérer les événements de souris relâchée pour tous les layers
-    def handleMouseReleased(): Unit = {
-      for (layer <- layers.indices.reverse) {
-        val releasedBox = layers(layer).find(_.mouseReleased())
-        if (releasedBox.isDefined) {
-          // Une boîte a été relâchée dans ce layer, donc on arrête
-          return
-        }
-      }
-    }
   }
 

@@ -1,6 +1,17 @@
 import java.awt.event.MouseEvent
 import scala.collection.mutable
 
+/**
+ * Custom Input Manager that handles :
+ *
+ * 1. Key bindings
+ *
+ * 2. Mouse button bindings
+ *
+ * 3. Mouse motion event bindings
+ *
+ * @note multiple functions can be bound to one event code
+ */
 object InputManager {
   private val keyBindings: mutable.Map[Int, mutable.ListBuffer[Boolean => Unit]] = mutable.Map()
   private val mouseBindings: mutable.Map[Int, mutable.ListBuffer[Boolean => Unit]] = mutable.Map()
@@ -12,24 +23,40 @@ object InputManager {
   private val mouseMotionEventBuffer: mutable.Queue[(Int, Int)] = mutable.Queue()
 
 
-  // Binds a key to a function
+  /**
+   * Binds a key to a function
+   * @param keyCode Key code
+   * @param f       Function to bind
+   */
   def bindKey(keyCode: Int, f: Boolean => Unit): Unit = {
     val actions = keyBindings.getOrElseUpdate(keyCode, mutable.ListBuffer())
     actions += f // Ajoute la fonction à la liste des bindings pour cette touche
   }
 
+  /**
+   * Binds a mouse button to a function
+   * @param mouseButton Mouse button code
+   * @param f           Function to bind
+   */
   def bindMouseButton(mouseButton: Int, f: Boolean => Unit): Unit = {
     val actions = mouseBindings.getOrElseUpdate(mouseButton, mutable.ListBuffer())
     actions += f
   }
 
+  /**
+   * Binds a mouse Motion event to a function
+   * @param f Function to bind
+   */
   def bindMouseMotion(f: (Int, Int) => Unit): Unit = {
     mouseMotionBindings += f
   }
 
 
-
-  // Methods for Keys handling
+  /**
+   * Adds the key pressed event to the keysEventBuffer
+   * @param keyCode Key pressed code
+   * @note Must be called when event is triggered
+   */
   def handleKeyPressed(keyCode: Int): Unit = {
     if(keysEventBuffer.length < Constants.MAX_INPUT_BUFFER_SIZE) {
       if (!activeKeys.contains(keyCode)) {
@@ -39,6 +66,11 @@ object InputManager {
     }
   }
 
+  /**
+   * Adds the key released event to the keysEventBuffer
+   * @param keyCode Key released code
+   * @note Must be called when event is triggered
+   */
   def handleKeyReleased(keyCode: Int): Unit = {
     if(keysEventBuffer.length < Constants.MAX_INPUT_BUFFER_SIZE) {
       if (activeKeys.contains(keyCode)) {
@@ -48,6 +80,10 @@ object InputManager {
     }
   }
 
+  /**
+   * Handles the buffered key events
+   * @note Should be called in the main Loop
+   */
   def handleKeys(): Unit = {
     while(keysEventBuffer.nonEmpty){
       val nextEvent: (Int, Boolean) = keysEventBuffer.dequeue()
@@ -60,6 +96,11 @@ object InputManager {
 
   }
 
+  /**
+   * Adds mouse button pressed event to the mouseButtonsEventBuffer
+   * @param mouseButton Mouse button code
+   * @note Must be called when the event is triggered
+   */
   def handleMouseButtonPressed(mouseButton: Int): Unit = {
     if(mouseButtonsEventBuffer.length < Constants.MAX_INPUT_BUFFER_SIZE) {
       if (!activeMouseButtons.contains(mouseButton)) {
@@ -69,6 +110,11 @@ object InputManager {
     }
   }
 
+  /**
+   * Adds the mouse button released event to the mouseButtonsEventBuffer
+   * @param mouseButton Mouse button code
+   * @note Must be called when the event is triggered
+   */
   def handleMouseButtonReleased(mouseButton: Int): Unit = {
     if(mouseButtonsEventBuffer.length < Constants.MAX_INPUT_BUFFER_SIZE) {
       if (activeMouseButtons.contains(mouseButton)) {
@@ -78,15 +124,22 @@ object InputManager {
     }
   }
 
+  /**
+   * Adds the mouse motion event to the mouseMotionEventBuffer
+   * @param x Absolute mouse position X
+   * @param y Absolute mouse position Y
+   * @note Must be called when the event is triggered
+   */
   def handleMouseMoved(x: Int, y: Int): Unit = {
     if(mouseMotionEventBuffer.length < Constants.MAX_INPUT_BUFFER_SIZE) {
       mouseMotionEventBuffer.enqueue((x,y))
-      //println(mouseMotionEventBuffer.length)
     }
-
-
   }
 
+  /**
+   * Handles the mouse events
+   * @note Should be called in the main Loop
+   */
   def handleMouse(): Unit = {
     while(mouseButtonsEventBuffer.nonEmpty){
       val nextEvent: (Int, Boolean) = mouseButtonsEventBuffer.dequeue()
