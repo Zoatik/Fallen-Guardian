@@ -10,7 +10,6 @@ object GameManager {
   // Window and Grid setup
   val fg = new FunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Fallen Guardian", false)
 
-  var layers: Layers = new Layers(NUMBER_OF_LAYERS)
   val camera2D: Camera2D = new Camera2D()
   var mouseX: Int = 0
   var mouseY: Int = 0
@@ -18,7 +17,7 @@ object GameManager {
   var initialized: Boolean = false
 
   var aled: Player = new Player()
-  layers.addSprite(1, aled.sprite)
+  Layers.addSprite(LAYER_PLAYER, aled.sprite)
 
   /* test animation */
   var anim: Animation = new Animation(aled.sprite, AnimationsResources.ANIM_SOLDIER_IDLE, 1000, true)
@@ -34,7 +33,7 @@ object GameManager {
     Grid.init((GRID_SIZE,GRID_SIZE), CELL_SIZE)
     for( el <- Grid.cells){ // Adds sprite to layer for each cell
       for(cell <- el){
-        layers.layerArray(0).addSprite(cell.sprite)
+        Layers.addSprite(LAYER_GROUND, cell.sprite)
       }
     }
 
@@ -92,7 +91,7 @@ object GameManager {
       GameManager.update()
       AnimationsManager.run()
 
-      Renderer.render(fg, layers)
+      Renderer.render(fg)
       val currTime = System.currentTimeMillis()
       deltaT = currTime - prevTime
       prevTime = currTime

@@ -1,4 +1,4 @@
-import Constants.{WINDOW_HEIGHT, WINDOW_WIDTH}
+import Constants.{NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH}
 import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
@@ -38,10 +38,10 @@ class Sprite(var imagePath: String,
 }
 
 /**
- * Layers class - contains all layers infos
- * @param size number of layers
+ * Layers object - contains all layers infos
  */
-class Layers(var size: Int) {
+object Layers{
+  var size: Int = NUMBER_OF_LAYERS
   var layerArray: Array[Layer] = Array.ofDim(size)
   for (i <- 0 until size){
     layerArray(i) = new Layer(i)
@@ -111,11 +111,11 @@ object Renderer {
    * @param fg      FunGraphics target
    * @param layers  layers to render
    */
-  def render(fg: FunGraphics, layers: Layers): Unit = {
+  def render(fg: FunGraphics): Unit = {
     // Rendering (note the synchronized)
     fg.frontBuffer.synchronized {
       fg.clear(Color.white)
-      for (layer <- layers.layerArray) {
+      for (layer <- Layers.layerArray) {
         for (sprite <- layer.spritesArray) {
           val x = sprite.pos._1 + sprite.bm.getWidth/2 + offsetX
           val y = sprite.pos._2 + sprite.bm.getHeight/2 + offsetY
@@ -129,7 +129,7 @@ object Renderer {
 
     /**
      * Pause for constant frame rate
-     * */
+     */
     fg.syncGameLogic(60)
   }
 }

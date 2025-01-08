@@ -7,7 +7,7 @@ object Constants {
   val CELL_SIZE: Int = 32
   val MAX_INPUT_BUFFER_SIZE: Int = 10
   val COLLISION_TIME_DELAY: Int = 10
-  val NUMBER_OF_LAYERS: Int = 3
+
 
   //*-------------------------*//
     // Camera constants
@@ -15,6 +15,14 @@ object Constants {
   val CAMERA_DOWN = KeyEvent.VK_S
   val CAMERA_LEFT = KeyEvent.VK_A
   val CAMERA_RIGHT = KeyEvent.VK_D
+
+  //*-------------------------*//
+    // Layers Constants
+  val NUMBER_OF_LAYERS: Int = 4
+  val LAYER_GROUND = 0
+  val LAYER_ENTITIES = 1
+  val LAYER_PLAYER = 2
+  val LAYER_UI = 3
 
 
   //* ------------------------* */

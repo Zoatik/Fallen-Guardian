@@ -65,7 +65,7 @@ class Character(
     val targetCell: Cell = Grid.getCell(posX, posY).getOrElse(Grid.getCell(0,0).get)
     for(cell <- Grid.findPath(startCell, targetCell).getOrElse(Array.empty)){
       this.pathQueue.enqueue(cell)
-      cell.sprite.changeImage("/res/ground/TX_stone_0.png")
+      //cell.sprite.changeImage("/res/ground/TX_stone_0.png")
     }
     nextStep = this.pathQueue.dequeue().absolutePos
     isMoving = true

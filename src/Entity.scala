@@ -1,4 +1,4 @@
-
+import Constants._
 /**
  * Base class for entities
  * @param pos             relative position to grid
@@ -22,7 +22,9 @@ class Entity(
     y = pos._2 * sprite.bm.getHeight,
     width = sprite.bm.getWidth,
     height = sprite.bm.getHeight
-  ))
+  ),
+    layer = LAYER_ENTITIES
+  )
 
   def isAlive: Boolean = hp > 0
 
