@@ -8,5 +8,31 @@ class Player(
               var coins: Int = Constants.PLAYER_DEFAULT_COINS
             ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
+  this.addAnimation("idle", new Animation(
+    spriteTarget = this.sprite,
+    imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_IDLE,
+    duration = 1000,
+    loop = true,
+    active = true
+  ))
+
+  this.addAnimation("walk", new Animation(
+    spriteTarget = this.sprite,
+    imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_WALK,
+    duration = 1000,
+    loop = true,
+    active = false
+  ))
+  this.playAnimation("idle")
+
+  override def startMoving(): Unit = {
+    super.startMoving()
+    this.playAnimation("walk")
+  }
+
+  override def stopMoving(): Unit = {
+    super.stopMoving()
+    this.playAnimation("idle")
+  }
 
 }

@@ -93,6 +93,9 @@ object Renderer {
   var offsetX: Int = 0
   var offsetY: Int = 0
 
+  private var prevTime: Long = System.currentTimeMillis()
+  var deltaT: Long = 0
+
   /**
    * Moves the rendering offset
    * @param deltaX  X delta
@@ -130,6 +133,9 @@ object Renderer {
     /**
      * Pause for constant frame rate
      */
+    val currTime = System.currentTimeMillis()
+    deltaT = currTime - prevTime
+    prevTime = currTime
     fg.syncGameLogic(60)
   }
 }

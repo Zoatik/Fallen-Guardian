@@ -17,10 +17,10 @@ object AnimationsManager {
 }
 
 class Animation( var spriteTarget: Sprite,
-                 var ImagesPathBuffer: mutable.ListBuffer[String],
+                 var imagesPathBuffer: mutable.ListBuffer[String],
                  var duration: Int,
-                 var loop: Boolean,
-                 var active: Boolean = true
+                 var loop: Boolean = true,
+                 private var active: Boolean = true
                ) {
   var indexCounter: Int = 0
   var prevTime: Long = 0
@@ -31,13 +31,30 @@ class Animation( var spriteTarget: Sprite,
     this.activate()
 
 
+  def this(spriteTarget: Sprite) {
+    this(spriteTarget, mutable.ListBuffer.empty, 0, false, false)
+  }
+
+  def init( imagesPathBuffer: mutable.ListBuffer[String],
+            duration: Int,
+            loop: Boolean = true,
+            active: Boolean = true
+          ): Unit = {
+    this.imagesPathBuffer = imagesPathBuffer
+    this.duration = duration
+    this.loop = loop
+    this.active = active
+    if(active)
+      this.activate()
+  }
+
   def next(): Unit = {
     if(finished || !playing)
       return
-    val minDeltaT: Int = duration / ImagesPathBuffer.length
+    val minDeltaT: Int = duration / imagesPathBuffer.length
     if (System.currentTimeMillis() - prevTime > minDeltaT){
       nextIndex()
-      val nextImage: String = ImagesPathBuffer(indexCounter)
+      val nextImage: String = imagesPathBuffer(indexCounter)
       this.spriteTarget.changeImage(nextImage)
       prevTime = System.currentTimeMillis()
     }
@@ -56,11 +73,19 @@ class Animation( var spriteTarget: Sprite,
     playing = false
   }
 
-  def activate(): Unit = AnimationsManager.add(this)
-  def deactivate(): Unit = AnimationsManager.remove(this)
+  def activate(): Unit = {
+      AnimationsManager.add(this)
+      active = true
+  }
+  def deactivate(): Unit = {
+      AnimationsManager.remove(this)
+      active = false
+  }
+
+  def isActive: Boolean = active
 
   private def nextIndex(): Unit = {
-    indexCounter = (indexCounter + 1) % ImagesPathBuffer.length
+    indexCounter = (indexCounter + 1) % imagesPathBuffer.length
     if(indexCounter == 0 && !loop) {
       finished = true
       playing = false

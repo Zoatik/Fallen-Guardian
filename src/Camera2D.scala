@@ -46,13 +46,13 @@ class Camera2D(var up: Int, var down: Int, var left: Int, var right: Int) {
     if(!isPressed)
       return
     if(keyCode == left) {
-      Renderer.move(1,0, GameManager.deltaT.toInt)
+      Renderer.move(1,0, Renderer.deltaT.toInt)
     } else if (keyCode == right) {
-      Renderer.move(-1,0, GameManager.deltaT.toInt)
+      Renderer.move(-1,0, Renderer.deltaT.toInt)
     } else if (keyCode == down){
-      Renderer.move(0,-1, GameManager.deltaT.toInt)
+      Renderer.move(0,-1, Renderer.deltaT.toInt)
     } else if (keyCode == up) {
-      Renderer.move(0,1, GameManager.deltaT.toInt)
+      Renderer.move(0,1, Renderer.deltaT.toInt)
     }
   }
 

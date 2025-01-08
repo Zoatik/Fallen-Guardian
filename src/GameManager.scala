@@ -13,17 +13,14 @@ object GameManager {
   val camera2D: Camera2D = new Camera2D()
   var mouseX: Int = 0
   var mouseY: Int = 0
-  var deltaT: Long = 0
   var initialized: Boolean = false
 
   var aled: Player = new Player()
   Layers.addSprite(LAYER_PLAYER, aled.sprite)
 
   /* test animation */
-  var anim: Animation = new Animation(aled.sprite, AnimationsResources.ANIM_SOLDIER_IDLE, 1000, true)
-  anim.play()
-  bindKey(KeyEvent.VK_C, (_, _) => anim.play())
-  bindKey(KeyEvent.VK_V, (_, _) => anim.stop())
+  //var anim: Animation = new Animation(aled.sprite, AnimationsResources.ANIM_SOLDIER_IDLE, 1000, true)
+  //anim.play()
 
   /**
    * Initialize all necessary components
@@ -76,14 +73,14 @@ object GameManager {
 
   /**
    * Game loop
-   *  - Calls InputManager handle functions
+   *  - Calls InputManager handling functions
    *  - Calls Gamemanager.update function
    *  - Calls AnimationsManager.run function
    *  - Calls Renderer.render function
    *  - Update the deltaT
    */
   def loop(): Unit = {
-    var prevTime: Long = System.currentTimeMillis()
+
     while (true) {
       InputManager.handleKeys()
       InputManager.handleMouse()
@@ -92,9 +89,7 @@ object GameManager {
       AnimationsManager.run()
 
       Renderer.render(fg)
-      val currTime = System.currentTimeMillis()
-      deltaT = currTime - prevTime
-      prevTime = currTime
+
     }
   }
 

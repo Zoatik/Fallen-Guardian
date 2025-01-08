@@ -15,5 +15,17 @@ object AnimationsResources {
       "/res/Characters/Soldier/idle/soldierIdle2.png"
     )}
 
+  val ANIM_SOLDIER_WALK: mutable.ListBuffer[String] = {
+    mutable.ListBuffer(
+      "/res/Characters/Soldier/walk/soldierWalk0.png",
+      "/res/Characters/Soldier/walk/soldierWalk1.png",
+      "/res/Characters/Soldier/walk/soldierWalk2.png",
+      "/res/Characters/Soldier/walk/soldierWalk3.png",
+      "/res/Characters/Soldier/walk/soldierWalk4.png",
+      "/res/Characters/Soldier/walk/soldierWalk5.png",
+      "/res/Characters/Soldier/walk/soldierWalk6.png",
+      "/res/Characters/Soldier/walk/soldierWalk7.png"
+    )}
+
 
 }
