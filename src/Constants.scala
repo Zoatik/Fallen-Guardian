@@ -1,3 +1,5 @@
+import java.awt.event.KeyEvent
+
 object Constants {
   val WINDOW_WIDTH: Int = 1400//1600
   val WINDOW_HEIGHT: Int = 1000//1200
@@ -6,6 +8,14 @@ object Constants {
   val MAX_INPUT_BUFFER_SIZE: Int = 10
   val COLLISION_TIME_DELAY: Int = 10
   val NUMBER_OF_LAYERS: Int = 3
+
+  //*-------------------------*//
+    // Camera constants
+  val CAMERA_UP = KeyEvent.VK_W
+  val CAMERA_DOWN = KeyEvent.VK_S
+  val CAMERA_LEFT = KeyEvent.VK_A
+  val CAMERA_RIGHT = KeyEvent.VK_D
+
 
   //* ------------------------* */
     // Player spawn constants

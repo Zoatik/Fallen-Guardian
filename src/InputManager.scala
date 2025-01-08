@@ -13,7 +13,7 @@ import scala.collection.mutable
  * @note multiple functions can be bound to one event code
  */
 object InputManager {
-  private val keyBindings: mutable.Map[Int, mutable.ListBuffer[Boolean => Unit]] = mutable.Map()
+  private val keyBindings: mutable.Map[Int, mutable.ListBuffer[(Int, Boolean) => Unit]] = mutable.Map()
   private val mouseBindings: mutable.Map[Int, mutable.ListBuffer[(Int, Boolean) => Unit]] = mutable.Map()
   private val mouseMotionBindings: mutable.Set[(Int, Int) => Unit] = mutable.Set()
   private val activeKeys: mutable.Set[Int] = mutable.Set()
@@ -28,7 +28,7 @@ object InputManager {
    * @param keyCode Key code
    * @param f       Function to bind
    */
-  def bindKey(keyCode: Int, f: Boolean => Unit): Unit = {
+  def bindKey(keyCode: Int, f: (Int, Boolean) => Unit): Unit = {
     val actions = keyBindings.getOrElseUpdate(keyCode, mutable.ListBuffer())
     actions += f // Ajoute la fonction à la liste des bindings pour cette touche
   }
@@ -87,7 +87,7 @@ object InputManager {
   def handleKeys(): Unit = {
     while(keysEventBuffer.nonEmpty){
       val nextEvent: (Int, Boolean) = keysEventBuffer.dequeue()
-      keyBindings.get(nextEvent._1).foreach(_.foreach(f => f(nextEvent._2)))
+      keyBindings.get(nextEvent._1).foreach(_.foreach(f => f(nextEvent._1, nextEvent._2)))
 
     }
     for(activeKey <- activeKeys){

@@ -39,7 +39,8 @@ class Character(
 
     val direction: (Int, Int) = (nextStep._1 - this.getAbsPosition._1, nextStep._2 - this.getAbsPosition._2)
     val length: Double = math.sqrt(math.pow(direction._1.toDouble, 2) + math.pow(direction._2.toDouble, 2))
-    val normDirection: (Int, Int) = ((direction._1/ length * velocity * (1 + Main.deltaT/10)).toInt, (direction._2/length * velocity * (1 + Main.deltaT/10)).toInt)
+    val normDirection: (Int, Int) = ((direction._1/ length * velocity * (1 + GameManager.deltaT/10)).toInt,
+                                      (direction._2/length * velocity * (1 + GameManager.deltaT/10)).toInt)
     var expectedPos: (Int, Int) = (this.getAbsPosition._1 + normDirection._1, this.getAbsPosition._2 + normDirection._2)
     var newDist: Double = math.sqrt(math.pow(nextStep._1 - expectedPos._1, 2) + math.pow(nextStep._2 - expectedPos._2, 2))
     var scaledNormDirection: (Int, Int) = normDirection
