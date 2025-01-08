@@ -32,6 +32,7 @@ class Player(
     active = false
   ))
 
+  Layers.addSprite(Constants.LAYER_PLAYER, this.sprite)
   this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
   this.playAnimation("idle")
 

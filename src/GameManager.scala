@@ -16,7 +16,17 @@ object GameManager {
   var initialized: Boolean = false
 
   var aled: Player = new Player()
-  Layers.addSprite(LAYER_PLAYER, aled.sprite)
+  //Layers.addSprite(LAYER_PLAYER, aled.sprite)
+
+  var oscour: Enemy = new Enemy(
+    _pos = (20,20),
+    _hp = 1,
+    _baseImagePath = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png",
+    _velocity = 2,
+    _damage = 1,
+    _armor = 2
+  )
+
 
   /* test animation */
   //var anim: Animation = new Animation(aled.sprite, AnimationsResources.ANIM_SOLDIER_IDLE, 1000, true)

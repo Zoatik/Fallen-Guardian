@@ -38,4 +38,11 @@ object AnimationsResources {
     )}
 
 
+  val ANIM_ORC_IDLE: mutable.ListBuffer[String] = {
+    mutable.ListBuffer(
+      "/res/Characters/Enemy/Orc/idle/orcIdle_0.png",
+      "/res/Characters/Enemy/Orc/idle/orcIdle_1.png",
+      "/res/Characters/Enemy/Orc/idle/orcIdle_2.png"
+    )}
+
 }

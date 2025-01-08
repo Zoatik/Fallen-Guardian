@@ -28,6 +28,7 @@ class Entity(
     layer = LAYER_ENTITIES
   )
 
+
   val animations: mutable.Map[String, Animation] = mutable.Map()
 
   def isAlive: Boolean = hp > 0
