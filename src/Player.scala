@@ -23,16 +23,16 @@ class Player(
     loop = true,
     active = false
   ))
+
+  this.addAnimation("attack1", new Animation(
+    spriteTarget = this.sprite,
+    imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_ATTACK_1,
+    duration = 600,
+    loop = false,
+    active = false
+  ))
+
+  this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
   this.playAnimation("idle")
-
-  override def startMoving(): Unit = {
-    super.startMoving()
-    this.playAnimation("walk")
-  }
-
-  override def stopMoving(): Unit = {
-    super.stopMoving()
-    this.playAnimation("idle")
-  }
 
 }

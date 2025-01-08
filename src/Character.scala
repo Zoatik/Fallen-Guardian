@@ -13,6 +13,8 @@ class Character(
   private var nextStep: (Int, Int) = this.getAbsPosition
   private var isMoving: Boolean = false
 
+  private var isAttacking: Boolean = false
+
   private def move(deltaX: Int, deltaY: Int): Unit = {
     val newX = this.getAbsPosition._1 + deltaX
     val newY = this.getAbsPosition._2 + deltaY
@@ -65,21 +67,23 @@ class Character(
     val targetCell: Cell = Grid.getCell(posX, posY).getOrElse(Grid.getCell(0,0).get)
     for(cell <- Grid.findPath(startCell, targetCell).getOrElse(Array.empty)){
       this.pathQueue.enqueue(cell)
-      //cell.sprite.changeImage("/res/ground/TX_stone_0.png")
     }
     nextStep = this.pathQueue.dequeue().absolutePos
     this.startMoving()
   }
 
   def startMoving(): Unit = {
+    this.playAnimation("walk")
     isMoving = true
   }
 
   def stopMoving(): Unit = {
+    this.playAnimation("idle")
     isMoving = false
   }
 
   def attack(target: Entity): Unit = {
+    isAttacking = true
     target.takeDamage(damage)
   }
 

@@ -24,6 +24,12 @@ object Constants {
   val LAYER_PLAYER = 2
   val LAYER_UI = 3
 
+  //*-------------------------*//
+    // Sprite Constants
+  val ANCHOR_TOP_LEFT = 0
+  val ANCHOR_MIDDLE = 1
+  val ANCHOR_BOTTOM_MIDDLE = 2
+
 
   //* ------------------------* */
     // Player spawn constants

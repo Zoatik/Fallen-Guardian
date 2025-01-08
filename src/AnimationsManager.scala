@@ -9,11 +9,11 @@ object AnimationsManager {
 
   def removeAll(): Unit = animationsBuffer.foreach(_.deactivate())
 
-  def run(): Unit = animationsBuffer.foreach(_.next())
+  def run(): Unit = animationsBuffer.toList.foreach(_.next())
 
-  def stopAll(): Unit = animationsBuffer.foreach(_.stop())
+  def stopAll(): Unit = animationsBuffer.toList.foreach(_.stop())
 
-  def playAll(): Unit = animationsBuffer.foreach(_.play())
+  def playAll(): Unit = animationsBuffer.toList.foreach(_.play())
 }
 
 class Animation( var spriteTarget: Sprite,
@@ -22,6 +22,9 @@ class Animation( var spriteTarget: Sprite,
                  var loop: Boolean = true,
                  private var active: Boolean = true
                ) {
+  val animationEndedListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
+  val animationStartedListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
+
   var indexCounter: Int = 0
   var prevTime: Long = 0
   var finished: Boolean = false
@@ -61,16 +64,30 @@ class Animation( var spriteTarget: Sprite,
 
   }
 
+  def onAnimationStarted(f: () => Unit): Unit = animationStartedListeners += f
+
+  def onAnimationEnded(f: () => Unit): Unit = animationEndedListeners += f
+
+  private def animationStarted(): Unit = animationStartedListeners.foreach(f => f())
+
+  private def animationEnded(): Unit = animationEndedListeners.foreach(f => f())
+
   def play(fromStart: Boolean = true): Unit = {
-    if(fromStart)
-      indexCounter = 0
-    prevTime = System.currentTimeMillis()
-    finished = false
-    playing = true
+    if(!playing) {
+      if (fromStart)
+        indexCounter = 0
+      prevTime = System.currentTimeMillis()
+      finished = false
+      playing = true
+      this.animationStarted()
+    }
   }
 
   def stop(): Unit = {
-    playing = false
+    if(playing) {
+      playing = false
+      this.animationEnded()
+    }
   }
 
   def activate(): Unit = {
@@ -88,7 +105,7 @@ class Animation( var spriteTarget: Sprite,
     indexCounter = (indexCounter + 1) % imagesPathBuffer.length
     if(indexCounter == 0 && !loop) {
       finished = true
-      playing = false
+      this.stop()
     }
   }
 

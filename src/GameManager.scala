@@ -59,7 +59,12 @@ object GameManager {
   def handleCellAction(mouseButton: Int, pressed: Boolean, cell: Cell): Unit = {
     if (!pressed){
       if(mouseButton == MouseEvent.BUTTON3) {
+        cell.sprite.changeImage("/res/ground/TX_stone_0.png") // DEBUG
         aled.calculatePath(cell.pos._1, cell.pos._2)
+      }
+      else if(mouseButton == MouseEvent.BUTTON1){
+        aled.stopMoving()
+        aled.playAnimation("attack1")
       }
     }
   }

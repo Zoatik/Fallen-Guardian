@@ -14,13 +14,14 @@ class Entity(
               protected var armor: Int,
               protected val baseImagePath: String
 ) {
-  val sprite: Sprite = new Sprite(baseImagePath)
+  val sprite: Sprite = new Sprite(baseImagePath, anchor = ANCHOR_BOTTOM_MIDDLE)
   private var absPos: (Int, Int) = (pos._1 * sprite.bm.getWidth, pos._2 * sprite.bm.getHeight)
-  sprite.setPosition(absPos)
+  private var spritePos: (Int, Int) = (pos._1 * CELL_SIZE + sprite.bm.getWidth/2, pos._2 * CELL_SIZE + sprite.bm.getHeight)
+  sprite.setPosition(spritePos)
 
   val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
-    x = pos._1 * sprite.bm.getWidth,
-    y = pos._2 * sprite.bm.getHeight,
+    x = pos._1 * CELL_SIZE,
+    y = pos._2 * CELL_SIZE,
     width = sprite.bm.getWidth,
     height = sprite.bm.getHeight
   ),
@@ -64,7 +65,7 @@ class Entity(
     val absolutePosX = Constants.CELL_SIZE * newPos._1
     val absolutePosY = Constants.CELL_SIZE * newPos._2
     absPos = (absolutePosX, absolutePosY)
-    sprite.setPosition(absolutePosX, absolutePosY)
+    sprite.setTopLeftPosition(absolutePosX, absolutePosY)
     collisionBox2D.setPosition(absolutePosX, absolutePosY)
   }
 
@@ -76,7 +77,7 @@ class Entity(
     absPos = newAbsPos
     val newPos = (newAbsPos._1 / Constants.CELL_SIZE, newAbsPos._2 / Constants.CELL_SIZE)
     pos = newPos
-    sprite.setPosition(newAbsPos._1, newAbsPos._2)
+    sprite.setTopLeftPosition(newAbsPos._1, newAbsPos._2)
     collisionBox2D.setPosition(newAbsPos._1, newAbsPos._2)
   }
 
