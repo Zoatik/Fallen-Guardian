@@ -151,8 +151,8 @@ class Cell(val pos: (Int, Int),
   val collisionBox: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(box2D)
   //collisionBox.onMouseEnter(() => startHover())
   //collisionBox.onMouseLeave(() => endHover())
-  //collisionBox.onMousePressed(() => mousePressed())
-  collisionBox.onMouseReleased(() => mouseReleased())
+  //collisionBox.onMousePressed(mouseButton: Int => mousePressed(mouseButton))
+  collisionBox.onMouseReleased(mouseButton => mouseReleased(mouseButton))
 
 
   def startHover(): Unit = {
@@ -163,18 +163,12 @@ class Cell(val pos: (Int, Int),
     this.sprite.changeImage(defaultImagePath)
   }
 
-  def mousePressed(): Unit = {
+  def mousePressed(mouseButton: Int): Unit = {
     println("pressed")
-
   }
 
-  def mouseReleased(): Unit = {
-    /*val path = Grid.findPath(this, Grid.cells(2)(2))
-    if (path.isDefined)
-      for (el <- path.get) {
-        el.sprite.changeImage("/res/ground/TX_stone_0.png")
-      }*/
-    GameManager.handleCellAction(false, this)
+  def mouseReleased(mouseButton: Int): Unit = {
+    GameManager.handleCellAction(mouseButton, false, this)
   }
 
   def distanceTo(other: Cell): Double = {

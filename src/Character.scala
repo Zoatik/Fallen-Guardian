@@ -12,13 +12,6 @@ class Character(
   private val pathQueue: mutable.Queue[Cell] = mutable.Queue()
   private var nextStep: (Int, Int) = this.getAbsPosition
   private var isMoving: Boolean = false
-  private var prevDist: Double = 0.0
-
-  private def move(): Unit = {
-    val newX = pos._1 + velocity
-    val newY = pos._2 + velocity
-    this.setPosition((newX, newY))
-  }
 
   private def move(deltaX: Int, deltaY: Int): Unit = {
     val newX = this.getAbsPosition._1 + deltaX
@@ -27,8 +20,6 @@ class Character(
   }
 
   def moveToTarget(): Boolean = {
-    //println(s"target: $nextStep, pos: $getAbsPosition")
-    //println(s"${this.pos}")
     if(!isMoving)
       return true
     var dist = this.absDistanceTo(this.nextStep)
@@ -66,6 +57,7 @@ class Character(
 
     false
   }
+
   def calculatePath(posX: Int, posY: Int): Unit = {
     pathQueue.removeAll()
     val startCell: Cell = Grid.getCell(this.pos._1, this.pos._2).getOrElse(Grid.getCell(0,0).get)

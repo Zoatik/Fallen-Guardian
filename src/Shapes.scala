@@ -31,8 +31,8 @@ class CollisionBox2D (val id: String, initialBox: Box) {
   private var box: Box = initialBox
   private val mouseEnterListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
   private val mouseLeaveListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
-  private val mousePressedListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
-  private val mouseReleasedListeners: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
+  private val mousePressedListeners: mutable.ListBuffer[Int => Unit] = mutable.ListBuffer()
+  private val mouseReleasedListeners: mutable.ListBuffer[Int => Unit] = mutable.ListBuffer()
 
   var isMouseOver: Boolean = false
 
@@ -69,7 +69,7 @@ class CollisionBox2D (val id: String, initialBox: Box) {
    * Binds a function to the mouse pressed event
    * @param listener function to trigger
    */
-  def onMousePressed(listener: () => Unit): Unit = {
+  def onMousePressed(listener: Int => Unit): Unit = {
     mousePressedListeners += listener
   }
 
@@ -77,7 +77,7 @@ class CollisionBox2D (val id: String, initialBox: Box) {
    * Binds a function to the mouse released event
    * @param listener function to trigger
    */
-  def onMouseReleased(listener: () => Unit): Unit = {
+  def onMouseReleased(listener: Int => Unit): Unit = {
     mouseReleasedListeners += listener
   }
 
@@ -106,10 +106,10 @@ class CollisionBox2D (val id: String, initialBox: Box) {
    * Calls all listeners when mouse is pressed
    * @return true if the event is fired - false otherwise
    */
-  def mousePressed(): Boolean = {
+  def mousePressed(mouseButton: Int): Boolean = {
     if(!isMouseOver)
       return false
-    mousePressedListeners.foreach(_())
+    mousePressedListeners.foreach(_(mouseButton))
     true
   }
 
@@ -117,10 +117,10 @@ class CollisionBox2D (val id: String, initialBox: Box) {
    * Calls all listeners when mouse is released
    * @return true if the event is fired - false otherwise
    */
-  def mouseReleased(): Boolean = {
+  def mouseReleased(mouseButton: Int): Boolean = {
     if(!isMouseOver)
       return false
-    mouseReleasedListeners.foreach(_())
+    mouseReleasedListeners.foreach(_(mouseButton))
     true
   }
 
@@ -142,7 +142,8 @@ object CollisionBox2DManager {
     private var isMouseDown: Boolean = false
 
     InputManager.bindMouseMotion((x,y) => checkMouseCollisions(x,y))
-    InputManager.bindMouseButton(MouseEvent.BUTTON1, isPressed => handleMouseAction(isPressed))
+    InputManager.bindMouseButton(MouseEvent.BUTTON1, (mouseButton, pressed) => handleMouseAction(mouseButton, pressed))
+    InputManager.bindMouseButton(MouseEvent.BUTTON3, (mouseButton, pressed) => handleMouseAction(mouseButton, pressed))
 
   /**
    * Adds a new collision Area to the Manager
@@ -208,11 +209,11 @@ object CollisionBox2DManager {
    *
    * @param isPressed true if mouse is pressed - false if mouse is released
    */
-  private def handleMouseAction(isPressed: Boolean): Unit = {
+  private def handleMouseAction(mouseButton: Int, isPressed: Boolean): Unit = {
       if(isPressed && !isMouseDown) {
         isMouseDown = true
         for (layer <- layers.indices.reverse) {
-          val pressedBox = layers(layer).find(_.mousePressed())
+          val pressedBox = layers(layer).find(_.mousePressed(mouseButton))
           if (pressedBox.isDefined) {
             // Une boîte a été pressée dans ce layer, donc on arrête
             return
@@ -222,7 +223,7 @@ object CollisionBox2DManager {
       else if(!isPressed && isMouseDown){
         isMouseDown = false
         for (layer <- layers.indices.reverse) {
-          val releasedBox = layers(layer).find(_.mouseReleased())
+          val releasedBox = layers(layer).find(_.mouseReleased(mouseButton))
           if (releasedBox.isDefined) {
             // Une boîte a été relâchée dans ce layer, donc on arrête
             return

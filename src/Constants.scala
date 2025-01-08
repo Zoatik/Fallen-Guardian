@@ -9,18 +9,13 @@ object Constants {
 
   //* ------------------------* */
     // Player spawn constants
-  val defaultPos: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
-  val defaultHp: Int = 10
-  val defaultArmor: Int = 5
+  val PLAYER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
+  val PLAYER_DEFAULT_HP: Int = 10
+  val PLAYER_DEFAULT_ARMOR: Int = 5
 
-  val defaultSpritePath: String = "/res/Characters/Soldier/idle/soldierIdle0.png"
-  val defaultScale: Double = 1
-  val defaultAngle: Int = 0
-  val defaultLayerZ: Int = 1
-  val defaultSprite: Sprite = new Sprite(defaultSpritePath, defaultPos, defaultScale, defaultAngle)
-
-
-  val defaultBox: Box = new Box(defaultPos._1, defaultPos._2, 10, 10)
-  val defaultBoxCollision2D: CollisionBox2D = new CollisionBox2D("Player Collider", defaultBox)
+  val PLAYER_DEFAULT_IMAGE_PATH: String = "/res/Characters/Soldier/idle/soldierIdle0.png"
+  val PLAYER_DEFAULT_VELOCITY: Int = 4
+  val PLAYER_DEFAULT_DAMAGE: Int = 3
+  val PLAYER_DEFAULT_COINS: Int = 2
 }
 

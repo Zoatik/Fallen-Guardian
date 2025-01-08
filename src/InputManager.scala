@@ -14,7 +14,7 @@ import scala.collection.mutable
  */
 object InputManager {
   private val keyBindings: mutable.Map[Int, mutable.ListBuffer[Boolean => Unit]] = mutable.Map()
-  private val mouseBindings: mutable.Map[Int, mutable.ListBuffer[Boolean => Unit]] = mutable.Map()
+  private val mouseBindings: mutable.Map[Int, mutable.ListBuffer[(Int, Boolean) => Unit]] = mutable.Map()
   private val mouseMotionBindings: mutable.Set[(Int, Int) => Unit] = mutable.Set()
   private val activeKeys: mutable.Set[Int] = mutable.Set()
   private val activeMouseButtons: mutable.Set[Int] = mutable.Set()
@@ -38,7 +38,7 @@ object InputManager {
    * @param mouseButton Mouse button code
    * @param f           Function to bind
    */
-  def bindMouseButton(mouseButton: Int, f: Boolean => Unit): Unit = {
+  def bindMouseButton(mouseButton: Int, f: (Int, Boolean) => Unit): Unit = {
     val actions = mouseBindings.getOrElseUpdate(mouseButton, mutable.ListBuffer())
     actions += f
   }
@@ -143,7 +143,7 @@ object InputManager {
   def handleMouse(): Unit = {
     while(mouseButtonsEventBuffer.nonEmpty){
       val nextEvent: (Int, Boolean) = mouseButtonsEventBuffer.dequeue()
-      mouseBindings.get(nextEvent._1).foreach(_.foreach(f => f(nextEvent._2)))
+      mouseBindings.get(nextEvent._1).foreach(_.foreach(f => f(nextEvent._1, nextEvent._2)))
 
     }
     while(mouseMotionEventBuffer.nonEmpty){
