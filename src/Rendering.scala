@@ -11,13 +11,11 @@ import java.awt.Color
  * @param pos       absolute pos in 2D space
  * @param scale     scale of the image
  * @param angle     rotation angle of the image
- * @param layerZ    layer height
  */
 class Sprite(var imagePath: String,
-             var pos: (Int, Int),
+             var pos: (Int, Int) = (0,0),
              var scale: Double = 1,
-             var angle: Double = 0,
-             var layerZ: Int = 0
+             var angle: Double = 0
             ) {
   var bm = new GraphicsBitmap(imagePath)
 

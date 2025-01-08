@@ -1,11 +1,10 @@
 class Enemy(
-             pos: (Int, Int),
-             hp: Int,
-             sprite: Sprite,
-             boxCollision2D: CollisionBox2D,
-             velocity: (Int, Int),
-             damage: Int,
-             armor: Int
-           ) extends Character(pos, hp, armor, sprite, boxCollision2D, velocity, damage) {
+             _pos: (Int, Int),
+             _hp: Int,
+             _baseImagePath: String,
+             _velocity: Int,
+             _damage: Int,
+             _armor: Int
+           ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
 }

@@ -1,11 +1,10 @@
 class Player(
-              pos: (Int, Int),
-              hp: Int,
-              armor: Int,
-              sprite: Sprite,
-              boxCollision2D: CollisionBox2D,
-              velocity: (Int, Int),
-              damage: Int,
-            ) extends Character(pos, hp, armor, sprite, boxCollision2D, velocity, damage) {
+              _pos: (Int, Int),
+              _hp: Int,
+              _armor: Int,
+              _baseImagePath: String,
+              _velocity: Int,
+              _damage: Int,
+            ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
 }

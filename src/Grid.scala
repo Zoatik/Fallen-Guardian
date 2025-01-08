@@ -43,11 +43,14 @@ object Grid {
   def getCellFromPoint(x: Int, y: Int): Option[Cell] = {
     val i: Int = x / 32
     val j: Int = y / 32
+    getCell(i,j)
+  }
+
+  def getCell(i: Int,j: Int): Option[Cell] = {
     if(!isInGrid(i,j))
       return None
 
     Some(this.cells(i)(j))
-
   }
 
   private def isInGrid(x: Int, y: Int): Boolean = {
@@ -166,11 +169,12 @@ class Cell(val pos: (Int, Int),
   }
 
   def mouseReleased(): Unit = {
-    val path = Grid.findPath(this, Grid.cells(2)(2))
+    /*val path = Grid.findPath(this, Grid.cells(2)(2))
     if (path.isDefined)
       for (el <- path.get) {
         el.sprite.changeImage("/res/ground/TX_stone_0.png")
-      }
+      }*/
+    GameManager.handleCellAction(false, this)
   }
 
   def distanceTo(other: Cell): Double = {

@@ -17,7 +17,7 @@ object Constants {
   val defaultScale: Double = 1
   val defaultAngle: Int = 0
   val defaultLayerZ: Int = 1
-  val defaultSprite: Sprite = new Sprite(defaultSpritePath, defaultPos, defaultScale, defaultAngle, defaultLayerZ)
+  val defaultSprite: Sprite = new Sprite(defaultSpritePath, defaultPos, defaultScale, defaultAngle)
 
 
   val defaultBox: Box = new Box(defaultPos._1, defaultPos._2, 10, 10)

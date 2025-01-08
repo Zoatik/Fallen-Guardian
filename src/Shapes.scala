@@ -25,6 +25,7 @@ case class Box(x: Int, y: Int, width: Int, height: Int) {
  * Collision Area with mouse Events
  * @param id          unique id of the Collision Area
  * @param initialBox  shape of the Area
+ * @note Should not be instanciated directly -> use CollisionBox2DManager
  */
 class CollisionBox2D (val id: String, initialBox: Box) {
   private var box: Box = initialBox
@@ -35,6 +36,11 @@ class CollisionBox2D (val id: String, initialBox: Box) {
 
   var isMouseOver: Boolean = false
 
+  /**
+   * Sets the absolute position of the box
+   * @param newX New absolute position X
+   * @param newY New absolute position Y
+   */
   def setPosition(newX: Int, newY: Int): Unit = {
     box = box.copy(x = newX, y = newY)
   }
