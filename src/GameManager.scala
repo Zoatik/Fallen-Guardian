@@ -46,6 +46,7 @@ object GameManager {
 
   /**
    * ensures that the Game Manager is initialized before use
+   * @throws IllegalStateException GameManager must be initialized using GameManager.init(params) before use.
    */
   private def ensureInitialized(): Unit = {
     if (!initialized) {
