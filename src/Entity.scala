@@ -20,7 +20,6 @@ class Entity(
   sprite.setPosition(spritePos)
 
 
-
   val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
     x = pos._1 * CELL_SIZE,
     y = pos._2 * CELL_SIZE,
@@ -31,6 +30,12 @@ class Entity(
   collisionBox2D.onMouseReleased(mouseButton => mouseReleased(mouseButton))
 
   val animations: mutable.Map[String, Animation] = mutable.Map()
+
+  def destroy(): Unit = {
+    Renderer.destroy(sprite)
+    CollisionBox2DManager.destroy(collisionBox2D)
+    AnimationsManager.destroy(animations.values)
+  }
 
   def isAlive: Boolean = hp > 0
 

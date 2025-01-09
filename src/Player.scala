@@ -8,6 +8,7 @@ class Player(
               var coins: Int = Constants.PLAYER_DEFAULT_COINS
             ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
+
   def setTarget(entity: Entity): Unit = {
     this.target = Some(entity)
   }

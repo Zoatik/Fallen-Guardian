@@ -23,6 +23,8 @@ object GameManager {
 
 
   InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) DEBUG_SPAWN_ENEMY())
+  InputManager.bindKey(KeyEvent.VK_E, (_, pressed) => if(!pressed) destroyEntity(enemies.head))
+
   def DEBUG_SPAWN_ENEMY(): Unit = {
     val oscour: Enemy = new Enemy(
       _pos = (20,20),
@@ -37,7 +39,16 @@ object GameManager {
   }
 
 
-  
+  def destroyEntity(entity: Entity): Unit = {
+    entity match {
+      case e: Enemy =>
+        enemies -= e
+        aled.target = None
+      case _ =>
+        println("Unsupported entity type for destruction.")
+    }
+    entity.destroy()
+  }
 
   /**
    * Initialize all necessary components

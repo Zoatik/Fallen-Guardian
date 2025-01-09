@@ -3,6 +3,10 @@ import scala.collection.mutable
 object AnimationsManager {
   private val animationsBuffer: mutable.ListBuffer[Animation] = mutable.ListBuffer()
 
+  def destroy(animations: Iterable[Animation]): Unit = {
+    animations.foreach(anim => remove(anim))
+  }
+
   def add(newAnim: Animation): Unit = this.animationsBuffer += newAnim
 
   def remove(animToRemove: Animation): Unit = this.animationsBuffer -= animToRemove

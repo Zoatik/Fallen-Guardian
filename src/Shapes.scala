@@ -135,102 +135,106 @@ class CollisionBox2D (val id: String, initialBox: Box) {
  * Collision Manager object - handles all collision detections when specific events are fired
  */
 object CollisionBox2DManager {
-    private val layers: Array[mutable.ListBuffer[CollisionBox2D]] =
-                          Array.fill(Constants.NUMBER_OF_LAYERS)(mutable.ListBuffer[CollisionBox2D]())
-    private var boxesCounter: Int = 0
-    private var prevTime: Long = 0
-    private var isMouseDown: Boolean = false
+  private val layers: Array[mutable.ListBuffer[CollisionBox2D]] =
+                        Array.fill(Constants.NUMBER_OF_LAYERS)(mutable.ListBuffer[CollisionBox2D]())
+  private var boxesCounter: Int = 0
+  private var prevTime: Long = 0
+  private var isMouseDown: Boolean = false
 
-    InputManager.bindMouseMotion((x,y) => checkMouseCollisions(x,y))
-    InputManager.bindMouseButton(MouseEvent.BUTTON1, (mouseButton, pressed) => handleMouseAction(mouseButton, pressed))
-    InputManager.bindMouseButton(MouseEvent.BUTTON3, (mouseButton, pressed) => handleMouseAction(mouseButton, pressed))
+  InputManager.bindMouseMotion((x,y) => checkMouseCollisions(x,y))
+  InputManager.bindMouseButton(MouseEvent.BUTTON1, (mouseButton, pressed) => handleMouseAction(mouseButton, pressed))
+  InputManager.bindMouseButton(MouseEvent.BUTTON3, (mouseButton, pressed) => handleMouseAction(mouseButton, pressed))
+
+
+  def destroy(collisionBox2D: CollisionBox2D): Unit = {
+    layers.find(layer => layer.contains(collisionBox2D)).getOrElse(return) -= collisionBox2D
+  }
+  /**
+  * Adds a new collision Area to the Manager
+  * @param initialBox  Box shape
+  * @param layer       Collision layer height - 0 if empty
+  * @return new Collision Area : collisionBox2D
+  */
+  def newCollisionBox2D(initialBox: Box, layer: Int = 0): CollisionBox2D = {
+    require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
+    val newBox = new CollisionBox2D(s"Box$boxesCounter", initialBox)
+    register(newBox, layer)
+    newBox
+  }
 
   /**
-   * Adds a new collision Area to the Manager
-   * @param initialBox  Box shape
-   * @param layer       Collision layer height - 0 if empty
-   * @return new Collision Area : collisionBox2D
-   */
-    def newCollisionBox2D(initialBox: Box, layer: Int = 0): CollisionBox2D = {
-      require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
-      val newBox = new CollisionBox2D(s"Box$boxesCounter", initialBox)
-      register(newBox, layer)
-      newBox
-    }
+  * Adds a new Collision Area to a specific layer
+  * @param box   Collision Area: CollisionBox2D
+  * @param layer Collision layer height
+  */
+  def register(box: CollisionBox2D, layer: Int): Unit = {
+    require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
+    layers(layer) += box
+    boxesCounter += 1
+  }
 
   /**
-   * Adds a new Collision Area to a specific layer
-   * @param box   Collision Area: CollisionBox2D
-   * @param layer Collision layer height
-   */
-    def register(box: CollisionBox2D, layer: Int): Unit = {
-      require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
-      layers(layer) += box
-      boxesCounter += 1
-    }
+  * Removes the given Collision Area from a layer
+  * @param box   CollisionArea to remove
+  * @param layer targeted layer height
+  */
+  def unregister(box: CollisionBox2D, layer: Int): Unit = {
+    require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
+    layers(layer) -= box
+  }
 
   /**
-   * Removes the given Collision Area from a layer
-   * @param box   CollisionArea to remove
-   * @param layer targeted layer height
-   */
-    def unregister(box: CollisionBox2D, layer: Int): Unit = {
-      require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
-      layers(layer) -= box
-    }
+  * Checks mouse collision with the first heighest Collision layer
+  *
+  * Triggers events when collision found
+  * @param mouseX  Absolute mouse position X
+  * @param mouseY  Absolute mouse position Y
+  */
+  def checkMouseCollisions(mouseX: Int, mouseY: Int): Unit = {
+    if(System.currentTimeMillis() - prevTime < Constants.COLLISION_TIME_DELAY)
+      return
 
-  /**
-   * Checks mouse collision with the first heighest Collision layer
-   *
-   * Triggers events when collision found
-   * @param mouseX  Absolute mouse position X
-   * @param mouseY  Absolute mouse position Y
-   */
-    def checkMouseCollisions(mouseX: Int, mouseY: Int): Unit = {
-      if(System.currentTimeMillis() - prevTime < Constants.COLLISION_TIME_DELAY)
+    for (layer <- layers.indices.reverse) { // Parcourir les couches de la plus haute à la plus basse
+      val collidedBox = layers(layer).find(_.checkMouseCollision(mouseX, mouseY))
+      if (collidedBox.isDefined) {
+        // Une collision a été trouvée dans ce layer, donc on arrête
         return
+      }
+    }
+    prevTime = System.currentTimeMillis()
+  }
 
-      for (layer <- layers.indices.reverse) { // Parcourir les couches de la plus haute à la plus basse
-        val collidedBox = layers(layer).find(_.checkMouseCollision(mouseX, mouseY))
-        if (collidedBox.isDefined) {
-          // Une collision a été trouvée dans ce layer, donc on arrête
+  /**
+  * Handles mouse actions - Must be bound to mouse related events
+  *
+  * 1. mouse pressed
+  *
+  * 2. mouse released
+  *
+  * @param isPressed true if mouse is pressed - false if mouse is released
+  */
+  private def handleMouseAction(mouseButton: Int, isPressed: Boolean): Unit = {
+    if(isPressed && !isMouseDown) {
+      isMouseDown = true
+      for (layer <- layers.indices.reverse) {
+        val pressedBox = layers(layer).find(_.mousePressed(mouseButton))
+        if (pressedBox.isDefined) {
+          // Une boîte a été pressée dans ce layer, donc on arrête
           return
         }
       }
-      prevTime = System.currentTimeMillis()
     }
-
-  /**
-   * Handles mouse actions - Must be bound to mouse related events
-   *
-   * 1. mouse pressed
-   *
-   * 2. mouse released
-   *
-   * @param isPressed true if mouse is pressed - false if mouse is released
-   */
-  private def handleMouseAction(mouseButton: Int, isPressed: Boolean): Unit = {
-      if(isPressed && !isMouseDown) {
-        isMouseDown = true
-        for (layer <- layers.indices.reverse) {
-          val pressedBox = layers(layer).find(_.mousePressed(mouseButton))
-          if (pressedBox.isDefined) {
-            // Une boîte a été pressée dans ce layer, donc on arrête
-            return
-          }
-        }
-      }
-      else if(!isPressed && isMouseDown){
-        isMouseDown = false
-        for (layer <- layers.indices.reverse) {
-          val releasedBox = layers(layer).find(_.mouseReleased(mouseButton))
-          if (releasedBox.isDefined) {
-            // Une boîte a été relâchée dans ce layer, donc on arrête
-            return
-          }
+    else if(!isPressed && isMouseDown){
+      isMouseDown = false
+      for (layer <- layers.indices.reverse) {
+        val releasedBox = layers(layer).find(_.mouseReleased(mouseButton))
+        if (releasedBox.isDefined) {
+          // Une boîte a été relâchée dans ce layer, donc on arrête
+          return
         }
       }
     }
-
   }
+
+}
 

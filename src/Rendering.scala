@@ -3,6 +3,7 @@ import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.Color
+import scala.collection.mutable
 
 /**
  * Ready to render sprite class
@@ -73,6 +74,10 @@ object Layers{
    */
   def addSprite(z: Int, sprite: Sprite): Unit = layerArray(z).addSprite(sprite)
 
+  def removeSprite(sprite: Sprite): Unit = {
+    layerArray.find(layer => layer.spritesList.contains(sprite)).getOrElse(return).spritesList -= sprite
+  }
+
   /**
    * creates a new layer
    */
@@ -96,13 +101,13 @@ object Layers{
  * @param z the layer height in its Layers array
  */
 class Layer(var z: Int){
-  var spritesArray: Array[Sprite] = Array.ofDim(0)
+  var spritesList: mutable.ListBuffer[Sprite] = mutable.ListBuffer()
 
   /**
    * Adds a sprite to the layer
    * @param sprite sprite to add
    */
-  def addSprite(sprite: Sprite): Unit = spritesArray :+= sprite
+  def addSprite(sprite: Sprite): Unit = spritesList += sprite
 }
 
 /**
@@ -114,6 +119,11 @@ object Renderer {
 
   private var prevTime: Long = System.currentTimeMillis()
   var deltaT: Long = 0
+
+
+  def destroy(sprite: Sprite): Unit = {
+    Layers.removeSprite(sprite)
+  }
 
   /**
    * Moves the rendering offset
@@ -138,7 +148,7 @@ object Renderer {
     fg.frontBuffer.synchronized {
       fg.clear(Color.white)
       for (layer <- Layers.layerArray) {
-        for (sprite <- layer.spritesArray) {
+        for (sprite <- layer.spritesList) {
           val pos = sprite.getTopLeftPos()
           val x = pos._1 + sprite.bm.getWidth/2 + offsetX
           val y = pos._2 + sprite.bm.getHeight/2 + offsetY

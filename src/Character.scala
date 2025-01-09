@@ -20,6 +20,11 @@ class Character(
   var target: Option[Entity] = None
 
 
+  override def destroy(): Unit = {
+    super.destroy()
+    pathQueue.empty
+    target = None
+  }
 
   private def move(deltaX: Int, deltaY: Int): Unit = {
     val newX = this.getAbsPosition._1 + deltaX
