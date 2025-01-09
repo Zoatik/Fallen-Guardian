@@ -19,14 +19,14 @@ class Entity(
   private var spritePos: (Int, Int) = (pos._1 * CELL_SIZE + sprite.bm.getWidth/2, pos._2 * CELL_SIZE + sprite.bm.getHeight)
   sprite.setPosition(spritePos)
 
+
+
   val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
     x = pos._1 * CELL_SIZE,
     y = pos._2 * CELL_SIZE,
     width = sprite.bm.getWidth,
     height = sprite.bm.getHeight
-  ),
-    layer = LAYER_ENTITIES
-  )
+  ), layer = LAYER_ENTITIES)
 
 
   val animations: mutable.Map[String, Animation] = mutable.Map()
@@ -38,6 +38,10 @@ class Entity(
     hp -= effectiveAmount
     if (hp < 0) hp = 0
   }
+
+  def updateTarget(): Unit
+
+  def findTarget(): Option[Entity] = None
 
   def addAnimation(id: String, newAnimation: Animation): Unit = animations.update(id, newAnimation)
 
@@ -55,6 +59,11 @@ class Entity(
 
   def absDistanceTo(otherPos: (Int, Int)): Double = {
     math.sqrt(math.pow(otherPos._1 - this.absPos._1, 2) + math.pow(otherPos._2 - this.absPos._2, 2))
+  }
+
+  def absDistanceTo(other: Entity): Double = {
+    val otherPos: (Int, Int) = other.absPos
+    absDistanceTo(otherPos)
   }
 
   /**

@@ -3,6 +3,8 @@ import hevs.graphics.FunGraphics
 import InputManager._
 import Constants._
 
+import scala.collection.mutable
+
 /**
  * Main Manager that handles the game logics
  */
@@ -15,10 +17,11 @@ object GameManager {
   var mouseY: Int = 0
   var initialized: Boolean = false
 
-  var aled: Player = new Player()
-  //Layers.addSprite(LAYER_PLAYER, aled.sprite)
+  var enemies: mutable.ListBuffer[Enemy] = mutable.ListBuffer()
 
-  var oscour: Enemy = new Enemy(
+  var aled: Player = new Player()
+
+  private var oscour: Enemy = new Enemy(
     _pos = (20,20),
     _hp = 1,
     _baseImagePath = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png",
@@ -26,11 +29,8 @@ object GameManager {
     _damage = 1,
     _armor = 2
   )
+  enemies += oscour
 
-
-  /* test animation */
-  //var anim: Animation = new Animation(aled.sprite, AnimationsResources.ANIM_SOLDIER_IDLE, 1000, true)
-  //anim.play()
 
   /**
    * Initialize all necessary components
