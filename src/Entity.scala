@@ -15,7 +15,7 @@ class Entity(
               protected val baseImagePath: String
 ) {
   val sprite: Sprite = new Sprite(baseImagePath, anchor = ANCHOR_BOTTOM_MIDDLE)
-  private var absPos: (Int, Int) = (pos._1 * sprite.bm.getWidth, pos._2 * sprite.bm.getHeight)
+  private var absPos: (Int, Int) = (pos._1 * CELL_SIZE, pos._2 * CELL_SIZE)
   private var spritePos: (Int, Int) = (pos._1 * CELL_SIZE + sprite.bm.getWidth/2, pos._2 * CELL_SIZE + sprite.bm.getHeight)
   sprite.setPosition(spritePos)
 

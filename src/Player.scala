@@ -47,4 +47,7 @@ class Player(
   this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
   this.playAnimation("idle")
 
+  this.animations("attack1").onAnimationStarted(() => isAttacking = true)
+  this.animations("attack1").onAnimationEnded(() => isAttacking = false)
+
 }

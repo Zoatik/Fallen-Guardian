@@ -13,11 +13,12 @@ class Character(
   private var nextStep: (Int, Int) = this.getAbsPosition
   private var isMoving: Boolean = false
 
-  private var isAttacking: Boolean = false
+  var isAttacking: Boolean = false
   private var hasReachedTarget: Boolean = false
   private val attackCooldown: Int = 1000
   private var prevAttackTime: Long = 0
   var target: Option[Entity] = None
+
 
 
   private def move(deltaX: Int, deltaY: Int): Unit = {
@@ -58,14 +59,14 @@ class Character(
     var scaledNormDirection: (Int, Int) = normDirection
 
     var i: Int = 1
-    while(newDist >= dist || i > 100){
+    while(newDist >= dist && i < 10){
       scaledNormDirection = (normDirection._1 / i, normDirection._2 / i)
       expectedPos = (this.getAbsPosition._1 + scaledNormDirection._1, this.getAbsPosition._2 + scaledNormDirection._2)
       newDist = math.sqrt(math.pow(nextStep._1 - expectedPos._1, 2) + math.pow(nextStep._2 - expectedPos._2, 2))
-
+      println(i)
       i += 1
     }
-    this.move(normDirection._1 / i , normDirection._2 / i)
+    this.move(scaledNormDirection._1 / i , scaledNormDirection._2 / i)
 
     hasReachedTarget = false
     false

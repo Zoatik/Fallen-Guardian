@@ -21,16 +21,23 @@ object GameManager {
 
   var aled: Player = new Player()
 
-  private var oscour: Enemy = new Enemy(
-    _pos = (20,20),
-    _hp = 2000,
-    _baseImagePath = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png",
-    _velocity = 2,
-    _damage = 1,
-    _armor = 2
-  )
-  enemies += oscour
 
+  InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) DEBUG_SPAWN_ENEMY())
+  def DEBUG_SPAWN_ENEMY(): Unit = {
+    val oscour: Enemy = new Enemy(
+      _pos = (20,20),
+      _hp = 2000,
+      _baseImagePath = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png",
+      _velocity = 1,
+      _damage = 1,
+      _armor = 2
+    )
+    enemies += oscour
+    oscour.calculatePath(50,50)
+  }
+
+
+  
 
   /**
    * Initialize all necessary components
@@ -90,15 +97,12 @@ object GameManager {
    * Updates the CharacterMovements,
    */
   private def update() : Unit = {
-    if(System.currentTimeMillis() - prevTime > 100) {
+    if(System.currentTimeMillis() - prevTime > 100 && !aled.isAttacking) {
       aled.updateTargetPos()
-
-      // TEST
-      oscour.calculatePath(40,40)
       prevTime = System.currentTimeMillis()
     }
     aled.moveToTarget()
-    oscour.moveToTarget()
+    enemies.foreach(_.moveToTarget())
     aled.targetReached()
 
   }
