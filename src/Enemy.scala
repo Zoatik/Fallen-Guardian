@@ -7,6 +7,11 @@ class Enemy(
              _armor: Int
            ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
+  override def updateTarget(): Unit = {
+
+
+  }
+
   this.addAnimation("idle", new Animation(
     spriteTarget = this.sprite,
     imagesPathBuffer = AnimationsResources.ANIM_ORC_IDLE,

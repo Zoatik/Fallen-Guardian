@@ -8,6 +8,17 @@ class Player(
               var coins: Int = Constants.PLAYER_DEFAULT_COINS
             ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
+  def setTarget(entity: Entity): Unit = {
+    this.target = Some(entity)
+  }
+
+  def updateTargetPos(): Unit = {
+    this.calculatePath(target.getOrElse(return).getPosition()._1, target.getOrElse(return).getPosition()._2)
+  }
+
+  override def updateTarget(): Unit = {}
+
+
   this.addAnimation("idle", new Animation(
     spriteTarget = this.sprite,
     imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_IDLE,
@@ -27,7 +38,7 @@ class Player(
   this.addAnimation("attack1", new Animation(
     spriteTarget = this.sprite,
     imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_ATTACK_1,
-    duration = 600,
+    duration = 100,
     loop = false,
     active = false
   ))

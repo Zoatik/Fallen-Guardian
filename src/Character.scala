@@ -14,6 +14,11 @@ class Character(
   private var isMoving: Boolean = false
 
   private var isAttacking: Boolean = false
+  private var hasReachedTarget: Boolean = false
+  private val attackCooldown: Int = 1000
+  private var prevAttackTime: Long = 0
+  var target: Option[Entity] = None
+
 
   private def move(deltaX: Int, deltaY: Int): Unit = {
     val newX = this.getAbsPosition._1 + deltaX
@@ -27,10 +32,15 @@ class Character(
     var dist = this.absDistanceTo(this.nextStep)
     if (dist < Constants.CELL_SIZE){
 
-      if(this.pathQueue.isEmpty ) {
+      if(this.pathQueue.isEmpty) {
         if(dist < velocity * 3) {
           this.setAbsPosition(nextStep)
           this.stopMoving()
+          if(target.isDefined) {
+            hasReachedTarget = true
+            targetReached()
+          }
+
           return true
         }
       }
@@ -57,7 +67,7 @@ class Character(
     }
     this.move(normDirection._1 / i , normDirection._2 / i)
 
-
+    hasReachedTarget = false
     false
   }
 
@@ -69,6 +79,8 @@ class Character(
       this.pathQueue.enqueue(cell)
     }
     nextStep = this.pathQueue.dequeue().absolutePos
+    if(pathQueue.isEmpty)
+      return
     this.startMoving()
   }
 
@@ -82,9 +94,22 @@ class Character(
     isMoving = false
   }
 
-  def attack(target: Entity): Unit = {
-    isAttacking = true
-    target.takeDamage(damage)
+  def targetReached(): Unit = {
+    if (target.isDefined && hasReachedTarget){
+      if(System.currentTimeMillis() - prevAttackTime > attackCooldown) {
+        attack()
+        prevAttackTime = System.currentTimeMillis()
+      }
+    }
+  }
+
+  def attack(): Unit = {
+    if(target.isDefined) {
+      isAttacking = true
+      playAnimation("attack1")
+      target.get.takeDamage(damage)
+      println("attack")
+    }
   }
 
   def setVelocity(newVelocity: Int): Unit = this.velocity = newVelocity

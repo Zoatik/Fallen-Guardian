@@ -28,6 +28,7 @@ class Entity(
     height = sprite.bm.getHeight
   ), layer = LAYER_ENTITIES)
 
+  collisionBox2D.onMouseReleased(mouseButton => mouseReleased(mouseButton))
 
   val animations: mutable.Map[String, Animation] = mutable.Map()
 
@@ -37,9 +38,10 @@ class Entity(
     val effectiveAmount = Math.max(amount - armor, 0)
     hp -= effectiveAmount
     if (hp < 0) hp = 0
+    println(s"${this.getClass} : life: $hp")
   }
 
-  def updateTarget(): Unit
+  def updateTarget(): Unit = {}
 
   def findTarget(): Option[Entity] = None
 
@@ -102,6 +104,10 @@ class Entity(
    * @return Absolute position in 2D space (pixels)
    */
   def getAbsPosition: (Int, Int) = absPos
+
+  def mouseReleased(mouseButton: Int): Unit = {
+    GameManager.handleEntityMouseAction(mouseButton, false, this)
+  }
 
 }
 

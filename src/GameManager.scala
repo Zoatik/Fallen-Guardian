@@ -23,7 +23,7 @@ object GameManager {
 
   private var oscour: Enemy = new Enemy(
     _pos = (20,20),
-    _hp = 1,
+    _hp = 2000,
     _baseImagePath = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png",
     _velocity = 2,
     _damage = 1,
@@ -68,22 +68,39 @@ object GameManager {
    */
   def handleCellAction(mouseButton: Int, pressed: Boolean, cell: Cell): Unit = {
     if (!pressed){
-      if(mouseButton == MouseEvent.BUTTON3) {
+      if(mouseButton == MouseEvent.BUTTON1) {
         cell.sprite.changeImage("/res/ground/TX_stone_0.png") // DEBUG
+        aled.target = None
         aled.calculatePath(cell.pos._1, cell.pos._2)
-      }
-      else if(mouseButton == MouseEvent.BUTTON1){
-        aled.stopMoving()
-        aled.playAnimation("attack1")
+
       }
     }
   }
 
+  def handleEntityMouseAction(mouseButton: Int, pressed: Boolean, entity: Entity): Unit = {
+    if (!pressed) {
+      if (mouseButton == MouseEvent.BUTTON1) {
+        aled.setTarget(entity)
+      }
+    }
+  }
+
+  var prevTime: Long = 0
   /**
    * Updates the CharacterMovements,
    */
   private def update() : Unit = {
+    if(System.currentTimeMillis() - prevTime > 100) {
+      aled.updateTargetPos()
+
+      // TEST
+      oscour.calculatePath(40,40)
+      prevTime = System.currentTimeMillis()
+    }
     aled.moveToTarget()
+    oscour.moveToTarget()
+    aled.targetReached()
+
   }
 
   /**
