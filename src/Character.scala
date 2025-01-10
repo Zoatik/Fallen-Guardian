@@ -61,9 +61,6 @@ class Character(
         }
       }
       else {
-        if(this.isInstanceOf[Enemy]){
-          println("reached next step")
-        }
         nextStep = this.pathQueue.dequeue().absolutePos
       }
     }
@@ -120,10 +117,6 @@ class Character(
 
   def updateTargetPos(): Unit = {
     this.calculatePath(target.getOrElse(return).getPosition()._1, target.getOrElse(return).getPosition()._2)
-    /// DEBUG
-    if(this.isInstanceOf[Enemy]){
-      pathQueue.foreach(_.sprite.changeImage("/res/ground/TX_stone_0.png"))
-    }
   }
 
   def checkTargetReached(): Unit = {

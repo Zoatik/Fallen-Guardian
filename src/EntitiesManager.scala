@@ -1,5 +1,6 @@
 import java.awt.event.KeyEvent
 import scala.collection.mutable
+import scala.util.Random
 
 object EntitiesManager {
 
@@ -7,12 +8,19 @@ object EntitiesManager {
 
   var player: Player = new Player()
 
-  InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) spawnEnemy())
+  private var waveTimer: Long = 0
+  private var startTime: Long = 0
+  private var waveCounter: Int = 0
+  private var prevSpawnTime: Long = 0
+  private val rand: Random = new Random()
+  private val maxEnemies = 20
+
+  //InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) spawnEnemy())
   InputManager.bindKey(KeyEvent.VK_E, (_, pressed) => if(!pressed) destroyEntity(enemies.head))
 
-  private def spawnEnemy(): Unit = {
+  private def spawnEnemy(pos: (Int, Int)): Unit = {
     val oscour: Enemy = new Enemy(
-      _pos = (20,20),
+      _pos = pos,
       _hp = 20,
       _baseImagePath = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png",
       _velocity = 1.5,
@@ -21,6 +29,39 @@ object EntitiesManager {
     )
     enemies += oscour
     oscour.calculatePath(50,50)
+  }
+
+  private def findSpawnPoint(): (Int, Int) = {
+    val maxX: Int = Constants.GRID_SIZE
+    val maxY: Int = Constants.GRID_SIZE
+    var spawnPoint = (rand.nextInt(maxX), rand.nextInt(maxX))
+    while(math.pow(spawnPoint._1- maxX/2, 2) + math.pow(spawnPoint._1- maxY/2, 2) < 100){
+      spawnPoint = (rand.nextInt(59), rand.nextInt(59))
+    }
+    spawnPoint
+  }
+
+  def startWave(waveCounter: Int): Unit = {
+    startTime = System.currentTimeMillis()
+    waveTimer = 0
+    this.waveCounter = waveCounter
+  }
+
+  def updateWave(): Unit = {
+    waveTimer = System.currentTimeMillis() - startTime
+    if(enemies.length < maxEnemies) {
+
+      val spawnChance: Int = math.pow(waveCounter, 2).toInt + waveTimer.toInt / 10000
+
+      val randNum = rand.nextInt(5000)
+      println(s"spawn chance:  $spawnChance, random number : $randNum")
+      if (waveTimer - prevSpawnTime > 100 && randNum < spawnChance) {
+        this.spawnEnemy(findSpawnPoint())
+        prevSpawnTime = waveTimer
+        println(enemies.length)
+      }
+    }
+
   }
 
 

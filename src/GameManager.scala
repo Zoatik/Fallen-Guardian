@@ -53,6 +53,7 @@ object GameManager {
   def startWave(): Unit = {
     waveCounter += 1
     isWavePlaying = true
+    EntitiesManager.startWave(waveCounter)
   }
 
   def stopWave(): Unit = {
@@ -62,7 +63,7 @@ object GameManager {
   private def update(): Unit = {
     EntitiesManager.updateActions()
     if(isWavePlaying) {
-      //EntitiesManager.updateSpawn()
+      EntitiesManager.updateWave()
     }
   }
 
