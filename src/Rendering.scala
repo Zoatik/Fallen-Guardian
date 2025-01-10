@@ -1,4 +1,4 @@
-import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH}
+import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH}
 import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
@@ -73,6 +73,7 @@ class Sprite(var imagePath: String,
     this.pos = newPos
   }
 
+
   def setTopLeftPosition(newTopLeftPos: (Int, Int)): Unit = {
     if(this.anchor == ANCHOR_TOP_LEFT)
       this.pos = newTopLeftPos
@@ -83,8 +84,9 @@ class Sprite(var imagePath: String,
   }
 
   def getTopLeftPos(): (Int, Int) = {
-    if(this.anchor == ANCHOR_TOP_LEFT)
+    if(this.anchor == ANCHOR_TOP_LEFT) {
       return this.pos
+    }
     if(this.anchor == ANCHOR_MIDDLE)
       return (this.pos._1 - bm.getWidth/2, this.pos._2 - bm.getHeight/2)
     // ANCHOR_BOTTOM_MIDDLE
@@ -184,9 +186,9 @@ object Renderer {
       fg.clear(Color.white)
       for (layer <- Layers.layerArray) {
         for (sprite <- layer.spritesList) {
-          val pos = sprite.getTopLeftPos()
-          val x = pos._1 + sprite.bm.getWidth/2 + offsetX
-          val y = pos._2 + sprite.bm.getHeight/2 + offsetY
+          val topLeftPos = sprite.getTopLeftPos()
+          val x = topLeftPos._1 + sprite.bm.getWidth/2 + offsetX
+          val y = topLeftPos._2 + sprite.bm.getHeight/2 + offsetY
           val angle = sprite.angle
           val scale = sprite.scale
           val bm = sprite.bm

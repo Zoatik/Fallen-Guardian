@@ -7,6 +7,7 @@ class Enemy(
              _armor: Int
            ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
+
   override def updateTarget(): Unit = {}
 
   override protected def attack(): Unit = {
@@ -48,7 +49,7 @@ class Enemy(
   this.addAnimation("attack1", new Animation(
     spriteTarget = this.sprite,
     imagesPathBuffer = AnimationsResources.ANIM_ORC_ATTACK_1,
-    duration = 300,
+    duration = 200,
     loop = false,
     active = false
   ))
@@ -64,9 +65,18 @@ class Enemy(
   Layers.addSprite(Constants.LAYER_ENTITIES, this.sprite)
   this.playAnimation("idle")
 
-  this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
-  this.animations("attack1").onAnimationStarted(() => isAttacking = true)
-  this.animations("attack1").onAnimationEnded(() => isAttacking = false)
+  this.animations("attack1").onAnimationEnded(() => {
+    playAnimation("idle")
+    //println(s"2. idle Image pos: ${sprite.pos}, topLeft : ${sprite.getTopLeftPos()}")
+  })
+  this.animations("attack1").onAnimationStarted(() => {
+    isAttacking = true
+    println(s"1. start Attack Image pos: ${sprite.pos}, topLeft : ${sprite.getTopLeftPos()}")
+  })
+  this.animations("attack1").onAnimationEnded(() =>{
+    isAttacking = false
+    println("ATTACK ENDED")
+  })
 
 
 }

@@ -54,12 +54,15 @@ object AnimationsResources {
 
   val ANIM_ORC_ATTACK_1: mutable.ListBuffer[String] = {
     mutable.ListBuffer(
+      "/res/Characters/Enemy/Orc/walk/orcWalk_0.png", // TO FIX A FLICKERING PROBLEM
+
       "/res/Characters/Enemy/Orc/attack1/orcAttack1_0.png",
       "/res/Characters/Enemy/Orc/attack1/orcAttack1_1.png",
       "/res/Characters/Enemy/Orc/attack1/orcAttack1_2.png",
       "/res/Characters/Enemy/Orc/attack1/orcAttack1_3.png",
       "/res/Characters/Enemy/Orc/attack1/orcAttack1_4.png",
-      "/res/Characters/Enemy/Orc/attack1/orcAttack1_5.png"
+      "/res/Characters/Enemy/Orc/attack1/orcAttack1_5.png",
+
     )}
 
   val ANIM_ORC_WALK: mutable.ListBuffer[String] = {

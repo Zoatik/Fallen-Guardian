@@ -37,7 +37,7 @@ class Character(
   }
 
   def moveToTarget(): Boolean = {
-    if(!isMoving)
+    if(!isMoving || isAttacking)
       return true
     if(isStuned && System.currentTimeMillis() - lastTimeStuned < 500)
       return false
@@ -51,7 +51,7 @@ class Character(
       return true
     }
 
-    if (dist < Constants.CELL_SIZE){
+    if (dist < Constants.CELL_SIZE + 10){
       if(this.pathQueue.isEmpty) {
         if(dist < velocity * 3 ) {
           this.setAbsPosition(nextStep)
@@ -60,8 +60,12 @@ class Character(
           return true
         }
       }
-      else
+      else {
+        if(this.isInstanceOf[Enemy]){
+          println("reached next step")
+        }
         nextStep = this.pathQueue.dequeue().absolutePos
+      }
     }
     dist = this.absDistanceTo(this.nextStep)
 
@@ -82,11 +86,13 @@ class Character(
     }
     this.move(scaledNormDirection._1 / i , scaledNormDirection._2 / i)
 
-    hasReachedTarget = false
+    //hasReachedTarget = false
     false
   }
 
   def calculatePath(posX: Int, posY: Int): Unit = {
+    if(isAttacking)
+      return
     pathQueue.removeAll()
     val startCell: Cell = Grid.getCell(this.pos._1, this.pos._2).getOrElse(Grid.getCell(0,0).get)
     val targetCell: Cell = Grid.getCell(posX, posY).getOrElse(Grid.getCell(0,0).get)
@@ -94,7 +100,8 @@ class Character(
       this.pathQueue.enqueue(cell)
     }
     nextStep = this.pathQueue.dequeue().absolutePos
-    if(pathQueue.isEmpty)
+    checkTargetReached()
+    if(pathQueue.isEmpty || hasReachedTarget)
       return
     this.startMoving()
   }
@@ -130,6 +137,7 @@ class Character(
 
   def tryToAttack(): Unit = {
     if(System.currentTimeMillis() - prevAttackTime > attackCooldown) {
+      checkTargetReached()
       if(hasReachedTarget) {
         attack()
         prevAttackTime = System.currentTimeMillis()
@@ -138,15 +146,12 @@ class Character(
   }
   protected def attack(): Unit = {
     if(!isStuned && target.isDefined) {
-      isAttacking = true
       playAnimation("attack1")
     }
   }
 
   override def takeDamage(amount: Int, source: Entity): Boolean = {
     val isDead = super.takeDamage(amount, source)
-    /*isStuned = true
-    lastTimeStuned = System.currentTimeMillis()*/
     playAnimation("hurt")
     isDead
   }

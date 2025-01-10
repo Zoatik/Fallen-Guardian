@@ -36,7 +36,6 @@ object EntitiesManager {
   }
 
   var prevUpdateTime: Long = 0
-  var prevMovementTime: Long = 0
   /**
    * Updates the CharacterMovements,
    */

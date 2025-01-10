@@ -64,9 +64,14 @@ class Entity(
     anim.play()
   }
 
-  def stopAnimation(id: String): Unit = animations.getOrElse(id, return).stop()
+  def stopAnimation(id: String): Unit = {
+    animations.getOrElse(id, return).stop()
+    animations(id).deactivate()
+  }
 
-  def stopAllAnimations(): Unit = animations.values.foreach(_.stop())
+  def stopAllAnimations(): Unit = {
+    animations.keys.foreach(id => stopAnimation(id))
+  }
 
 
   def absDistanceTo(otherPos: (Int, Int)): Double = {
@@ -99,7 +104,7 @@ class Entity(
     absPos = newAbsPos
     val newPos = (newAbsPos._1 / Constants.CELL_SIZE, newAbsPos._2 / Constants.CELL_SIZE)
     pos = newPos
-    sprite.setTopLeftPosition(newAbsPos._1, newAbsPos._2)
+    sprite.setPosition(newAbsPos._1 + sprite.bm.getWidth/2, newAbsPos._2 + sprite.bm.getHeight)
     collisionBox2D.setPosition(newAbsPos._1, newAbsPos._2)
   }
 
