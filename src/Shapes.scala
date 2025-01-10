@@ -10,6 +10,12 @@ import scala.collection.mutable
  */
 case class Box(x: Int, y: Int, width: Int, height: Int) {
 
+  def intersects(other: Box): Boolean = {
+    this.x < other.x + other.width  &&
+    this.x + this.width > other.x   &&
+    this.y < other.y + other.height &&
+    this.height + this.y > other.y
+  }
   /**
    * Check if a given point is inside the 2D Box
    * @param px  point absolute X
@@ -35,6 +41,8 @@ class CollisionBox2D (val id: String, initialBox: Box) {
   private val mouseReleasedListeners: mutable.ListBuffer[Int => Unit] = mutable.ListBuffer()
 
   var isMouseOver: Boolean = false
+
+  def collidesWith(other: CollisionBox2D): Boolean = this.box.intersects(other.box)
 
   /**
    * Sets the absolute position of the box

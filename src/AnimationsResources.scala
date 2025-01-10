@@ -45,4 +45,33 @@ object AnimationsResources {
       "/res/Characters/Enemy/Orc/idle/orcIdle_2.png"
     )}
 
+  val ANIM_ORC_HURT: mutable.ListBuffer[String] = {
+    mutable.ListBuffer(
+      "/res/Characters/Enemy/Orc/hurt/orcHurt_0.png",
+      "/res/Characters/Enemy/Orc/hurt/orcHurt_1.png",
+      "/res/Characters/Enemy/Orc/hurt/orcHurt_2.png"
+    )}
+
+  val ANIM_ORC_ATTACK_1: mutable.ListBuffer[String] = {
+    mutable.ListBuffer(
+      "/res/Characters/Enemy/Orc/attack1/orcAttack1_0.png",
+      "/res/Characters/Enemy/Orc/attack1/orcAttack1_1.png",
+      "/res/Characters/Enemy/Orc/attack1/orcAttack1_2.png",
+      "/res/Characters/Enemy/Orc/attack1/orcAttack1_3.png",
+      "/res/Characters/Enemy/Orc/attack1/orcAttack1_4.png",
+      "/res/Characters/Enemy/Orc/attack1/orcAttack1_5.png"
+    )}
+
+  val ANIM_ORC_WALK: mutable.ListBuffer[String] = {
+    mutable.ListBuffer(
+      "/res/Characters/Enemy/Orc/walk/orcWalk_0.png",
+      "/res/Characters/Enemy/Orc/walk/orcWalk_1.png",
+      "/res/Characters/Enemy/Orc/walk/orcWalk_2.png",
+      "/res/Characters/Enemy/Orc/walk/orcWalk_3.png",
+      "/res/Characters/Enemy/Orc/walk/orcWalk_4.png",
+      "/res/Characters/Enemy/Orc/walk/orcWalk_5.png",
+      "/res/Characters/Enemy/Orc/walk/orcWalk_6.png",
+      "/res/Characters/Enemy/Orc/walk/orcWalk_7.png"
+    )}
+
 }

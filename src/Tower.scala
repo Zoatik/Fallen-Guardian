@@ -19,7 +19,7 @@ class Tower(
   override def findTarget(): Option[Enemy] = {
     var minDist: Double = Double.PositiveInfinity
     var closestTarget: Option[Enemy] = None
-    GameManager.enemies.foreach(enemy => {
+    EntitiesManager.enemies.foreach(enemy => {
       val currentDist: Double = this.absDistanceTo(enemy)
       if (currentDist < minDist) {
         minDist = currentDist

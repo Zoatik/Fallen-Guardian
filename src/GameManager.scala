@@ -17,38 +17,9 @@ object GameManager {
   var mouseY: Int = 0
   var initialized: Boolean = false
 
-  var enemies: mutable.ListBuffer[Enemy] = mutable.ListBuffer()
+  var waveCounter: Int = 0
+  var isWavePlaying: Boolean = false
 
-  var aled: Player = new Player()
-
-
-  InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) DEBUG_SPAWN_ENEMY())
-  InputManager.bindKey(KeyEvent.VK_E, (_, pressed) => if(!pressed) destroyEntity(enemies.head))
-
-  def DEBUG_SPAWN_ENEMY(): Unit = {
-    val oscour: Enemy = new Enemy(
-      _pos = (20,20),
-      _hp = 2000,
-      _baseImagePath = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png",
-      _velocity = 1,
-      _damage = 1,
-      _armor = 2
-    )
-    enemies += oscour
-    oscour.calculatePath(50,50)
-  }
-
-
-  def destroyEntity(entity: Entity): Unit = {
-    entity match {
-      case e: Enemy =>
-        enemies -= e
-        aled.target = None
-      case _ =>
-        println("Unsupported entity type for destruction.")
-    }
-    entity.destroy()
-  }
 
   /**
    * Initialize all necessary components
@@ -78,44 +49,21 @@ object GameManager {
     }
   }
 
-  /**
-   * Handles the cells Action (pressed or released)
-   * @param mouseButton mouse button code that has been triggered
-   * @param pressed     true if pressed, false if released
-   * @param cell        the interacted cell
-   */
-  def handleCellAction(mouseButton: Int, pressed: Boolean, cell: Cell): Unit = {
-    if (!pressed){
-      if(mouseButton == MouseEvent.BUTTON1) {
-        cell.sprite.changeImage("/res/ground/TX_stone_0.png") // DEBUG
-        aled.target = None
-        aled.calculatePath(cell.pos._1, cell.pos._2)
 
-      }
-    }
+  def startWave(): Unit = {
+    waveCounter += 1
+    isWavePlaying = true
   }
 
-  def handleEntityMouseAction(mouseButton: Int, pressed: Boolean, entity: Entity): Unit = {
-    if (!pressed) {
-      if (mouseButton == MouseEvent.BUTTON1) {
-        aled.setTarget(entity)
-      }
-    }
+  def stopWave(): Unit = {
+    isWavePlaying = false
   }
 
-  var prevTime: Long = 0
-  /**
-   * Updates the CharacterMovements,
-   */
-  private def update() : Unit = {
-    if(System.currentTimeMillis() - prevTime > 100 && !aled.isAttacking) {
-      aled.updateTargetPos()
-      prevTime = System.currentTimeMillis()
+  private def update(): Unit = {
+    EntitiesManager.updateActions()
+    if(isWavePlaying) {
+      //EntitiesManager.updateSpawn()
     }
-    aled.moveToTarget()
-    enemies.foreach(_.moveToTarget())
-    aled.targetReached()
-
   }
 
   /**
@@ -137,6 +85,35 @@ object GameManager {
 
       Renderer.render(fg)
 
+    }
+  }
+
+  /**
+   * Handles the cells Action (pressed or released)
+   * @param mouseButton mouse button code that has been triggered
+   * @param pressed     true if pressed, false if released
+   * @param cell        the interacted cell
+   */
+  def handleCellAction(mouseButton: Int, pressed: Boolean, cell: Cell): Unit = {
+    ensureInitialized()
+    if (!pressed){
+      if(mouseButton == MouseEvent.BUTTON1) {
+        EntitiesManager.player.target = None
+        EntitiesManager.player.calculatePath(cell.pos._1, cell.pos._2)
+
+      }
+    }
+  }
+
+  def handleEntityMouseAction(mouseButton: Int, pressed: Boolean, entity: Entity): Unit = {
+    ensureInitialized()
+    if (!pressed) {
+      if (mouseButton == MouseEvent.BUTTON1) {
+        entity match {
+          case enemy: Enemy => EntitiesManager.player.setTarget(enemy)
+          case _ =>
+        }
+      }
     }
   }
 

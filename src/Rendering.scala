@@ -20,6 +20,7 @@ class Sprite(var imagePath: String,
              var anchor: Int = ANCHOR_TOP_LEFT
             ) {
   var bm = new GraphicsBitmap(imagePath)
+  private var brightness: Double = 1.0
 
   /**
    * Changes the base image of the sprite
@@ -28,6 +29,40 @@ class Sprite(var imagePath: String,
   def changeImage(newImagePath: String): Unit = {
     this.imagePath = newImagePath
     this.bm = new GraphicsBitmap(newImagePath)
+    brighten(brightness)
+  }
+
+  def brighten(factor: Double = 1.5): Unit = {
+    brightness = factor
+    val w = bm.getBufferedImage.getWidth()
+    val h = bm.getBufferedImage.getHeight()
+    for(x <- 0 until w; y <- 0 until h){
+      val rgb = bm.getBufferedImage.getRGB(x,y)
+      val alpha = (rgb >> 24) & 0xFF
+      val r = (rgb >> 16) & 0xFF
+      val g = (rgb >> 8) & 0xFF
+      val b = rgb & 0xFF
+
+      // Augmenter la luminosité en limitant à 255
+      val newR = Math.min((r * factor).toInt, 255)
+      val newG = Math.min((g * factor).toInt, 255)
+      val newB = Math.min((b * factor).toInt, 255)
+
+
+      // Recomposer la nouvelle valeur RGB
+      val newRgb = (alpha << 24) | (newR << 16) | (newG << 8) | newB
+
+      // Mettre à jour le pixel
+      bm.getBufferedImage.setRGB(x, y, newRgb)
+    }
+
+
+  }
+
+  def restoreImage(): Unit = {
+    bm = new GraphicsBitmap(imagePath)
+    brightness = 1
+
   }
 
   /**

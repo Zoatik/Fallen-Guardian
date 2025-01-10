@@ -21,13 +21,15 @@ class Entity(
 
 
   val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
-    x = pos._1 * CELL_SIZE,
-    y = pos._2 * CELL_SIZE,
+    x = sprite.getTopLeftPos()._1,
+    y = sprite.getTopLeftPos()._2,
     width = sprite.bm.getWidth,
     height = sprite.bm.getHeight
   ), layer = LAYER_ENTITIES)
 
   collisionBox2D.onMouseReleased(mouseButton => mouseReleased(mouseButton))
+  collisionBox2D.onMouseEnter(() => mouseEntered())
+  collisionBox2D.onMouseLeave(() => mouseLeft())
 
   val animations: mutable.Map[String, Animation] = mutable.Map()
 
@@ -39,11 +41,14 @@ class Entity(
 
   def isAlive: Boolean = hp > 0
 
-  def takeDamage(amount: Int): Unit = {
+  def takeDamage(amount: Int, source: Entity): Boolean = {
     val effectiveAmount = Math.max(amount - armor, 0)
     hp -= effectiveAmount
-    if (hp < 0) hp = 0
     println(s"${this.getClass} : life: $hp")
+    if (hp <= 0)
+      hp = 0
+
+    hp == 0
   }
 
   def updateTarget(): Unit = {}
@@ -114,5 +119,14 @@ class Entity(
     GameManager.handleEntityMouseAction(mouseButton, false, this)
   }
 
+  def mouseEntered(): Unit = {
+    sprite.brighten(2)
+  }
+
+  def mouseLeft(): Unit = {
+    sprite.restoreImage()
+  }
+
+  def getHp(): Int = hp
 }
 
