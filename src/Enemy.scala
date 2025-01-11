@@ -15,7 +15,6 @@ class Enemy(
   override protected def attack(): Unit = {
     super.attack()
     if(!isStunned && target.isDefined){
-      println("ENEMY ATTACKED")
       if(target.get.takeDamage(damage, this)){
         hasReachedTarget = false
         EntitiesManager.destroyEntity(target.get)
@@ -67,9 +66,10 @@ class Enemy(
   Layers.addSprite(Constants.LAYER_ENTITIES, this.sprite)
   this.playAnimation("idle")
 
+  this.animations("hurt").onAnimationEnded(() => playAnimation("idle"))
   this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
-  this.animations("attack1").onAnimationStarted(() => isAttacking = true)
-  this.animations("attack1").onAnimationEnded(() =>isAttacking = false)
+  this.animations("attack1").onAnimationStarted(() => {isAttacking = true; println("orc attack start")})
+  this.animations("attack1").onAnimationEnded(() => isAttacking = false)
 
 
 }

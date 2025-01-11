@@ -10,21 +10,28 @@ object AnimationsResources {
 
   val ANIM_SOLDIER_IDLE: mutable.ListBuffer[String] = {
     mutable.ListBuffer(
-      "/res/Characters/Soldier/idle/soldierIdle0.png",
-      "/res/Characters/Soldier/idle/soldierIdle1.png",
-      "/res/Characters/Soldier/idle/soldierIdle2.png"
+      "/res/Characters/Soldier/idle/soldierIdle_0.png",
+      "/res/Characters/Soldier/idle/soldierIdle_1.png",
+      "/res/Characters/Soldier/idle/soldierIdle_2.png"
+    )}
+
+  val ANIM_SOLDIER_HURT: mutable.ListBuffer[String] = {
+    mutable.ListBuffer(
+      "/res/Characters/soldier/hurt/soldierHurt_0.png",
+      "/res/Characters/soldier/hurt/soldierHurt_1.png",
+      "/res/Characters/soldier/hurt/soldierHurt_2.png"
     )}
 
   val ANIM_SOLDIER_WALK: mutable.ListBuffer[String] = {
     mutable.ListBuffer(
-      "/res/Characters/Soldier/walk/soldierWalk0.png",
-      "/res/Characters/Soldier/walk/soldierWalk1.png",
-      "/res/Characters/Soldier/walk/soldierWalk2.png",
-      "/res/Characters/Soldier/walk/soldierWalk3.png",
-      "/res/Characters/Soldier/walk/soldierWalk4.png",
-      "/res/Characters/Soldier/walk/soldierWalk5.png",
-      "/res/Characters/Soldier/walk/soldierWalk6.png",
-      "/res/Characters/Soldier/walk/soldierWalk7.png"
+      "/res/Characters/Soldier/walk/soldierWalk_0.png",
+      "/res/Characters/Soldier/walk/soldierWalk_1.png",
+      "/res/Characters/Soldier/walk/soldierWalk_2.png",
+      "/res/Characters/Soldier/walk/soldierWalk_3.png",
+      "/res/Characters/Soldier/walk/soldierWalk_4.png",
+      "/res/Characters/Soldier/walk/soldierWalk_5.png",
+      "/res/Characters/Soldier/walk/soldierWalk_6.png",
+      "/res/Characters/Soldier/walk/soldierWalk_7.png"
     )}
 
   val ANIM_SOLDIER_ATTACK_1: mutable.ListBuffer[String] = {

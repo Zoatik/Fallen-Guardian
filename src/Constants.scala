@@ -41,7 +41,7 @@ object Constants {
   val PLAYER_DEFAULT_HP: Int = 10
   val PLAYER_DEFAULT_ARMOR: Int = 5
 
-  val PLAYER_DEFAULT_IMAGE_PATH: String = "/res/Characters/Soldier/idle/soldierIdle0.png"
+  val PLAYER_DEFAULT_IMAGE_PATH: String = "/res/Characters/Soldier/idle/soldierIdle_0.png"
   val PLAYER_DEFAULT_VELOCITY: Double = 3.8
   val PLAYER_DEFAULT_DAMAGE: Int = 8
   val PLAYER_DEFAULT_COINS: Int = 2
