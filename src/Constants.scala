@@ -1,8 +1,8 @@
 import java.awt.event.KeyEvent
 
 object Constants {
-  val WINDOW_WIDTH: Int = 1920//1400//1600
-  val WINDOW_HEIGHT: Int = 1080//1000//1200
+  val WINDOW_WIDTH: Int = 1400//1920//1400//1600
+  val WINDOW_HEIGHT: Int = 1000//1080//1000//1200
   val GRID_SIZE: Int = 60
   val CELL_SIZE: Int = 32
   val MAX_INPUT_BUFFER_SIZE: Int = 10
@@ -45,5 +45,16 @@ object Constants {
   val PLAYER_DEFAULT_VELOCITY: Double = 3.8
   val PLAYER_DEFAULT_DAMAGE: Int = 8
   val PLAYER_DEFAULT_COINS: Int = 2
+
+  //* ------------------------* */
+    // Tower constants
+  val TOWER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
+  val TOWER_DEFAULT_HP: Int = 100
+  val TOWER_DEFAULT_ARMOR: Int = 50
+
+  val TOWER_DEFAULT_IMAGE_PATH: String = "/res/Tower/BloodMoonTower_cover_free_version.gif"
+  val TOWER_DEFAULT_DAMAGE: Int = 16
+  val TOWER_DEFAULT_RANGE: Int = 50
+  val TOWER_DEFAULT_ATTACK_SPEED: Double = 4
 }
 

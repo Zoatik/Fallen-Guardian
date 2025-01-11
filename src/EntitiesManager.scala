@@ -9,6 +9,9 @@ object EntitiesManager {
 
   var player: Player = new Player()
 
+  var tower: Tower = new Tower()
+  towers += tower
+
   private var waveTimer: Long = 0
   private var startTime: Long = 0
   private var waveCounter: Int = 0
@@ -62,9 +65,7 @@ object EntitiesManager {
         println(enemies.length)
       }
     }
-
   }
-
 
   def destroyEntity(entity: Entity): Unit = {
     entity match {
@@ -100,7 +101,5 @@ object EntitiesManager {
       enemy.moveToTarget()
       enemy.tryToAttack()
     })
-
   }
-
 }

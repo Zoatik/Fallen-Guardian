@@ -58,7 +58,7 @@ class Entity(
 
   def playAnimation(id: String): Unit = {
     stopAllAnimations()
-    val anim = animations.getOrElse(id, {println(s"animation $id not found"); return})
+    val anim = animations.getOrElse(id,   {println(s"animation $id not found"); return})
     anim.activate()
     anim.play()
   }

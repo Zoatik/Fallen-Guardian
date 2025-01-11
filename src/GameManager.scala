@@ -27,7 +27,7 @@ object GameManager {
   def init(): Unit = {
     /*---Grid initialisation---*/
     Grid.init((GRID_SIZE,GRID_SIZE), CELL_SIZE)
-    for( el <- Grid.cells){ // Adds sprite to layer for each cell
+    for(el <- Grid.cells){ // Adds sprite to layer for each cell
       for(cell <- el){
         Layers.addSprite(LAYER_GROUND, cell.sprite)
       }
