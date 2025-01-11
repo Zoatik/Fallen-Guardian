@@ -100,6 +100,7 @@ object GameManager {
     if (!pressed){
       if(mouseButton == MouseEvent.BUTTON1) {
         EntitiesManager.player.target = None
+        EntitiesManager.player.isAttacking = false
         EntitiesManager.player.calculatePath(cell.pos._1, cell.pos._2)
 
       }

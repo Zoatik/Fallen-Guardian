@@ -8,11 +8,13 @@ class Enemy(
            ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
 
+  override val attackCooldown: Int = 1000
+
   override def updateTarget(): Unit = {}
 
   override protected def attack(): Unit = {
     super.attack()
-    if(!isStuned && target.isDefined){
+    if(!isStunned && target.isDefined){
       println("ENEMY ATTACKED")
       if(target.get.takeDamage(damage, this)){
         hasReachedTarget = false
@@ -22,8 +24,8 @@ class Enemy(
   }
 
   override def takeDamage(amount: Int, source: Entity): Boolean = {
-    isStuned = true
-    lastTimeStuned = System.currentTimeMillis()
+    isStunned = true
+    lastTimeStunned = System.currentTimeMillis()
     val isDead = super.takeDamage(amount, source)
     this.target = Some(source)
     this.updateTargetPos()
@@ -65,18 +67,9 @@ class Enemy(
   Layers.addSprite(Constants.LAYER_ENTITIES, this.sprite)
   this.playAnimation("idle")
 
-  this.animations("attack1").onAnimationEnded(() => {
-    playAnimation("idle")
-    //println(s"2. idle Image pos: ${sprite.pos}, topLeft : ${sprite.getTopLeftPos()}")
-  })
-  this.animations("attack1").onAnimationStarted(() => {
-    isAttacking = true
-    println(s"1. start Attack Image pos: ${sprite.pos}, topLeft : ${sprite.getTopLeftPos()}")
-  })
-  this.animations("attack1").onAnimationEnded(() =>{
-    isAttacking = false
-    println("ATTACK ENDED")
-  })
+  this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
+  this.animations("attack1").onAnimationStarted(() => isAttacking = true)
+  this.animations("attack1").onAnimationEnded(() =>isAttacking = false)
 
 
 }

@@ -1,3 +1,5 @@
+import Constants.COLLISION_FRAME_MAGNIFICATION
+
 import java.awt.event.MouseEvent
 import scala.collection.mutable
 
@@ -23,7 +25,7 @@ case class Box(x: Int, y: Int, width: Int, height: Int) {
    * @return true if the point is in the 2D Box - false otherwise
    */
   def containsPoint(px: Int, py: Int): Boolean = {
-    px >= x && px < x + width && py >= y && py < y + height
+    px >= x && px < x + width + COLLISION_FRAME_MAGNIFICATION && py >= y && py < y + height + COLLISION_FRAME_MAGNIFICATION
   }
 }
 

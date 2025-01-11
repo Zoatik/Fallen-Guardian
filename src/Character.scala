@@ -11,16 +11,16 @@ class Character(
 
   private val pathQueue: mutable.Queue[Cell] = mutable.Queue()
   private var nextStep: (Int, Int) = this.getAbsPosition
-  protected var isMoving: Boolean = false
-  protected var isStuned: Boolean = false
-  protected var lastTimeStuned: Long = 0
+  private var isMoving: Boolean = false
+  protected var isStunned: Boolean = false
+  protected var lastTimeStunned: Long = 0
 
   var isAttacking: Boolean = false
   protected var hasReachedTarget: Boolean = false
   protected val attackCooldown: Int = 1000
   protected var prevAttackTime: Long = 0
   var target: Option[Entity] = None
-
+  var lvl: Int = 1
 
 
 
@@ -39,14 +39,13 @@ class Character(
   def moveToTarget(): Boolean = {
     if(!isMoving || isAttacking)
       return true
-    if(isStuned && System.currentTimeMillis() - lastTimeStuned < 500)
+    if(isStunned && System.currentTimeMillis() - lastTimeStunned < 500)
       return false
-    isStuned = false
+    isStunned = false
     var dist = this.absDistanceTo(this.nextStep)
     checkTargetReached()
     if(hasReachedTarget){
       this.pathQueue.removeAll()
-      //this.setAbsPosition(nextStep)
       this.stopMoving()
       return true
     }
@@ -83,33 +82,35 @@ class Character(
     }
     this.move(scaledNormDirection._1 / i , scaledNormDirection._2 / i)
 
-    //hasReachedTarget = false
     false
   }
 
-  def calculatePath(posX: Int, posY: Int): Unit = {
+  def calculatePath(posX: Int, posY: Int): Boolean = {
     if(isAttacking)
-      return
+      return false
     pathQueue.removeAll()
     val startCell: Cell = Grid.getCell(this.pos._1, this.pos._2).getOrElse(Grid.getCell(0,0).get)
     val targetCell: Cell = Grid.getCell(posX, posY).getOrElse(Grid.getCell(0,0).get)
     for(cell <- Grid.findPath(startCell, targetCell).getOrElse(Array.empty)){
       this.pathQueue.enqueue(cell)
     }
+    if(pathQueue.isEmpty)
+      return false
     nextStep = this.pathQueue.dequeue().absolutePos
     checkTargetReached()
-    if(pathQueue.isEmpty || hasReachedTarget)
-      return
-    this.startMoving()
+    if(!hasReachedTarget)
+      this.startMoving()
+
+    true
   }
 
-  def startMoving(): Unit = {
+  private def startMoving(): Unit = {
     if(!this.animations("walk").playing)
       this.playAnimation("walk")
     isMoving = true
   }
 
-  def stopMoving(): Unit = {
+  private def stopMoving(): Unit = {
     if(!this.animations("idle").playing)
       this.playAnimation("idle")
     isMoving = false
@@ -119,7 +120,7 @@ class Character(
     this.calculatePath(target.getOrElse(return).getPosition()._1, target.getOrElse(return).getPosition()._2)
   }
 
-  def checkTargetReached(): Unit = {
+  private def checkTargetReached(): Unit = {
     if(target.isDefined && collisionBox2D.collidesWith(target.get.collisionBox2D)) {
       hasReachedTarget = true
     }
@@ -138,7 +139,7 @@ class Character(
     }
   }
   protected def attack(): Unit = {
-    if(!isStuned && target.isDefined) {
+    if(!isStunned && target.isDefined && !animations("attack1").playing) {
       playAnimation("attack1")
     }
   }
@@ -149,7 +150,5 @@ class Character(
     isDead
   }
 
-  def setVelocity(newVelocity: Int): Unit = this.velocity = newVelocity
-  def getVelocity: Double = this.velocity
 }
 

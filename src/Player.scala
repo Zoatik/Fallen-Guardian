@@ -9,22 +9,23 @@ class Player(
             ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
 
+  override val attackCooldown: Int = 400
+
   def setTarget(entity: Enemy): Unit = {
     this.target = Some(entity)
     updateTargetPos()
   }
 
-
-
   override def updateTarget(): Unit = {}
 
   override protected def attack(): Unit = {
     super.attack()
-    if(!isStuned && target.isDefined)
+    if(!isStunned && target.isDefined)
       if(target.get.takeDamage(damage, this)){
-        coins += target.get.getHp()
+        coins += target.get.asInstanceOf[Enemy].lvl
         hasReachedTarget = false
         EntitiesManager.destroyEntity(target.get)
+        println(s"COINS : $coins")
       }
   }
 
@@ -54,9 +55,9 @@ class Player(
   ))
 
   Layers.addSprite(Constants.LAYER_PLAYER, this.sprite)
-  this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
   this.playAnimation("idle")
 
+  this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
   this.animations("attack1").onAnimationStarted(() => isAttacking = true)
   this.animations("attack1").onAnimationEnded(() => isAttacking = false)
 

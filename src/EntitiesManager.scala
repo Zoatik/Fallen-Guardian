@@ -5,6 +5,7 @@ import scala.util.Random
 object EntitiesManager {
 
   var enemies: mutable.ListBuffer[Enemy] = mutable.ListBuffer()
+  var towers: mutable.ListBuffer[Tower] = mutable.ListBuffer()
 
   var player: Player = new Player()
 
@@ -15,7 +16,8 @@ object EntitiesManager {
   private val rand: Random = new Random()
   private val maxEnemies = 20
 
-  //InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) spawnEnemy())
+  // DEBUG
+  InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) spawnEnemy((20,20)))
   InputManager.bindKey(KeyEvent.VK_E, (_, pressed) => if(!pressed) destroyEntity(enemies.head))
 
   private def spawnEnemy(pos: (Int, Int)): Unit = {
@@ -28,7 +30,7 @@ object EntitiesManager {
       _armor = 2
     )
     enemies += oscour
-    oscour.calculatePath(50,50)
+    oscour.calculatePath(30,30)
   }
 
   private def findSpawnPoint(): (Int, Int) = {
@@ -54,8 +56,7 @@ object EntitiesManager {
       val spawnChance: Int = math.pow(waveCounter, 2).toInt + waveTimer.toInt / 10000
 
       val randNum = rand.nextInt(5000)
-      println(s"spawn chance:  $spawnChance, random number : $randNum")
-      if (waveTimer - prevSpawnTime > 100 && randNum < spawnChance) {
+      if (waveTimer - prevSpawnTime > 100 && (randNum < spawnChance || enemies.length < 1)) {
         this.spawnEnemy(findSpawnPoint())
         prevSpawnTime = waveTimer
         println(enemies.length)

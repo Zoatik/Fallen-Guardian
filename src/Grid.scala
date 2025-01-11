@@ -87,13 +87,16 @@ object Grid {
 
   /*------------ PATH FINDING FUNCTIONS ------------*/
 
+
   /**
    * findPath function - public
    * @param start   start Cell
    * @param target  targeted Cell
+   * @param ignoreTargetCollision if true, ignores the state of the cell target
+   * @param ignoreCollisions if true, ignores the states of all cells
    * @return if path exists, returns an array of cells, otherwise None
    */
-  def findPath(start: Cell, target: Cell): Option[Array[Cell]] = {
+  def findPath(start: Cell, target: Cell, ignoreTargetCollision: Boolean = true, ignoreCollisions: Boolean = false): Option[Array[Cell]] = {
     ensureInitialized()
     // Open list (nœuds à explorer) avec priorité
     val openSet: mutable.PriorityQueue[(Cell, Double)] =
@@ -121,7 +124,7 @@ object Grid {
       }
 
       // Explorer les voisins
-      for ((neighbor, cost) <- getNeighbours(current)) {
+      for ((neighbor, cost) <- getNeighbours(current, target, ignoreTargetCollision, ignoreCollisions)) {
         val tentativeGScore = gScore(current) + cost
 
         if (tentativeGScore < gScore(neighbor)) {
@@ -147,15 +150,20 @@ object Grid {
    * @param cell the central cell
    * @return an Array of cells that are neighbours to the given cell
    */
-  private def getNeighbours(cell: Cell): Array[(Cell, Double)] = {
+  private def getNeighbours(cell: Cell, target: Cell, ignoreTargetCollision: Boolean, ignoreCollision: Boolean): Array[(Cell, Double)] = {
     val neighbours = mutable.ListBuffer[(Cell, Double)]()
     for (i <- -1 to 1; j <- -1 to 1) {
       if (!(i == 0 && j == 0)) { // Ignorer la cellule elle-même
         val otherX: Int = cell.pos._1  + i
         val otherY: Int = cell.pos._2  + j
         val cost: Double = if (i != 0 && j != 0) math.sqrt(2) else 1.0 // Diagonaux coûtent sqrt(2)
-        if (isInGrid(otherX, otherY) && cells(otherX)(otherY).state != CellStates.BLOCK_PATH) {
-          neighbours += ((cells(otherX)(otherY), cost))
+        if (isInGrid(otherX, otherY)) {
+          if(ignoreCollision || cells(otherX)(otherY).state != CellStates.BLOCK_PATH) {
+            neighbours += ((cells(otherX)(otherY), cost))
+          }
+          else if(ignoreTargetCollision && cells(otherX)(otherY) == target){
+            neighbours += ((cells(otherX)(otherY), cost))
+          }
         }
       }
     }

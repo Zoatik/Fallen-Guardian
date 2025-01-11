@@ -44,7 +44,6 @@ class Entity(
   def takeDamage(amount: Int, source: Entity): Boolean = {
     val effectiveAmount = Math.max(amount - armor, 0)
     hp -= effectiveAmount
-    println(s"${this.getClass} : life: $hp")
     if (hp <= 0)
       hp = 0
 
@@ -121,14 +120,14 @@ class Entity(
   def getAbsPosition: (Int, Int) = absPos
 
   def mouseReleased(mouseButton: Int): Unit = {
-    GameManager.handleEntityMouseAction(mouseButton, false, this)
+    GameManager.handleEntityMouseAction(mouseButton, pressed = false, this)
   }
 
-  def mouseEntered(): Unit = {
+  private def mouseEntered(): Unit = {
     sprite.brighten(2)
   }
 
-  def mouseLeft(): Unit = {
+  private def mouseLeft(): Unit = {
     sprite.restoreImage()
   }
 

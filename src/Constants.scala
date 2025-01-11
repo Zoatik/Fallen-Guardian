@@ -1,8 +1,8 @@
 import java.awt.event.KeyEvent
 
 object Constants {
-  val WINDOW_WIDTH: Int = 1400//1600
-  val WINDOW_HEIGHT: Int = 1000//1200
+  val WINDOW_WIDTH: Int = 1920//1400//1600
+  val WINDOW_HEIGHT: Int = 1080//1000//1200
   val GRID_SIZE: Int = 60
   val CELL_SIZE: Int = 32
   val MAX_INPUT_BUFFER_SIZE: Int = 10
@@ -30,6 +30,10 @@ object Constants {
   val ANCHOR_MIDDLE = 1
   val ANCHOR_BOTTOM_MIDDLE = 2
 
+
+  //* ------------------------* */
+    // UI Constants
+  val COLLISION_FRAME_MAGNIFICATION = 15
 
   //* ------------------------* */
     // Player spawn constants
