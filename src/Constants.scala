@@ -52,9 +52,9 @@ object Constants {
   val TOWER_DEFAULT_HP: Int = 100
   val TOWER_DEFAULT_ARMOR: Int = 50
 
-  val TOWER_DEFAULT_IMAGE_PATH: String = "/res/Tower/BloodMoonTower_cover_free_version.gif"
-  val TOWER_DEFAULT_DAMAGE: Int = 16
-  val TOWER_DEFAULT_RANGE: Int = 50
+  val TOWER_DEFAULT_IMAGE_PATH: String = "/res/Tower/IdleAnimation/tower_00.png"
+  val TOWER_DEFAULT_DAMAGE: Int = 4
+  val TOWER_DEFAULT_RANGE: Int = 128
   val TOWER_DEFAULT_ATTACK_SPEED: Double = 4
 }
 

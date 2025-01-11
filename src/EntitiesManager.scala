@@ -11,6 +11,7 @@ object EntitiesManager {
 
   var tower: Tower = new Tower()
   towers += tower
+  //println(tower.getAbsPosition)
 
   private var waveTimer: Long = 0
   private var startTime: Long = 0
@@ -97,6 +98,9 @@ object EntitiesManager {
 
     player.moveToTarget()
     player.tryToAttack()
+    //tower.findTarget()
+    tower.towerTryToAttack()
+
     
     enemies.foreach(enemy => {
       enemy.tryToAttack()

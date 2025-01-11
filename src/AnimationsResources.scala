@@ -84,4 +84,21 @@ object AnimationsResources {
       "/res/Characters/Enemy/Orc/walk/orcWalk_7.png"
     )}
 
+
+  val ANIM_TOWER_IDLE: mutable.ListBuffer[String] = {
+    mutable.ListBuffer(
+      "/res/Tower/IdleAnimation/tower_00.png",
+      "/res/Tower/IdleAnimation/tower_01.png",
+      "/res/Tower/IdleAnimation/tower_02.png",
+      "/res/Tower/IdleAnimation/tower_03.png",
+      "/res/Tower/IdleAnimation/tower_04.png",
+      "/res/Tower/IdleAnimation/tower_05.png",
+      "/res/Tower/IdleAnimation/tower_06.png",
+      "/res/Tower/IdleAnimation/tower_07.png",
+      "/res/Tower/IdleAnimation/tower_08.png",
+      "/res/Tower/IdleAnimation/tower_09.png",
+      "/res/Tower/IdleAnimation/tower_10.png",
+    )
+  }
+
 }
