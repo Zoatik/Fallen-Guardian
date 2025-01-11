@@ -38,6 +38,14 @@ class Player(
     active = true
   ))
 
+  this.addAnimation("hurt", new Animation(
+    spriteTarget = this.sprite,
+    imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_HURT,
+    duration = 300,
+    loop = false,
+    active = false
+  ))
+
   this.addAnimation("walk", new Animation(
     spriteTarget = this.sprite,
     imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_WALK,
@@ -57,8 +65,10 @@ class Player(
   Layers.addSprite(Constants.LAYER_PLAYER, this.sprite)
   this.playAnimation("idle")
 
+  this.animations("hurt").onAnimationEnded(() => playAnimation("idle"))
   this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
   this.animations("attack1").onAnimationStarted(() => isAttacking = true)
   this.animations("attack1").onAnimationEnded(() => isAttacking = false)
+
 
 }

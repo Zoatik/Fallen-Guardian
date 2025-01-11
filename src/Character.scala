@@ -39,6 +39,9 @@ class Character(
   def moveToTarget(): Boolean = {
     if(!isMoving || isAttacking)
       return true
+
+    if(animations("idle").playing)
+      playAnimation("walk")
     if(isStunned && System.currentTimeMillis() - lastTimeStunned < 500)
       return false
     isStunned = false
@@ -105,14 +108,15 @@ class Character(
   }
 
   private def startMoving(): Unit = {
-    if(!this.animations("walk").playing)
+    if(this.animations("idle").playing)
       this.playAnimation("walk")
     isMoving = true
   }
 
   private def stopMoving(): Unit = {
-    if(!this.animations("idle").playing)
+    if(this.animations("walk").playing) {
       this.playAnimation("idle")
+    }
     isMoving = false
   }
 
@@ -130,7 +134,7 @@ class Character(
   }
 
   def tryToAttack(): Unit = {
-    if(System.currentTimeMillis() - prevAttackTime > attackCooldown) {
+    if(!isStunned && System.currentTimeMillis() - prevAttackTime > attackCooldown) {
       checkTargetReached()
       if(hasReachedTarget) {
         attack()
@@ -139,7 +143,7 @@ class Character(
     }
   }
   protected def attack(): Unit = {
-    if(!isStunned && target.isDefined && !animations("attack1").playing) {
+    if(target.isDefined && !animations("attack1").playing) {
       playAnimation("attack1")
     }
   }
@@ -149,6 +153,7 @@ class Character(
     playAnimation("hurt")
     isDead
   }
+
 
 }
 

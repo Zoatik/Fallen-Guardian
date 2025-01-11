@@ -96,9 +96,10 @@ object EntitiesManager {
 
     player.moveToTarget()
     player.tryToAttack()
+    
     enemies.foreach(enemy => {
-      enemy.moveToTarget()
       enemy.tryToAttack()
+      enemy.moveToTarget()
     })
 
   }
