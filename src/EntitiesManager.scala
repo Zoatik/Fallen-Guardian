@@ -13,7 +13,7 @@ object EntitiesManager {
   towers += tower
   //println(tower.getAbsPosition)
 
-  private var waveTimer: Long = 0
+  var waveTimer: Long = 0
   private var startTime: Long = 0
   private var waveCounter: Int = 0
   private var prevSpawnTime: Long = 0
@@ -46,19 +46,25 @@ object EntitiesManager {
     this.waveCounter = waveCounter
   }
 
-  def updateWave(): Unit = {
+  def updateWave(): Boolean = {
     waveTimer = System.currentTimeMillis() - startTime
-    if(enemies.length < maxEnemies) {
+    if(waveTimer < Constants.WAVE_TIME) {
+      if (enemies.length < maxEnemies) {
 
-      val spawnChance: Int = math.pow(waveCounter, 2).toInt + waveTimer.toInt / 10000
+        val spawnChance: Int = math.pow(waveCounter, 2).toInt + waveTimer.toInt / 10000
 
-      val randNum = rand.nextInt(5000)
-      if (waveTimer - prevSpawnTime > 100 && (randNum < spawnChance || enemies.length < 1)) {
-        this.spawnEnemy(findSpawnPoint())
-        prevSpawnTime = waveTimer
-        println(enemies.length)
+        val randNum = rand.nextInt(5000)
+        if (waveTimer - prevSpawnTime > 100 && (randNum < spawnChance || enemies.length < 1)) {
+          this.spawnEnemy(findSpawnPoint())
+          prevSpawnTime = waveTimer
+        }
       }
+      return true
     }
+
+    else if(enemies.isEmpty) // returns false only when the time is up and no more enemies are alive
+      return false
+    true
   }
 
   def destroyEntity(entity: Entity): Unit = {

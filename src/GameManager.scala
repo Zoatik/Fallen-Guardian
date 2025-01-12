@@ -16,7 +16,7 @@ object GameManager {
   var initialized: Boolean = false
 
   var waveCounter: Int = 0
-  var wavesStartedTime: Long = 0
+  var prevWaveEndedTime: Long = 0
   var isWavePlaying: Boolean = false
 
 
@@ -57,13 +57,20 @@ object GameManager {
 
   def stopWave(): Unit = {
     isWavePlaying = false
+    prevWaveEndedTime = System.currentTimeMillis()
   }
 
   private def update(): Unit = {
-    EntitiesManager.updateActions()
     if(isWavePlaying) {
-      EntitiesManager.updateWave()
+      isWavePlaying = EntitiesManager.updateWave()
+      if(!isWavePlaying)
+        stopWave()
     }
+    else if(System.currentTimeMillis() - prevWaveEndedTime > WAVE_PAUSE_TIME){
+      startWave()
+    }
+
+    EntitiesManager.updateActions()
   }
 
   /**

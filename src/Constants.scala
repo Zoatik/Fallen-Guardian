@@ -68,7 +68,8 @@ object Constants {
   val TOWER_DEFAULT_ATTACK_SPEED: Double = 4
 
   //* ------------------------* */
-  // Waves constants
-  val WAVE_TIME: Int = 180
+  // Waves constants -> time in milliseconds
+  val WAVE_TIME: Int = 180_000
+  val WAVE_PAUSE_TIME: Int = 10_000
 }
 
