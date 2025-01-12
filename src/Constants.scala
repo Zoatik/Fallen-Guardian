@@ -69,7 +69,7 @@ object Constants {
 
   //* ------------------------* */
   // Waves constants -> time in milliseconds
-  val WAVE_TIME: Int = 180_000
+  val WAVE_TIME: Int = 10_000//180_000
   val WAVE_PAUSE_TIME: Int = 10_000
 }
 

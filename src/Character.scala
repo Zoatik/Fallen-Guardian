@@ -4,10 +4,11 @@ class Character(
                  _pos: (Int, Int),
                  _hp: Int,
                  _armor: Int,
+                 _lvl: Int,
                  _baseImagePath: String,
                  var velocity: Double,    // Vitesse de déplacement (dx, dy)
                  var damage: Int             // Quantité de dégâts infligés
-               ) extends Entity(_pos, _hp, _armor, _baseImagePath) {
+               ) extends Entity(_pos, _hp, _armor, _lvl, _baseImagePath) {
 
   private val pathQueue: mutable.Queue[Cell] = mutable.Queue()
   private var nextStep: (Int, Int) = this.getAbsPosition

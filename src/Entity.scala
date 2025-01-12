@@ -12,14 +12,13 @@ class Entity(
               protected var pos: (Int, Int),
               protected var hp: Int,
               protected var armor: Int,
+              protected var lvl: Int,
               protected val baseImagePath: String
 ) {
   val sprite: Sprite = new Sprite(baseImagePath, anchor = ANCHOR_BOTTOM_MIDDLE)
   private var absPos: (Int, Int) = (pos._1 * CELL_SIZE, pos._2 * CELL_SIZE)
   private var spritePos: (Int, Int) = (pos._1 * CELL_SIZE + sprite.bm.getWidth/2, pos._2 * CELL_SIZE + sprite.bm.getHeight)
   sprite.setPosition(spritePos)
-
-  var lvl: Int = 1
 
   val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
     x = sprite.getTopLeftPos()._1,
@@ -137,5 +136,7 @@ class Entity(
   }
 
   def getHp(): Int = hp
+
+  def getLvl(): Int = lvl
 }
 

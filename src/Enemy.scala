@@ -4,8 +4,9 @@ class Enemy(
              _baseImagePath: String,
              _velocity: Double,
              _damage: Int,
-             _armor: Int
-           ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
+             _armor: Int,
+             _lvl: Int
+           ) extends Character(_pos, _hp, _armor, _lvl,  _baseImagePath, _velocity, _damage) {
 
   def this(pos: (Int, Int), lvl: Int){
     this(
@@ -14,7 +15,8 @@ class Enemy(
       _baseImagePath = Constants.ENEMY_DEFAULT_IMAGE_PATH,
       _velocity = Constants.ENEMY_DEFAULT_VELOCITY,
       _damage = Constants.ENEMY_DEFAULT_DAMAGE * lvl,
-      _armor = Constants.ENEMY_DEFAULT_ARMOR * lvl
+      _armor = Constants.ENEMY_DEFAULT_ARMOR * lvl,
+      _lvl = lvl
     )
   }
 

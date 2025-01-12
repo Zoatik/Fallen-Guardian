@@ -2,23 +2,25 @@ class Player(
               _pos: (Int, Int) = Constants.PLAYER_DEFAULT_POS,
               _hp: Int = Constants.PLAYER_DEFAULT_HP,
               _armor: Int = Constants.PLAYER_DEFAULT_ARMOR,
+              _lvl: Int = 1,
               _baseImagePath: String = Constants.PLAYER_DEFAULT_IMAGE_PATH,
               _velocity: Double = Constants.PLAYER_DEFAULT_VELOCITY,
               _damage: Int = Constants.PLAYER_DEFAULT_DAMAGE,
               var coins: Int = Constants.PLAYER_DEFAULT_COINS
-            ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
+            ) extends Character(_pos, _hp, _armor, _lvl, _baseImagePath, _velocity, _damage) {
 
 
   override val attackCooldown: Int = 400
 
-  def this(pos: (Int, Int), _lvl: Int) =
+  def this(pos: (Int, Int), lvl: Int) =
     this(
       _pos = pos,
-      _hp = Constants.PLAYER_DEFAULT_HP * _lvl,
-      _armor = Constants.PLAYER_DEFAULT_ARMOR * _lvl,
+      _hp = Constants.PLAYER_DEFAULT_HP * lvl,
+      _armor = Constants.PLAYER_DEFAULT_ARMOR * lvl,
+      _lvl = lvl,
       _baseImagePath = Constants.PLAYER_DEFAULT_IMAGE_PATH,
       _velocity = Constants.PLAYER_DEFAULT_VELOCITY,
-      _damage = Constants.PLAYER_DEFAULT_DAMAGE * _lvl
+      _damage = Constants.PLAYER_DEFAULT_DAMAGE * lvl
     )
 
   override def levelUp(): Unit = {
@@ -40,7 +42,7 @@ class Player(
     super.attack()
     if(!isStunned && target.isDefined)
       if(target.get.takeDamage(damage, this)){
-        coins += target.get.asInstanceOf[Enemy].lvl
+        coins += target.get.asInstanceOf[Enemy].getLvl()
         hasReachedTarget = false
         EntitiesManager.destroyEntity(target.get)
         println(s"COINS : $coins")

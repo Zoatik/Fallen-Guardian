@@ -25,9 +25,9 @@ object EntitiesManager {
   InputManager.bindKey(KeyEvent.VK_E, (_, pressed) => if(!pressed) destroyEntity(enemies.head))
 
   private def spawnEnemy(pos: (Int, Int)): Unit = {
-    val oscour: Enemy = new Enemy(pos, 1)
+    val oscour: Enemy = new Enemy(pos, waveCounter)
     enemies += oscour
-    oscour.calculatePath(30,30)
+    oscour.calculatePath(30,30) // TODO : set the base as target
   }
 
   private def findSpawnPoint(): (Int, Int) = {

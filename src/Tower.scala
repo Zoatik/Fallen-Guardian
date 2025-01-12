@@ -2,6 +2,7 @@ class Tower(
              _pos: (Int, Int) = Constants.TOWER_DEFAULT_POS,
              _hp: Int = Constants.TOWER_DEFAULT_HP,
              _armor: Int = Constants.TOWER_DEFAULT_ARMOR,
+             _lvl: Int = 1,
              _baseImagePath: String = Constants.TOWER_DEFAULT_IMAGE_PATH,
              _price: Int = 3,
              _blockPath: Boolean = true,
@@ -10,7 +11,7 @@ class Tower(
              var range: Int = Constants.TOWER_DEFAULT_RANGE,
              var attackSpeed: Double = Constants.TOWER_DEFAULT_ATTACK_SPEED,
              var target: Option[Enemy] = None
-           ) extends Building(_pos, _hp, _armor, _baseImagePath, _price, _blockPath, _isTargetable) {
+           ) extends Building(_pos, _hp, _armor, _lvl, _baseImagePath, _price, _blockPath, _isTargetable) {
 
 
   override def updateTarget(): Unit = {
@@ -45,7 +46,7 @@ class Tower(
       towerAttack()
     }
     if(!target.isDefined) {
-      println("Tower is currently looking for a target.")
+      //println("Tower is currently looking for a target.")
     }
   }
 
