@@ -47,6 +47,16 @@ object Constants {
   val PLAYER_DEFAULT_COINS: Int = 2
 
   //* ------------------------* */
+  // Tower constants
+  val ENEMY_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
+  val ENEMY_DEFAULT_HP: Int = 10
+  val ENEMY_DEFAULT_ARMOR: Int = 1
+
+  val ENEMY_DEFAULT_IMAGE_PATH: String = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png"
+  val ENEMY_DEFAULT_VELOCITY: Double = 1.5
+  val ENEMY_DEFAULT_DAMAGE: Int = 2
+
+  //* ------------------------* */
     // Tower constants
   val TOWER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
   val TOWER_DEFAULT_HP: Int = 100
@@ -56,5 +66,9 @@ object Constants {
   val TOWER_DEFAULT_DAMAGE: Int = 4
   val TOWER_DEFAULT_RANGE: Int = 128
   val TOWER_DEFAULT_ATTACK_SPEED: Double = 4
+
+  //* ------------------------* */
+  // Waves constants
+  val WAVE_TIME: Int = 180
 }
 

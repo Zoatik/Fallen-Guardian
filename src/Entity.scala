@@ -19,6 +19,7 @@ class Entity(
   private var spritePos: (Int, Int) = (pos._1 * CELL_SIZE + sprite.bm.getWidth/2, pos._2 * CELL_SIZE + sprite.bm.getHeight)
   sprite.setPosition(spritePos)
 
+  var lvl: Int = 1
 
   val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
     x = sprite.getTopLeftPos()._1,
@@ -32,6 +33,10 @@ class Entity(
   collisionBox2D.onMouseLeave(() => mouseLeft())
 
   val animations: mutable.Map[String, Animation] = mutable.Map()
+
+  def levelUp(): Unit = {
+    lvl += 1
+  }
 
   def destroy(): Unit = {
     Renderer.destroy(sprite)

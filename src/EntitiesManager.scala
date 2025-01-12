@@ -25,14 +25,7 @@ object EntitiesManager {
   InputManager.bindKey(KeyEvent.VK_E, (_, pressed) => if(!pressed) destroyEntity(enemies.head))
 
   private def spawnEnemy(pos: (Int, Int)): Unit = {
-    val oscour: Enemy = new Enemy(
-      _pos = pos,
-      _hp = 20,
-      _baseImagePath = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png",
-      _velocity = 1.5,
-      _damage = 1,
-      _armor = 2
-    )
+    val oscour: Enemy = new Enemy(pos, 1)
     enemies += oscour
     oscour.calculatePath(30,30)
   }

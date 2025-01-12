@@ -11,6 +11,24 @@ class Player(
 
   override val attackCooldown: Int = 400
 
+  def this(pos: (Int, Int), _lvl: Int) =
+    this(
+      _pos = pos,
+      _hp = Constants.PLAYER_DEFAULT_HP * _lvl,
+      _armor = Constants.PLAYER_DEFAULT_ARMOR * _lvl,
+      _baseImagePath = Constants.PLAYER_DEFAULT_IMAGE_PATH,
+      _velocity = Constants.PLAYER_DEFAULT_VELOCITY,
+      _damage = Constants.PLAYER_DEFAULT_DAMAGE * _lvl
+    )
+
+  override def levelUp(): Unit = {
+    super.levelUp()
+    this.hp = Constants.PLAYER_DEFAULT_HP * lvl
+    this.damage = Constants.PLAYER_DEFAULT_DAMAGE * lvl
+    this.armor = Constants.PLAYER_DEFAULT_ARMOR * lvl
+  }
+
+
   def setTarget(entity: Enemy): Unit = {
     this.target = Some(entity)
     updateTargetPos()

@@ -20,7 +20,6 @@ class Character(
   protected val attackCooldown: Int = 1000
   protected var prevAttackTime: Long = 0
   var target: Option[Entity] = None
-  var lvl: Int = 1
 
 
 

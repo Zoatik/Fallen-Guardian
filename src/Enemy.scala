@@ -7,6 +7,23 @@ class Enemy(
              _armor: Int
            ) extends Character(_pos, _hp, _armor, _baseImagePath, _velocity, _damage) {
 
+  def this(pos: (Int, Int), lvl: Int){
+    this(
+      _pos = pos,
+      _hp = Constants.ENEMY_DEFAULT_HP * lvl,
+      _baseImagePath = Constants.ENEMY_DEFAULT_IMAGE_PATH,
+      _velocity = Constants.ENEMY_DEFAULT_VELOCITY,
+      _damage = Constants.ENEMY_DEFAULT_DAMAGE * lvl,
+      _armor = Constants.ENEMY_DEFAULT_ARMOR * lvl
+    )
+  }
+
+  override def levelUp(): Unit = {
+    super.levelUp()
+    this.hp = Constants.ENEMY_DEFAULT_HP * lvl
+    this.damage = Constants.ENEMY_DEFAULT_DAMAGE * lvl
+    this.armor = Constants.ENEMY_DEFAULT_ARMOR * lvl
+  }
 
   override val attackCooldown: Int = 1000
 

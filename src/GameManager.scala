@@ -1,9 +1,7 @@
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import hevs.graphics.FunGraphics
-import InputManager._
 import Constants._
 
-import scala.collection.mutable
 
 /**
  * Main Manager that handles the game logics
@@ -18,6 +16,7 @@ object GameManager {
   var initialized: Boolean = false
 
   var waveCounter: Int = 0
+  var wavesStartedTime: Long = 0
   var isWavePlaying: Boolean = false
 
 
