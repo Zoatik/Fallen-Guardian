@@ -13,11 +13,17 @@ class Entity(
               protected var hp: Int,
               protected var armor: Int,
               protected var lvl: Int,
-              protected val baseImagePath: String
+              protected val baseImagePath: String,
+              protected val spriteAnchor: Int = ANCHOR_BOTTOM_MIDDLE
 ) {
-  val sprite: Sprite = new Sprite(baseImagePath, anchor = ANCHOR_BOTTOM_MIDDLE)
-  private var absPos: (Int, Int) = (pos._1 * CELL_SIZE, pos._2 * CELL_SIZE)
-  private var spritePos: (Int, Int) = (pos._1 * CELL_SIZE + CELL_SIZE/2, pos._2 * CELL_SIZE + CELL_SIZE)
+  val sprite: Sprite = new Sprite(baseImagePath, anchor = spriteAnchor)
+  protected var absPos: (Int, Int) = (pos._1 * CELL_SIZE, pos._2 * CELL_SIZE)
+
+  private var spritePos = spriteAnchor match {
+    case ANCHOR_TOP_LEFT => (pos._1 * CELL_SIZE, pos._2 * CELL_SIZE)
+    case ANCHOR_MIDDLE => (pos._1 * CELL_SIZE + CELL_SIZE/2, pos._2 * CELL_SIZE + CELL_SIZE/2)
+    case ANCHOR_BOTTOM_MIDDLE => (pos._1 * CELL_SIZE + CELL_SIZE/2, pos._2 * CELL_SIZE + CELL_SIZE)
+  }
 
   sprite.setPosition(spritePos)
 

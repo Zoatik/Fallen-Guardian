@@ -8,23 +8,9 @@ object EntitiesManager {
   val towers: mutable.ListBuffer[Tower] = mutable.ListBuffer()
   val bullets: mutable.ListBuffer[Bullet] = mutable.ListBuffer()
 
-  val player: Player = new Player()
-  val base: Entity = new Entity(
-    pos = Constants.BASE_DEFAULT_POS,
-    hp = Constants.BASE_DEFAULT_HP,
-    armor = Constants.BASE_DEFAULT_ARMOR,
-    lvl = 1,
-    baseImagePath = Constants.BASE_DEFAULT_IMAGE_PATH
-  )
-  base.addAnimation("hurt", new Animation(
-    spriteTarget = base.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_BASE_HURT,
-    duration = 1000,
-    loop = false,
-    active = false
-  ))
+  var player: Player = new Player()
+  var base: Option[Base] = Some(new Base())
 
-  Layers.addSprite(Constants.LAYER_ENTITIES, base.sprite)
 
 
 
@@ -42,7 +28,7 @@ object EntitiesManager {
   private def spawnEnemy(pos: (Int, Int)): Unit = {
     val oscour: Enemy = new Enemy(pos, waveCounter)
     enemies += oscour
-    oscour.target = Some(base)
+    oscour.target = base
   }
 
   def addBuilding(pos: (Int, Int), buildType: Int, lvl: Int): Unit = {
@@ -106,6 +92,13 @@ object EntitiesManager {
         bullets -= bullet
         towers.foreach(_.target = None)
         player.target = None
+      case base: Base =>
+        enemies.foreach(enemy => {
+          if(enemy.target.get == base)
+            enemy.target = None
+        })
+        this.base = None
+        GameManager.gameOver(false)
       case _ =>
         println("Unsupported entity type for destruction.")
     }

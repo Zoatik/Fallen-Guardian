@@ -82,6 +82,16 @@ object GameManager {
     EntitiesManager.updateActions()
   }
 
+  def gameOver(win: Boolean): Unit = {
+    isWavePlaying = false
+    if(win){
+      println("YOU WON")
+    }
+    else{
+      println("YOU LOST")
+    }
+  }
+
   /**
    * Game loop
    *  - Calls InputManager handling functions

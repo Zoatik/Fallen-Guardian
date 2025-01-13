@@ -46,7 +46,6 @@ class Enemy(
     lastTimeStunned = System.currentTimeMillis()
     val isDead = super.takeDamage(amount, source)
     this.target = Some(source)
-    println("new target : " + this.target)
     this.updateTargetPos()
     isDead
   }
@@ -91,7 +90,7 @@ class Enemy(
     if(!this.isAnimationPlaying())
       playAnimation("idle")
   })
-  this.animations("attack1").onAnimationStarted(() => {isAttacking = true; println("orc attack start")})
+  this.animations("attack1").onAnimationStarted(() => isAttacking = true)
   this.animations("attack1").onAnimationEnded(() => isAttacking = false)
 
 

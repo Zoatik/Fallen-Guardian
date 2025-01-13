@@ -91,6 +91,16 @@ object Grid {
     x >= 0 && y >= 0 && x < cells.length && y < cells(0).length
   }
 
+  def build(cell: Cell, buildSelected: Int, lvl: Int): Unit = {
+    cell.state = CellStates.BLOCK_PATH
+    EntitiesManager.addBuilding(cell.pos, buildSelected, lvl)
+  }
+
+  def removeBuilding(building: Building): Unit = {
+    getCell(building.getPosition()._1, building.getPosition()._2).getOrElse(return).state = CellStates.EMPTY
+    EntitiesManager.destroyEntity(building)
+  }
+
   /*------------ PATH FINDING FUNCTIONS ------------*/
 
 
@@ -151,16 +161,6 @@ object Grid {
     None
   }
 
-  def build(cell: Cell, buildSelected: Int, lvl: Int): Unit = {
-    cell.state = CellStates.BLOCK_PATH
-    EntitiesManager.addBuilding(cell.pos, buildSelected, lvl)
-  }
-
-  def removeBuilding(building: Building): Unit = {
-    getCell(building.getPosition()._1, building.getPosition()._2).getOrElse(return).state = CellStates.EMPTY
-    EntitiesManager.destroyEntity(building)
-  }
-
   /**
    * Get the neighbours from a given cell
    *
@@ -202,6 +202,8 @@ object Grid {
     }
     path
   }
+
+
 }
 
 /**

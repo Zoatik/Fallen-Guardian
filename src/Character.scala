@@ -138,7 +138,6 @@ class Character(
 
   def tryToAttack(): Unit = {
     if(!isStunned && System.currentTimeMillis() - prevAttackTime > attackCooldown) {
-      if(this.isInstanceOf[Enemy]) println("try to attack")
       checkTargetReached()
       if(hasReachedTarget) {
         attack()
