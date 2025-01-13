@@ -43,7 +43,7 @@ class Enemy(
 
   override def takeDamage(amount: Int, source: Entity): Boolean = {
     isStunned = true
-    lastTimeStunned = System.currentTimeMillis()
+    lastTimeStunned = GameManager.gameTimer
     val isDead = super.takeDamage(amount, source)
     this.target = Some(source)
     this.updateTargetPos()

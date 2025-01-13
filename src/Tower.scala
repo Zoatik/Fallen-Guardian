@@ -56,10 +56,10 @@ class Tower(
 
   private var prevTowerAttackTime: Double = 0
   protected def towerAttack(): Unit = {
-    if(target.isDefined && ( System.currentTimeMillis() - prevTowerAttackTime )>= attackSpeed){
+    if(target.isDefined && ( GameManager.gameTimer - prevTowerAttackTime )>= attackSpeed){
       EntitiesManager.spawnBullet(this.pos, this)
       println("TOWER SPAWN BULLET at : " + pos)
-      prevTowerAttackTime = System.currentTimeMillis()
+      prevTowerAttackTime = GameManager.gameTimer
     }
   }
 

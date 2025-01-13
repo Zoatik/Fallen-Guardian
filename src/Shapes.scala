@@ -203,7 +203,7 @@ object CollisionBox2DManager {
   * @param mouseY  Absolute mouse position Y
   */
   def checkMouseCollisions(mouseX: Int, mouseY: Int): Unit = {
-    if(System.currentTimeMillis() - prevTime < Constants.COLLISION_TIME_DELAY)
+    if(GameManager.gameTimer - prevTime < Constants.COLLISION_TIME_DELAY)
       return
 
     for (layer <- layers.indices.reverse) { // Parcourir les couches de la plus haute à la plus basse
@@ -213,7 +213,7 @@ object CollisionBox2DManager {
         return
       }
     }
-    prevTime = System.currentTimeMillis()
+    prevTime = GameManager.gameTimer
   }
 
   /**

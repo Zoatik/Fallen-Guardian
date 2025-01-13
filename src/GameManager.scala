@@ -18,9 +18,13 @@ object GameManager {
   var waveCounter: Int = 0
   var prevWaveEndedTime: Long = 0
   var isWavePlaying: Boolean = false
+  var prevTime: Long = System.currentTimeMillis()
+  var gameTimer: Long = 0
+  var isPaused: Boolean = false
 
 
   InputManager.bindKey(KeyEvent.VK_B, (_, pressed) => if(!pressed) changeGameMode())
+  InputManager.bindKey(KeyEvent.VK_ESCAPE, (_, pressed) => if(!pressed) isPaused = !isPaused)
 
   private def changeGameMode(): Unit = {
     EntitiesManager.player.isBuilding = !EntitiesManager.player.isBuilding
@@ -66,7 +70,7 @@ object GameManager {
 
   def stopWave(): Unit = {
     isWavePlaying = false
-    prevWaveEndedTime = System.currentTimeMillis()
+    prevWaveEndedTime = gameTimer
   }
 
   private def update(): Unit = {
@@ -75,7 +79,7 @@ object GameManager {
       if(!isWavePlaying)
         stopWave()
     }
-    else if(System.currentTimeMillis() - prevWaveEndedTime > WAVE_PAUSE_TIME){
+    else if(GameManager.gameTimer - prevWaveEndedTime > WAVE_PAUSE_TIME){
       startWave()
     }
 
@@ -106,7 +110,11 @@ object GameManager {
       InputManager.handleKeys()
       InputManager.handleMouse()
 
-      GameManager.update()
+      if(!isPaused) {
+        gameTimer += System.currentTimeMillis() - prevTime
+        prevTime = System.currentTimeMillis()
+        GameManager.update()
+      }
       AnimationsManager.run()
 
       Renderer.render(fg)
@@ -122,6 +130,8 @@ object GameManager {
    */
   def handleCellAction(mouseButton: Int, pressed: Boolean, cell: Cell): Unit = {
     ensureInitialized()
+    if(isPaused)
+      return
     if (!pressed){
       if(EntitiesManager.player.isBuilding){
         if (mouseButton == MouseEvent.BUTTON1 && cell.state == CellStates.EMPTY) {
@@ -145,6 +155,8 @@ object GameManager {
 
   def handleEntityMouseAction(mouseButton: Int, pressed: Boolean, entity: Entity): Unit = {
     ensureInitialized()
+    if(isPaused)
+      return
     if (!pressed) {
       if(EntitiesManager.player.isBuilding) {
         if (mouseButton == MouseEvent.BUTTON3) {

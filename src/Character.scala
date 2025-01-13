@@ -37,7 +37,7 @@ class Character(
   }
 
   def moveToTarget(): Boolean = {
-    if(isStunned && System.currentTimeMillis() - lastTimeStunned < 500)
+    if(isStunned && GameManager.gameTimer - lastTimeStunned < 500)
       return false
     isStunned = false
 
@@ -137,11 +137,11 @@ class Character(
   }
 
   def tryToAttack(): Unit = {
-    if(!isStunned && System.currentTimeMillis() - prevAttackTime > attackCooldown) {
+    if(!isStunned && GameManager.gameTimer - prevAttackTime > attackCooldown) {
       checkTargetReached()
       if(hasReachedTarget) {
         attack()
-        prevAttackTime = System.currentTimeMillis()
+        prevAttackTime = GameManager.gameTimer
       }
     }
   }

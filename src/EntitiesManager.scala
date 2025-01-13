@@ -53,13 +53,13 @@ object EntitiesManager {
   }
 
   def startWave(waveCounter: Int): Unit = {
-    startTime = System.currentTimeMillis()
+    startTime = GameManager.gameTimer
     waveTimer = 0
     this.waveCounter = waveCounter
   }
 
   def updateWave(): Boolean = {
-    waveTimer = System.currentTimeMillis() - startTime
+    waveTimer = GameManager.gameTimer - startTime
     if(waveTimer < Constants.WAVE_TIME) {
       if (enemies.length < maxEnemies) {
 
@@ -111,7 +111,7 @@ object EntitiesManager {
    * Updates the CharacterMovements,
    */
   def updateActions() : Unit = {
-    val currentTime = System.currentTimeMillis()
+    val currentTime = GameManager.gameTimer
     if(currentTime - prevCoinTime > 1000) {
       prevCoinTime = currentTime
       player.coins += 1
