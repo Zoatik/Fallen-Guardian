@@ -30,25 +30,24 @@ class Tower(
       //val currentDist: Double = this.absDistanceTo(enemy)
       //je ne savais pas comment accéder à cette distance dans la partie towerTryToAttack
       //j'ai donc créer une variable globale currentDist.
-      currentDist = this.absDistanceTo(enemy)
+      val currentDist: Double = this.absDistanceTo(enemy)
       if (currentDist < minDist) {
         minDist = currentDist
         closestTarget = Some(enemy)
       }
     })
+    if(minDist > range) {
+      closestTarget = None
+    }
     closestTarget
   }
 
-  var currentDist: Double = Double.PositiveInfinity
   def towerTryToAttack(): Unit = {
     target = findTarget()
     //have to make an alternative to the cooldown function like there was in the character class
     //and use the attack speed value instead.
-    if (target.isDefined && (currentDist < range)) {
+    if (target.isDefined) {
       towerAttack()
-    }
-    if(!target.isDefined) {
-      //println("Tower is currently looking for a target.")
     }
   }
 
@@ -60,10 +59,7 @@ class Tower(
         println(s"-------------------Tower has dealt damage.")
       }
     }
-
   }
-
-  //tout crash lorsque j'essaie d'activer cette fonction pour l'animation
 
   this.addAnimation("idle", new Animation(
     spriteTarget = this.sprite,
