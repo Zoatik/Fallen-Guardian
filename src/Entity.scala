@@ -17,8 +17,10 @@ class Entity(
 ) {
   val sprite: Sprite = new Sprite(baseImagePath, anchor = ANCHOR_BOTTOM_MIDDLE)
   private var absPos: (Int, Int) = (pos._1 * CELL_SIZE, pos._2 * CELL_SIZE)
-  private var spritePos: (Int, Int) = (pos._1 * CELL_SIZE + sprite.bm.getWidth/2, pos._2 * CELL_SIZE + sprite.bm.getHeight)
+  private var spritePos: (Int, Int) = (pos._1 * CELL_SIZE + CELL_SIZE/2, pos._2 * CELL_SIZE + CELL_SIZE)
+
   sprite.setPosition(spritePos)
+
 
   val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
     x = sprite.getTopLeftPos()._1,
