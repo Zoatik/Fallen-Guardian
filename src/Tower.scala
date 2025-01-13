@@ -14,6 +14,8 @@ class Tower(
            ) extends Building(_pos, _hp, _armor, _lvl, _baseImagePath, _price, _blockPath, _isTargetable) {
 
 
+  def this(pos: (Int, Int), lvl: Int) = this(_pos = pos, _lvl = lvl)
+
   override def updateTarget(): Unit = {
     if (target.isDefined) {
       return
@@ -53,6 +55,7 @@ class Tower(
   protected def towerAttack(): Unit = {
     if(target.isDefined){
       if (target.get.takeDamage(damage, this)) {
+        EntitiesManager.player.coins += target.get.getLvl()
         EntitiesManager.destroyEntity(target.get)
         println(s"-------------------Tower has dealt damage.")
       }

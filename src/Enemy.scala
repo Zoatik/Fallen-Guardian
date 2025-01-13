@@ -86,7 +86,10 @@ class Enemy(
   this.playAnimation("idle")
 
   this.animations("hurt").onAnimationEnded(() => playAnimation("idle"))
-  this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
+  this.animations("attack1").onAnimationEnded(() => {
+    if(!this.isAnimationPlaying())
+      playAnimation("idle")
+  })
   this.animations("attack1").onAnimationStarted(() => {isAttacking = true; println("orc attack start")})
   this.animations("attack1").onAnimationEnded(() => isAttacking = false)
 

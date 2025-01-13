@@ -1,3 +1,5 @@
+import java.awt.event.KeyEvent
+
 class Player(
               _pos: (Int, Int) = Constants.PLAYER_DEFAULT_POS,
               _hp: Int = Constants.PLAYER_DEFAULT_HP,
@@ -11,6 +13,12 @@ class Player(
 
 
   override val attackCooldown: Int = 400
+  var xp: Int = 0
+
+  // player game mode infos
+  var isBuilding = false
+  var buildSelected: Int = Constants.BUILD_TOWER
+
 
   def this(pos: (Int, Int), lvl: Int) =
     this(
@@ -30,6 +38,14 @@ class Player(
     this.armor = Constants.PLAYER_DEFAULT_ARMOR * lvl
   }
 
+  def gainXP(amount: Int): Unit = {
+    xp += amount
+    if(xp > 1000){
+      xp = 0
+      levelUp()
+    }
+  }
+
 
   def setTarget(entity: Enemy): Unit = {
     this.target = Some(entity)
@@ -43,10 +59,31 @@ class Player(
     if(!isStunned && target.isDefined)
       if(target.get.takeDamage(damage, this)){
         coins += target.get.asInstanceOf[Enemy].getLvl()
-        hasReachedTarget = false
+        gainXP(100)
         EntitiesManager.destroyEntity(target.get)
         println(s"COINS : $coins")
       }
+  }
+
+  def build(cell: Cell): Unit = {
+    var price: Int = 0
+    buildSelected match {
+      case Constants.BUILD_TOWER => price = Constants.BUILD_TOWER_PRICE
+      case Constants.BUILD_BARRICADE => price = Constants.BUILD_BARRICADE_PRICE
+      case _ => price = 1000
+    }
+    if(coins >= price) {
+      coins -= price
+      Grid.build(cell, buildSelected, lvl)
+    }
+  }
+
+  def sell(building: Building): Unit = {
+    building match {
+      case tower: Tower => coins += Constants.BUILD_TOWER_PRICE / 2
+    }
+    Grid.removeBuilding(building)
+    println("tower sold, coins : " + coins)
   }
 
 
@@ -86,7 +123,10 @@ class Player(
   this.playAnimation("idle")
 
   this.animations("hurt").onAnimationEnded(() => playAnimation("idle"))
-  this.animations("attack1").onAnimationEnded(() => playAnimation("idle"))
+  this.animations("attack1").onAnimationEnded(() => {
+    if(!this.isAnimationPlaying())
+      playAnimation("idle")
+  })
   this.animations("attack1").onAnimationStarted(() => isAttacking = true)
   this.animations("attack1").onAnimationEnded(() => isAttacking = false)
 

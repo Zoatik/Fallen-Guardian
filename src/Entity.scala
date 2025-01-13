@@ -76,6 +76,14 @@ class Entity(
     animations.keys.foreach(id => stopAnimation(id))
   }
 
+  def isAnimationPlaying(): Boolean = {
+    for(anim <- animations.values){
+      if(anim.playing)
+        return true
+    }
+    false
+  }
+
 
   def absDistanceTo(otherPos: (Int, Int)): Double = {
     math.sqrt(math.pow(otherPos._1 - this.absPos._1, 2) + math.pow(otherPos._2 - this.absPos._2, 2))

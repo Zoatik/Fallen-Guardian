@@ -8,6 +8,9 @@ object Grid {
   private var cellSize: Int = 10
   private var initialized: Boolean = false
   var cells: Array[Array[Cell]] = Array.ofDim(size._1, size._2)
+  var highLightedCells: mutable.ListBuffer[Cell] = mutable.ListBuffer()
+
+  var highlightOnMouse: Boolean = false
 
   /**
    * Initializes the Grid
@@ -31,7 +34,7 @@ object Grid {
         else if (randNum > 80 && randNum <= 90)
           baseImagePath = "/res/ground/TX_flower_0.png"
 
-        val cellPos: (Int, Int) = (i , j )
+        val cellPos: (Int, Int) = (i , j)
         cells(i)(j) = new Cell(cellPos, cellSize, CellStates.EMPTY, baseImagePath)
       }
     }
@@ -49,6 +52,9 @@ object Grid {
     }
   }
 
+  def restoreHighlightedCells(): Unit = {
+    highLightedCells.foreach(cell => cell.sprite.changeImage(cell.defaultImagePath))
+  }
 
   /**
    * Retrieves a Cell from a point with absolute coordinates
@@ -145,8 +151,19 @@ object Grid {
     None
   }
 
+  def build(cell: Cell, buildSelected: Int, lvl: Int): Unit = {
+    cell.state = CellStates.BLOCK_PATH
+    EntitiesManager.addBuilding(cell.pos, buildSelected, lvl)
+  }
+
+  def removeBuilding(building: Building): Unit = {
+    getCell(building.getPosition()._1, building.getPosition()._2).getOrElse(return).state = CellStates.EMPTY
+    EntitiesManager.destroyEntity(building)
+  }
+
   /**
    * Get the neighbours from a given cell
+   *
    * @param cell the central cell
    * @return an Array of cells that are neighbours to the given cell
    */
@@ -201,8 +218,8 @@ class Cell(val pos: (Int, Int),
   val sprite: Sprite = new Sprite(defaultImagePath, absolutePos)
   val box2D: Box = Box(absolutePos._1, absolutePos._2, size, size)
   val collisionBox: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(box2D)
-  //collisionBox.onMouseEnter(() => startHover())
-  //collisionBox.onMouseLeave(() => endHover())
+  collisionBox.onMouseEnter(() => startHover())
+  collisionBox.onMouseLeave(() => endHover())
   //collisionBox.onMousePressed(mouseButton: Int => mousePressed(mouseButton))
   collisionBox.onMouseReleased(mouseButton => mouseReleased(mouseButton))
 
@@ -211,14 +228,20 @@ class Cell(val pos: (Int, Int),
    * Defines the action to do when hovered
    */
   def startHover(): Unit = {
-    this.sprite.changeImage("/res/ground/cellEmpty.png")
+    if(Grid.highlightOnMouse) {
+      Grid.highLightedCells += this
+      this.sprite.changeImage("/res/ground/cellEmpty.png")
+    }
   }
 
   /**
    * Defines the action to do when end hovered
    */
   def endHover(): Unit = {
-    this.sprite.changeImage(defaultImagePath)
+    if(Grid.highlightOnMouse) {
+      Grid.highLightedCells -= this
+      this.sprite.changeImage(defaultImagePath)
+    }
   }
 
   /**

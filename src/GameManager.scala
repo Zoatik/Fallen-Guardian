@@ -20,6 +20,15 @@ object GameManager {
   var isWavePlaying: Boolean = false
 
 
+  InputManager.bindKey(KeyEvent.VK_B, (_, pressed) => if(!pressed) changeGameMode())
+
+  private def changeGameMode(): Unit = {
+    EntitiesManager.player.isBuilding = !EntitiesManager.player.isBuilding
+    Grid.highlightOnMouse = EntitiesManager.player.isBuilding
+    Grid.restoreHighlightedCells()
+  }
+
+
   /**
    * Initialize all necessary components
    */
@@ -104,11 +113,22 @@ object GameManager {
   def handleCellAction(mouseButton: Int, pressed: Boolean, cell: Cell): Unit = {
     ensureInitialized()
     if (!pressed){
-      if(mouseButton == MouseEvent.BUTTON1) {
-        EntitiesManager.player.target = None
-        EntitiesManager.player.isAttacking = false
-        EntitiesManager.player.calculatePath(cell.pos._1, cell.pos._2)
+      if(EntitiesManager.player.isBuilding){
+        if (mouseButton == MouseEvent.BUTTON1 && cell.state == CellStates.EMPTY) {
+          EntitiesManager.player.build(cell)
+        }
+        else if(mouseButton == MouseEvent.BUTTON3){
+          changeGameMode()
+        }
+      }
 
+      else {
+        if (mouseButton == MouseEvent.BUTTON1) {
+          EntitiesManager.player.target = None
+          EntitiesManager.player.isAttacking = false
+          EntitiesManager.player.calculatePath(cell.pos._1, cell.pos._2)
+
+        }
       }
     }
   }
@@ -116,10 +136,19 @@ object GameManager {
   def handleEntityMouseAction(mouseButton: Int, pressed: Boolean, entity: Entity): Unit = {
     ensureInitialized()
     if (!pressed) {
-      if (mouseButton == MouseEvent.BUTTON1) {
-        entity match {
-          case enemy: Enemy => EntitiesManager.player.setTarget(enemy)
-          case _ =>
+      if(EntitiesManager.player.isBuilding) {
+        if (mouseButton == MouseEvent.BUTTON3) {
+          entity match {
+            case building: Building => EntitiesManager.player.sell(building)
+          }
+        }
+      }
+      else {
+        if (mouseButton == MouseEvent.BUTTON1) {
+          entity match {
+            case enemy: Enemy => EntitiesManager.player.setTarget(enemy)
+            case _ =>
+          }
         }
       }
     }

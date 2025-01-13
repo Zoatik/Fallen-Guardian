@@ -33,7 +33,7 @@ object Constants {
 
   //* ------------------------* */
     // UI Constants
-  val COLLISION_FRAME_MAGNIFICATION = 15
+  //val COLLISION_FRAME_MAGNIFICATION = 15
 
   //* ------------------------* */
     // Player spawn constants
@@ -42,9 +42,9 @@ object Constants {
   val PLAYER_DEFAULT_ARMOR: Int = 5
 
   val PLAYER_DEFAULT_IMAGE_PATH: String = "/res/Characters/Soldier/idle/soldierIdle_0.png"
-  val PLAYER_DEFAULT_VELOCITY: Double = 3.8
+  val PLAYER_DEFAULT_VELOCITY: Double = 4.0
   val PLAYER_DEFAULT_DAMAGE: Int = 8
-  val PLAYER_DEFAULT_COINS: Int = 2
+  val PLAYER_DEFAULT_COINS: Int = 100
 
   //* ------------------------* */
   // Tower constants
@@ -53,7 +53,7 @@ object Constants {
   val ENEMY_DEFAULT_ARMOR: Int = 1
 
   val ENEMY_DEFAULT_IMAGE_PATH: String = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png"
-  val ENEMY_DEFAULT_VELOCITY: Double = 1.5
+  val ENEMY_DEFAULT_VELOCITY: Double = 1.8
   val ENEMY_DEFAULT_DAMAGE: Int = 2
 
   //* ------------------------* */
@@ -68,8 +68,15 @@ object Constants {
   val TOWER_DEFAULT_ATTACK_SPEED: Double = 4
 
   //* ------------------------* */
+  // Build system constants
+  val BUILD_TOWER: Int = 0
+  val BUILD_BARRICADE: Int = 1
+  val BUILD_TOWER_PRICE: Int = 50
+  val BUILD_BARRICADE_PRICE: Int = 10
+
+  //* ------------------------* */
   // Waves constants -> time in milliseconds
-  val WAVE_TIME: Int = 10_000//180_000
+  val WAVE_TIME: Int = 180_000
   val WAVE_PAUSE_TIME: Int = 10_000
 }
 

@@ -4,14 +4,12 @@ import scala.util.Random
 
 object EntitiesManager {
 
-  var enemies: mutable.ListBuffer[Enemy] = mutable.ListBuffer()
-  var towers: mutable.ListBuffer[Tower] = mutable.ListBuffer()
+  val enemies: mutable.ListBuffer[Enemy] = mutable.ListBuffer()
+  val towers: mutable.ListBuffer[Tower] = mutable.ListBuffer()
 
-  var player: Player = new Player()
+  val player: Player = new Player()
 
-  var tower: Tower = new Tower()
-  towers += tower
-  //println(tower.getAbsPosition)
+
 
   var waveTimer: Long = 0
   private var startTime: Long = 0
@@ -29,6 +27,13 @@ object EntitiesManager {
     enemies += oscour
     oscour.calculatePath(30,30) // TODO : set the base as target
   }
+
+  def addBuilding(pos: (Int, Int), buildType: Int, lvl: Int): Unit = {
+    if(buildType == Constants.BUILD_TOWER){
+      towers += new Tower(pos, lvl)
+    }
+  }
+
 
   private def findSpawnPoint(): (Int, Int) = {
     val maxX: Int = Constants.GRID_SIZE
@@ -69,8 +74,11 @@ object EntitiesManager {
 
   def destroyEntity(entity: Entity): Unit = {
     entity match {
-      case e: Enemy =>
-        enemies -= e
+      case enemy: Enemy =>
+        enemies -= enemy
+        player.target = None
+      case tower: Tower =>
+        towers -= tower
         player.target = None
       case _ =>
         println("Unsupported entity type for destruction.")
@@ -79,11 +87,18 @@ object EntitiesManager {
   }
 
   var prevUpdateTime: Long = 0
+  var prevCoinTime: Long = 0
   /**
    * Updates the CharacterMovements,
    */
   def updateActions() : Unit = {
-    if(System.currentTimeMillis() - prevUpdateTime > 200) {
+    val currentTime = System.currentTimeMillis()
+    if(currentTime - prevCoinTime > 1000) {
+      prevCoinTime = currentTime
+      player.coins += 1
+    }
+
+    if(currentTime - prevUpdateTime > 200) {
       if(!player.isAttacking)
         player.updateTargetPos()
 
@@ -92,14 +107,15 @@ object EntitiesManager {
           enemy.updateTargetPos()
       })
 
-      prevUpdateTime = System.currentTimeMillis()
+      prevUpdateTime = currentTime
     }
 
     player.moveToTarget()
     player.tryToAttack()
     //tower.findTarget()
-    tower.towerTryToAttack()
-
+    towers.foreach(tower => {
+      tower.towerTryToAttack()
+    })
     
     enemies.foreach(enemy => {
       enemy.tryToAttack()
