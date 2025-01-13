@@ -173,6 +173,11 @@ object Renderer {
     this.offsetY += deltaY * deltaT
   }
 
+  def setCenterPosition(pos: (Int, Int)): Unit = {
+    this.offsetX = -pos._1 + WINDOW_WIDTH / 2
+    this.offsetY = -pos._2 + WINDOW_HEIGHT / 2
+  }
+
   /**
    * Renders all layers in an ordered manner
    *

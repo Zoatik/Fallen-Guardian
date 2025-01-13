@@ -37,6 +37,10 @@ class Camera2D(var up: Int, var down: Int, var left: Int, var right: Int) {
     )
   }
 
+  def setPosition(pos: (Int, Int)): Unit = {
+    Renderer.setCenterPosition(pos)
+  }
+
   /**
    * Handles Camera2D movement Inputs
    * @param keyCode   key code of the eventKey

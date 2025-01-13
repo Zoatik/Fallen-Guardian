@@ -8,7 +8,7 @@ object EntitiesManager {
   val towers: mutable.ListBuffer[Tower] = mutable.ListBuffer()
   val bullets: mutable.ListBuffer[Bullet] = mutable.ListBuffer()
 
-  var player: Player = new Player()
+  var player: Option[Player] = Some(new Player())
   var base: Option[Base] = Some(new Base())
 
 
@@ -20,7 +20,7 @@ object EntitiesManager {
   private var waveCounter: Int = 0
   private var prevSpawnTime: Long = 0
   private val rand: Random = new Random()
-  private val maxEnemies = 20
+  private var maxEnemies = 20
 
   // DEBUG
   InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) spawnEnemy((20,20)))
@@ -57,6 +57,7 @@ object EntitiesManager {
     startTime = GameManager.gameTimer
     waveTimer = 0
     this.waveCounter = waveCounter
+    maxEnemies += 5 * (waveCounter - 1)
   }
 
   def updateWave(): Boolean = {
@@ -84,15 +85,15 @@ object EntitiesManager {
     entity match {
       case enemy: Enemy =>
         enemies -= enemy
-        player.target = None
+        player.get.target = None
         towers.foreach(_.target = None)
       case tower: Tower =>
         towers -= tower
-        player.target = None
+        player.get.target = None
       case bullet: Bullet =>
         bullets -= bullet
         towers.foreach(_.target = None)
-        player.target = None
+        player.get.target = None
       case base: Base =>
         enemies.foreach(enemy => {
           if(enemy.target.get == base)
@@ -100,10 +101,22 @@ object EntitiesManager {
         })
         this.base = None
         GameManager.gameOver(false)
+      case player: Player =>
+        enemies.foreach(enemy => {
+          if(enemy.target.get == player)
+            enemy.target = None
+        })
+        playerKilled()
       case _ =>
         println("Unsupported entity type for destruction.")
     }
     entity.destroy()
+  }
+
+  private def playerKilled(): Unit = {
+    val newLvl: Int = if(player.get.getLvl() > 5) player.get.getLvl() - 5 else 1
+    val newPos: (Int, Int) = base.get.getPosition()
+    player = Some(new Player(_pos = newPos, _lvl = newLvl))
   }
 
   var prevUpdateTime: Long = 0
@@ -115,12 +128,12 @@ object EntitiesManager {
     val currentTime = GameManager.gameTimer
     if(currentTime - prevCoinTime > 1000) {
       prevCoinTime = currentTime
-      player.coins += 1
+      player.get.coins += 1
     }
 
     if(currentTime - prevUpdateTime > 200) {
-      if(!player.isAttacking)
-        player.updateTargetPos()
+      if(!player.get.isAttacking)
+        player.get.updateTargetPos()
 
       enemies.foreach( enemy => {
         if(!enemy.isAttacking)
@@ -134,10 +147,10 @@ object EntitiesManager {
       prevUpdateTime = currentTime
     }
 
-    if(player.isMoving){Constants.PLAYER_MOVE_AUDIO.play()}
+    if(player.get.isMoving){Constants.PLAYER_MOVE_AUDIO.play()}
 
-    player.moveToTarget()
-    player.tryToAttack()
+    player.get.moveToTarget()
+    player.get.tryToAttack()
 
     towers.foreach(tower => {
       tower.towerTryToAttack()

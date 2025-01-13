@@ -8,4 +8,8 @@ class Building(_pos: (Int, Int),
                var isTargetable: Boolean
               ) extends Entity(_pos, _hp, _armor, _lvl, _baseImagePath){
 
+  override def levelUp(): Unit = {
+    price *= 2
+  }
+
 }

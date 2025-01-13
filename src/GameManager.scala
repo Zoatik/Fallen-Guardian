@@ -21,14 +21,16 @@ object GameManager {
   var prevTime: Long = System.currentTimeMillis()
   var gameTimer: Long = 0
   var isPaused: Boolean = false
+  var isReadyToStart: Boolean = false
 
 
   InputManager.bindKey(KeyEvent.VK_B, (_, pressed) => if(!pressed) changeGameMode())
   InputManager.bindKey(KeyEvent.VK_ESCAPE, (_, pressed) => if(!pressed) isPaused = !isPaused)
+  InputManager.bindKey(KeyEvent.VK_ENTER, (_, pressed) => if(!pressed) isReadyToStart = true)
 
   private def changeGameMode(): Unit = {
-    EntitiesManager.player.isBuilding = !EntitiesManager.player.isBuilding
-    Grid.highlightOnMouse = EntitiesManager.player.isBuilding
+    EntitiesManager.player.get.isBuilding = !EntitiesManager.player.get.isBuilding
+    Grid.highlightOnMouse = EntitiesManager.player.get.isBuilding
     Grid.restoreHighlightedCells()
   }
 
@@ -44,6 +46,7 @@ object GameManager {
         Layers.addSprite(LAYER_GROUND, cell.sprite)
       }
     }
+    camera2D.setPosition(GRID_SIZE*CELL_SIZE/2,GRID_SIZE*CELL_SIZE/2)
 
     this.setInputListeners()
     fg.displayFPS(true)
@@ -68,6 +71,7 @@ object GameManager {
     EntitiesManager.startWave(waveCounter)
   }
 
+
   def stopWave(): Unit = {
     isWavePlaying = false
     prevWaveEndedTime = gameTimer
@@ -79,7 +83,7 @@ object GameManager {
       if(!isWavePlaying)
         stopWave()
     }
-    else if(GameManager.gameTimer - prevWaveEndedTime > WAVE_PAUSE_TIME){
+    else if(GameManager.gameTimer - prevWaveEndedTime > WAVE_PAUSE_TIME && isReadyToStart){
       startWave()
     }
 
@@ -133,9 +137,9 @@ object GameManager {
     if(isPaused)
       return
     if (!pressed){
-      if(EntitiesManager.player.isBuilding){
+      if(EntitiesManager.player.get.isBuilding){
         if (mouseButton == MouseEvent.BUTTON1 && cell.state == CellStates.EMPTY) {
-          EntitiesManager.player.build(cell)
+          EntitiesManager.player.get.build(cell)
         }
         else if(mouseButton == MouseEvent.BUTTON3){
           changeGameMode()
@@ -144,9 +148,9 @@ object GameManager {
 
       else {
         if (mouseButton == MouseEvent.BUTTON1) {
-          EntitiesManager.player.target = None
-          EntitiesManager.player.isAttacking = false
-          EntitiesManager.player.calculatePath(cell.pos._1, cell.pos._2)
+          EntitiesManager.player.get.target = None
+          EntitiesManager.player.get.isAttacking = false
+          EntitiesManager.player.get.calculatePath(cell.pos._1, cell.pos._2)
 
         }
       }
@@ -158,17 +162,22 @@ object GameManager {
     if(isPaused)
       return
     if (!pressed) {
-      if(EntitiesManager.player.isBuilding) {
+      if(EntitiesManager.player.get.isBuilding) {
         if (mouseButton == MouseEvent.BUTTON3) {
           entity match {
-            case building: Building => EntitiesManager.player.sell(building)
+            case building: Building => EntitiesManager.player.get.sell(building)
+          }
+        }
+        else if (mouseButton == MouseEvent.BUTTON1){
+          entity match {
+            case building: Building => EntitiesManager.player.get.upgrade(building)
           }
         }
       }
       else {
         if (mouseButton == MouseEvent.BUTTON1) {
           entity match {
-            case enemy: Enemy => EntitiesManager.player.setTarget(enemy)
+            case enemy: Enemy => EntitiesManager.player.get.setTarget(enemy)
             case _ =>
           }
         }

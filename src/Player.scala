@@ -79,9 +79,20 @@ class Player(
     }
   }
 
+  def upgrade(building: Building): Unit = {
+    var price: Int = 0
+    building match {
+      case tower: Tower => price = tower.price
+    }
+    if(coins >= price){
+      coins -= price
+      building.levelUp()
+    }
+  }
+
   def sell(building: Building): Unit = {
     building match {
-      case tower: Tower => coins += Constants.BUILD_TOWER_PRICE / 2
+      case tower: Tower => coins += tower.price / 2
     }
     Grid.removeBuilding(building)
     println("tower sold, coins : " + coins)

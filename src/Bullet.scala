@@ -64,7 +64,7 @@ class Bullet(
 
   def hit(): Unit = {
     if (target.get.takeDamage(sourceTower.damage, sourceTower)) {
-        EntitiesManager.player.coins += target.get.getLvl()
+        EntitiesManager.player.get.coins += target.get.getLvl()
         EntitiesManager.destroyEntity(target.get)
       }
     EntitiesManager.destroyEntity(this)

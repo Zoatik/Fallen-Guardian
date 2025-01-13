@@ -1,20 +1,40 @@
 class Tower(
-             _pos: (Int, Int) = Constants.TOWER_DEFAULT_POS,
-             _hp: Int = Constants.TOWER_DEFAULT_HP,
-             _armor: Int = Constants.TOWER_DEFAULT_ARMOR,
-             _lvl: Int = 1,
-             _baseImagePath: String = Constants.TOWER_DEFAULT_IMAGE_PATH,
-             _price: Int = 3,
-             _blockPath: Boolean = true,
-             _isTargetable: Boolean = true,
-             var damage: Int = Constants.TOWER_DEFAULT_DAMAGE,
-             var range: Int = Constants.TOWER_DEFAULT_RANGE,
-             var attackSpeed: Double = Constants.TOWER_DEFAULT_ATTACK_SPEED,
+             _pos: (Int, Int),
+             _hp: Int,
+             _armor: Int,
+             _lvl: Int,
+             _baseImagePath: String,
+             _price: Int,
+             _blockPath: Boolean,
+             _isTargetable: Boolean,
+             var damage: Int,
+             var range: Int,
+             var attackSpeed: Double,
              var target: Option[Enemy] = None
            ) extends Building(_pos, _hp, _armor, _lvl, _baseImagePath, _price, _blockPath, _isTargetable) {
 
 
-  def this(pos: (Int, Int), lvl: Int) = this(_pos = pos, _lvl = lvl)
+  def this(pos: (Int, Int), lvl: Int) = this(
+    _pos = pos,
+    _hp = Constants.TOWER_DEFAULT_HP,
+    _armor = Constants.TOWER_DEFAULT_ARMOR,
+    _lvl = lvl,
+    _baseImagePath = Constants.TOWER_DEFAULT_IMAGE_PATH,
+    _price = Constants.BUILD_TOWER_PRICE,
+    _blockPath = true,
+    _isTargetable = true,
+    damage = Constants.TOWER_DEFAULT_DAMAGE * lvl,
+    range = Constants.TOWER_DEFAULT_RANGE * (1 + lvl / 5),
+    attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED * (1 + lvl/10.0)
+  )
+
+  override def levelUp(): Unit = {
+    super.levelUp()
+    damage = Constants.TOWER_DEFAULT_DAMAGE * lvl
+    range = Constants.TOWER_DEFAULT_RANGE * (1 + lvl / 5)
+    attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED * (1 + lvl/10.0)
+    println("TOWER UPGRADED")
+  }
 
   override def updateTarget(): Unit = {
     if (target.isDefined) {
