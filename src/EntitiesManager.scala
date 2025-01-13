@@ -36,7 +36,7 @@ object EntitiesManager {
   }
 
   def spawnBullet(pos: (Int, Int), sourceTower: Tower): Unit = {
-    bullets += new Bullet(pos, sourceTower)
+    bullets += new Bullet((0,-1), sourceTower)
   }
 
 
@@ -118,7 +118,7 @@ object EntitiesManager {
       })
 
       bullets.foreach(bullet =>{
-        bullet.updateTargetPos()
+        bullet.refreshPath()
       })
 
       prevUpdateTime = currentTime
@@ -130,9 +130,8 @@ object EntitiesManager {
     towers.foreach(tower => {
       tower.towerTryToAttack()
     })
-    bullets.foreach(bullet => {
+    bullets.toList.foreach(bullet => {
       bullet.moveToTarget()
-      bullet.updateAttack()
     })
     
     enemies.foreach(enemy => {
