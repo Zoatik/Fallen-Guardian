@@ -79,15 +79,15 @@ class Player(
     }
   }
 
-  def upgrade(building: Building): Unit = {
+  def upgrade(building: Building): Boolean = {
     var price: Int = 0
-    building match {
-      case tower: Tower => price = tower.price
-    }
+    price = building.price
     if(coins >= price){
       coins -= price
       building.levelUp()
+      return true
     }
+    false
   }
 
   def sell(building: Building): Unit = {

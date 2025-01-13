@@ -2,6 +2,8 @@ import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import hevs.graphics.FunGraphics
 import Constants._
 
+import java.awt.{Component, Cursor}
+
 
 /**
  * Main Manager that handles the game logics
@@ -9,6 +11,9 @@ import Constants._
 object GameManager {
   // Window and Grid setup
   val fg = new FunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Fallen Guardian", false)
+
+  //fg.mainFrame.setCursor(Cursor.HAND_CURSOR)
+
 
   val camera2D: Camera2D = new Camera2D()
   var mouseX: Int = 0
@@ -32,6 +37,10 @@ object GameManager {
     EntitiesManager.player.get.isBuilding = !EntitiesManager.player.get.isBuilding
     Grid.highlightOnMouse = EntitiesManager.player.get.isBuilding
     Grid.restoreHighlightedCells()
+    if(EntitiesManager.player.get.isBuilding)
+      changeCursor(CURSOR_BUILD)
+    else
+      changeCursor(CURSOR_DEFAULT)
   }
 
 
@@ -47,12 +56,14 @@ object GameManager {
       }
     }
     camera2D.setPosition(GRID_SIZE*CELL_SIZE/2,GRID_SIZE*CELL_SIZE/2)
+    changeCursor(CURSOR_DEFAULT)
 
     this.setInputListeners()
     fg.displayFPS(true)
 
     initialized = true
   }
+
 
   /**
    * ensures that the Game Manager is initialized before use
@@ -64,6 +75,9 @@ object GameManager {
     }
   }
 
+  private def changeCursor(cursor: Cursor): Unit = {
+    fg.mainFrame.getComponent(0).setCursor(cursor)
+  }
 
   def startWave(): Unit = {
     waveCounter += 1
@@ -161,27 +175,60 @@ object GameManager {
     ensureInitialized()
     if(isPaused)
       return
+    val player: Player = EntitiesManager.player.getOrElse(return)
     if (!pressed) {
-      if(EntitiesManager.player.get.isBuilding) {
-        if (mouseButton == MouseEvent.BUTTON3) {
+      if(player.isBuilding) {
+        if (mouseButton == MouseEvent.BUTTON1) {
           entity match {
-            case building: Building => EntitiesManager.player.get.sell(building)
-          }
-        }
-        else if (mouseButton == MouseEvent.BUTTON1){
-          entity match {
-            case building: Building => EntitiesManager.player.get.upgrade(building)
+            case building: Building => player.sell(building)
+            case _ => return
           }
         }
       }
       else {
         if (mouseButton == MouseEvent.BUTTON1) {
           entity match {
-            case enemy: Enemy => EntitiesManager.player.get.setTarget(enemy)
-            case _ =>
+            case enemy: Enemy => player.setTarget(enemy)
+            case building: Building =>
+              if(player.upgrade(building) && player.coins < building.price)
+                changeCursor(CURSOR_NO_UPGRADE)
+
+            case _ => return
           }
         }
       }
+    }
+  }
+
+  def handleOnEntityEntered(entity: Entity): Unit = {
+    val player = EntitiesManager.player.getOrElse(return)
+    if(player.isBuilding) {
+      entity match {
+        case _: Enemy => changeCursor(CURSOR_NO_BUILD)
+        case _: Player => changeCursor(CURSOR_NO_BUILD)
+        case _: Base => changeCursor(CURSOR_NO_BUILD)
+        case _: Building => changeCursor(CURSOR_SELL)
+        case _ =>
+      }
+    }
+    else {
+      entity match {
+        case enemy : Enemy => changeCursor(CURSOR_ATTACK)
+        case building: Building =>
+          if(player.coins >= building.price)
+            changeCursor(CURSOR_UPGRADE)
+          else
+            changeCursor(CURSOR_NO_UPGRADE)
+
+        case _ =>
+      }
+    }
+  }
+
+  def handleOnEntityLeft(entity: Entity): Unit = {
+    entity match {
+      case _: Enemy => changeCursor(CURSOR_DEFAULT)
+      case _ => changeCursor(CURSOR_DEFAULT)
     }
   }
 

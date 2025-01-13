@@ -1,4 +1,7 @@
+import java.awt.{Cursor, Point, Toolkit}
 import java.awt.event.KeyEvent
+import javax.imageio.ImageIO
+import java.io.File
 
 object Constants {
   val WINDOW_WIDTH: Int = 1400//1920//1400//1600
@@ -34,6 +37,27 @@ object Constants {
   //* ------------------------* */
     // UI Constants
   //val COLLISION_FRAME_MAGNIFICATION = 15
+  private val cursorDefaultImage = ImageIO.read(getClass.getResource("res/Cursors/defaultCursor.png"))
+  private val cursorBuildImage = ImageIO.read(getClass.getResource("res/Cursors/buildCursor.png"))
+  private val cursorNoBuildImage = ImageIO.read(getClass.getResource("res/Cursors/noBuildCursor.png"))
+  private val cursorUpgradeImage = ImageIO.read(getClass.getResource("res/Cursors/upgradeCursor.png"))
+  private val cursorNoUpgradeImage = ImageIO.read(getClass.getResource("res/Cursors/noUpgradeCursor.png"))
+  private val cursorSellImage = ImageIO.read(getClass.getResource("res/Cursors/sellCursor.png"))
+  private val cursorNoSellImage = ImageIO.read(getClass.getResource("res/Cursors/noSellCursor.png"))
+  private val cursorAttackImage = ImageIO.read(getClass.getResource("res/Cursors/attackCursor.png"))
+
+
+  private val hotspotTopLeft = new Point(0,0)
+  private val hotspotCenter = new Point(16,16)
+  val CURSOR_DEFAULT: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorDefaultImage, hotspotTopLeft, "Default Cursor")
+  val CURSOR_BUILD: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorBuildImage, hotspotTopLeft, "build Cursor")
+  val CURSOR_NO_BUILD: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorNoBuildImage, hotspotTopLeft, "no build Cursor")
+  val CURSOR_UPGRADE: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorUpgradeImage, hotspotTopLeft, "upgrade Cursor")
+  val CURSOR_NO_UPGRADE: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorNoUpgradeImage, hotspotTopLeft, "no upgrade Cursor")
+  val CURSOR_SELL: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorSellImage, hotspotTopLeft, "sell Cursor")
+  val CURSOR_NO_SELL: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorNoSellImage, hotspotTopLeft, "no sell Cursor")
+  val CURSOR_ATTACK: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorAttackImage, hotspotCenter, "attack Cursor")
+
 
   //* ------------------------* */
     // Player spawn constants

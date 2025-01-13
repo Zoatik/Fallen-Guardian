@@ -145,10 +145,12 @@ class Entity(
 
   private def mouseEntered(): Unit = {
     sprite.brighten(2)
+    GameManager.handleOnEntityEntered(this)
   }
 
   private def mouseLeft(): Unit = {
     sprite.restoreImage()
+    GameManager.handleOnEntityLeft(this)
   }
 
   def getHp(): Int = hp
