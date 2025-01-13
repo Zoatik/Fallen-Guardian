@@ -102,4 +102,16 @@ object AnimationsResources {
     )
   }
 
+  val ANIM_BASE_HURT: mutable.ListBuffer[String] = {
+    mutable.ListBuffer(
+      "/res/Base/base_0.png",
+      "/res/Base/base_1.png",
+      "/res/Base/base_2.png",
+      "/res/Base/base_1.png",
+      "/res/Base/base_2.png",
+      "/res/Base/base_0.png",
+    )
+  }
+
+
 }

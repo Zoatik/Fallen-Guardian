@@ -9,6 +9,22 @@ object EntitiesManager {
   val bullets: mutable.ListBuffer[Bullet] = mutable.ListBuffer()
 
   val player: Player = new Player()
+  val base: Entity = new Entity(
+    pos = Constants.BASE_DEFAULT_POS,
+    hp = Constants.BASE_DEFAULT_HP,
+    armor = Constants.BASE_DEFAULT_ARMOR,
+    lvl = 1,
+    baseImagePath = Constants.BASE_DEFAULT_IMAGE_PATH
+  )
+  base.addAnimation("hurt", new Animation(
+    spriteTarget = base.sprite,
+    imagesPathBuffer = AnimationsResources.ANIM_BASE_HURT,
+    duration = 1000,
+    loop = false,
+    active = false
+  ))
+
+  Layers.addSprite(Constants.LAYER_ENTITIES, base.sprite)
 
 
 
@@ -26,7 +42,7 @@ object EntitiesManager {
   private def spawnEnemy(pos: (Int, Int)): Unit = {
     val oscour: Enemy = new Enemy(pos, waveCounter)
     enemies += oscour
-    oscour.calculatePath(30,30) // TODO : set the base as target
+    oscour.target = Some(base)
   }
 
   def addBuilding(pos: (Int, Int), buildType: Int, lvl: Int): Unit = {

@@ -73,6 +73,13 @@ object Constants {
   val BULLET_DEFAULT_IMAGE_PATH: String = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png"//"/res/Tower/bullet/bullet_0.png"
 
   //* ------------------------* */
+  // Base constants
+  val BASE_DEFAULT_POS: (Int, Int) = (29, 29)
+  val BASE_DEFAULT_HP: Int = 100
+  val BASE_DEFAULT_ARMOR: Int = 1
+  val BASE_DEFAULT_IMAGE_PATH: String = "/res/Base/base_0.png"//"/res/Tower/bullet/bullet_0.png"
+
+  //* ------------------------* */
   // Build system constants
   val BUILD_TOWER: Int = 0
   val BUILD_BARRICADE: Int = 1
