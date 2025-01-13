@@ -98,6 +98,7 @@ object AnimationsResources {
       "/res/Tower/IdleAnimation/tower_08.png",
       "/res/Tower/IdleAnimation/tower_09.png",
       "/res/Tower/IdleAnimation/tower_10.png",
+      "/res/Tower/IdleAnimation/tower_11.png"
     )
   }
 
