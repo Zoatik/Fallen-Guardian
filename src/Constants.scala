@@ -47,7 +47,7 @@ object Constants {
   val PLAYER_DEFAULT_COINS: Int = 100
 
   //* ------------------------* */
-  // Tower constants
+    // Tower constants
   val ENEMY_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
   val ENEMY_DEFAULT_HP: Int = 10
   val ENEMY_DEFAULT_ARMOR: Int = 1
@@ -68,27 +68,37 @@ object Constants {
   val TOWER_DEFAULT_ATTACK_SPEED: Double = 3000
 
   //* ------------------------* */
-  // Tower bullet constants
+    // Tower bullet constants
   val BULLET_VELOCITY: Int = 5
   val BULLET_DEFAULT_IMAGE_PATH: String = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png"//"/res/Tower/bullet/bullet_0.png"
 
   //* ------------------------* */
-  // Base constants
+    // Base constants
   val BASE_DEFAULT_POS: (Int, Int) = (29, 29)
   val BASE_DEFAULT_HP: Int = 100
   val BASE_DEFAULT_ARMOR: Int = 1
   val BASE_DEFAULT_IMAGE_PATH: String = "/res/Base/base_0.png"//"/res/Tower/bullet/bullet_0.png"
 
   //* ------------------------* */
-  // Build system constants
+    // Build system constants
   val BUILD_TOWER: Int = 0
   val BUILD_BARRICADE: Int = 1
   val BUILD_TOWER_PRICE: Int = 50
   val BUILD_BARRICADE_PRICE: Int = 10
 
   //* ------------------------* */
-  // Waves constants -> time in milliseconds
+    // Waves constants -> time in milliseconds
   val WAVE_TIME: Int = 180_000
   val WAVE_PAUSE_TIME: Int = 10_000
+
+  //* ------------------------* */
+  // Audio constants
+  val THEME_SONG: Audio = new Audio("/res/Audio/theme.wav")
+
+  val PLAYER_MOVE_AUDIO: Audio = new Audio(s"/res/Audio/PlayerAudio/WalkAudio/Walk_${(math.random() * (15-1) + 1).toInt}.wav")
+  val PLAYER_ATTACK_AUDIO: Audio = new Audio("/res/Audio/PlayerAudio/AttackAudio/Sword_slash2.wav")
+
+  val GOBLIN_HURT_AUDIO: Audio = new Audio("/res/Audio/GoblinAudio/goblin_hurt.wav")
+  val GOBLIN_DEATH_AUDIO: Audio = new Audio("/res/Audio/GoblinAudio/goblin_death.wav")
 }
 
