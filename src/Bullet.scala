@@ -36,6 +36,9 @@ class Bullet(
     if(hasReachedTarget()){
       hit()
     }
+    else if(target.isEmpty){
+      EntitiesManager.destroyEntity(this)
+    }
     else {
       move(direction._1, direction._2)
     }
@@ -65,11 +68,10 @@ class Bullet(
         EntitiesManager.destroyEntity(target.get)
       }
     EntitiesManager.destroyEntity(this)
-    println(s"-------------------bullet has dealt damage.")
   }
 
 
-  Layers.addSprite(Constants.LAYER_ENTITIES, this.sprite)
+  Layers.addSprite(Constants.LAYER_PLAYER, this.sprite)
 
 
 }

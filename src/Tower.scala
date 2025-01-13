@@ -24,22 +24,25 @@ class Tower(
   }
 
   override def findTarget(): Option[Enemy] = {
-    var minDist: Double = Double.PositiveInfinity
-    var closestTarget: Option[Enemy] = None
-    EntitiesManager.enemies.foreach(enemy => {
-      //val currentDist: Double = this.absDistanceTo(enemy)
-      //je ne savais pas comment accéder à cette distance dans la partie towerTryToAttack
-      //j'ai donc créer une variable globale currentDist.
-      val currentDist: Double = this.absDistanceTo(enemy)
-      if (currentDist < minDist) {
-        minDist = currentDist
-        closestTarget = Some(enemy)
+    if(target.isEmpty) {
+      var minDist: Double = Double.PositiveInfinity
+      var closestTarget: Option[Enemy] = None
+      EntitiesManager.enemies.foreach(enemy => {
+        //val currentDist: Double = this.absDistanceTo(enemy)
+        //je ne savais pas comment accéder à cette distance dans la partie towerTryToAttack
+        //j'ai donc créer une variable globale currentDist.
+        val currentDist: Double = this.absDistanceTo(enemy)
+        if (currentDist < minDist) {
+          minDist = currentDist
+          closestTarget = Some(enemy)
+        }
+      })
+      if (minDist > range) {
+        closestTarget = None
       }
-    })
-    if(minDist > range) {
-      closestTarget = None
+      return closestTarget
     }
-    closestTarget
+    target
   }
 
   def towerTryToAttack(): Unit = {

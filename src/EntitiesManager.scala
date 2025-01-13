@@ -126,7 +126,7 @@ object EntitiesManager {
 
     player.moveToTarget()
     player.tryToAttack()
-    //tower.findTarget()
+
     towers.foreach(tower => {
       tower.towerTryToAttack()
     })

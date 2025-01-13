@@ -37,14 +37,17 @@ class Character(
   }
 
   def moveToTarget(): Boolean = {
+    if(isStunned && System.currentTimeMillis() - lastTimeStunned < 500)
+      return false
+    isStunned = false
+
     if(!isMoving || isAttacking)
       return true
 
     if(animations("idle").playing)
       playAnimation("walk")
-    if(isStunned && System.currentTimeMillis() - lastTimeStunned < 500)
-      return false
-    isStunned = false
+
+
     var dist = this.absDistanceTo(this.nextStep)
     checkTargetReached()
     if(hasReachedTarget){
@@ -135,6 +138,7 @@ class Character(
 
   def tryToAttack(): Unit = {
     if(!isStunned && System.currentTimeMillis() - prevAttackTime > attackCooldown) {
+      if(this.isInstanceOf[Enemy]) println("try to attack")
       checkTargetReached()
       if(hasReachedTarget) {
         attack()

@@ -46,6 +46,7 @@ class Enemy(
     lastTimeStunned = System.currentTimeMillis()
     val isDead = super.takeDamage(amount, source)
     this.target = Some(source)
+    println("new target : " + this.target)
     this.updateTargetPos()
     isDead
   }
