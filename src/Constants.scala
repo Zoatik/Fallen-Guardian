@@ -65,7 +65,7 @@ object Constants {
   val TOWER_DEFAULT_IMAGE_PATH: String = "/res/Tower/IdleAnimation/tower_00.png"
   val TOWER_DEFAULT_DAMAGE: Int = 4
   val TOWER_DEFAULT_RANGE: Int = 128
-  val TOWER_DEFAULT_ATTACK_SPEED: Double = 4
+  val TOWER_DEFAULT_ATTACK_SPEED: Double = 3000
 
   //* ------------------------* */
   // Tower bullet constants
