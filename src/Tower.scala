@@ -53,11 +53,8 @@ class Tower(
 
   protected def towerAttack(): Unit = {
     if(target.isDefined){
-      if (target.get.takeDamage(damage, this)) {
-        EntitiesManager.player.coins += target.get.getLvl()
-        EntitiesManager.destroyEntity(target.get)
-        println(s"-------------------Tower has dealt damage.")
-      }
+      EntitiesManager.spawnBullet(this.pos, this)
+      println("TOWER SPAWN BULLET at : " + pos)
     }
   }
 

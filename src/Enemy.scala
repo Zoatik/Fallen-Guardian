@@ -45,6 +45,10 @@ class Enemy(
     isStunned = true
     lastTimeStunned = System.currentTimeMillis()
     val isDead = super.takeDamage(amount, source)
+    source match {
+      case player: Player => this.target = Some(player)
+      case bullet: Bullet => this.target = Some(bullet.sourceTower)
+    }
     this.target = Some(source)
     this.updateTargetPos()
     isDead

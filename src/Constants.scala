@@ -68,6 +68,11 @@ object Constants {
   val TOWER_DEFAULT_ATTACK_SPEED: Double = 4
 
   //* ------------------------* */
+  // Tower bullet constants
+  val BULLET_VELOCITY: Int = 5
+  val BULLET_DEFAULT_IMAGE_PATH: String = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png"//"/res/Tower/bullet/bullet_0.png"
+
+  //* ------------------------* */
   // Build system constants
   val BUILD_TOWER: Int = 0
   val BUILD_BARRICADE: Int = 1

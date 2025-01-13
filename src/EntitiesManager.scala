@@ -6,6 +6,7 @@ object EntitiesManager {
 
   val enemies: mutable.ListBuffer[Enemy] = mutable.ListBuffer()
   val towers: mutable.ListBuffer[Tower] = mutable.ListBuffer()
+  val bullets: mutable.ListBuffer[Bullet] = mutable.ListBuffer()
 
   val player: Player = new Player()
 
@@ -32,6 +33,10 @@ object EntitiesManager {
     if(buildType == Constants.BUILD_TOWER){
       towers += new Tower(pos, lvl)
     }
+  }
+
+  def spawnBullet(pos: (Int, Int), sourceTower: Tower): Unit = {
+    bullets += new Bullet(pos, sourceTower)
   }
 
 
@@ -77,8 +82,13 @@ object EntitiesManager {
       case enemy: Enemy =>
         enemies -= enemy
         player.target = None
+        towers.foreach(_.target = None)
       case tower: Tower =>
         towers -= tower
+        player.target = None
+      case bullet: Bullet =>
+        bullets -= bullet
+        towers.foreach(_.target = None)
         player.target = None
       case _ =>
         println("Unsupported entity type for destruction.")
@@ -107,6 +117,10 @@ object EntitiesManager {
           enemy.updateTargetPos()
       })
 
+      bullets.foreach(bullet =>{
+        bullet.updateTargetPos()
+      })
+
       prevUpdateTime = currentTime
     }
 
@@ -115,6 +129,10 @@ object EntitiesManager {
     //tower.findTarget()
     towers.foreach(tower => {
       tower.towerTryToAttack()
+    })
+    bullets.foreach(bullet => {
+      bullet.moveToTarget()
+      bullet.updateAttack()
     })
     
     enemies.foreach(enemy => {
