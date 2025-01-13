@@ -45,6 +45,12 @@ class Enemy(
     isStunned = true
     lastTimeStunned = System.currentTimeMillis()
     val isDead = super.takeDamage(amount, source)
+    if (!isDead) {
+      Constants.GOBLIN_HURT_AUDIO.play()
+    }
+    else {
+      Constants.GOBLIN_DEATH_AUDIO.play()
+    }
     this.target = Some(source)
     this.updateTargetPos()
     isDead

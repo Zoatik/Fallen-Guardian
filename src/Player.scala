@@ -55,6 +55,7 @@ class Player(
   override def updateTarget(): Unit = {}
 
   override protected def attack(): Unit = {
+    Constants.PLAYER_ATTACK_AUDIO.play()
     super.attack()
     if(!isStunned && target.isDefined)
       if(target.get.takeDamage(damage, this)){

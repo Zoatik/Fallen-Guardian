@@ -12,6 +12,7 @@ object EntitiesManager {
   var base: Option[Base] = Some(new Base())
 
 
+  Constants.THEME_SONG.audioClip.loop(999999)
 
 
   var waveTimer: Long = 0
@@ -132,6 +133,8 @@ object EntitiesManager {
 
       prevUpdateTime = currentTime
     }
+
+    if(player.isMoving){Constants.PLAYER_MOVE_AUDIO.play()}
 
     player.moveToTarget()
     player.tryToAttack()
