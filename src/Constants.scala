@@ -88,6 +88,17 @@ object Constants {
   val PLAYER_HP_BAR_4: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health4.png")
   val PLAYER_HP_BAR_5: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health5.png")
 
+  val UI_PLAYER_DISPLAY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/playerStats.png")
+  val UI_BASE_LIFE_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_0.png")
+  val UI_BASE_LIFE_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life1_0.png")
+  val UI_BASE_LIFE_1_HIGHLIGHTED: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life1_1.png")
+  val UI_BASE_LIFE_25: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_25.png")
+  val UI_BASE_LIFE_50: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_50.png")
+  val UI_BASE_LIFE_75: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_75.png")
+  val UI_BASE_LIFE_100: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_100.png")
+  val UI_BOARD: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/board.png")
+
+
   //* ------------------------* */
     // Player spawn constants
   val PLAYER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
