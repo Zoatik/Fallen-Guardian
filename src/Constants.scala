@@ -62,23 +62,23 @@ object Constants {
   //* ------------------------* */
     // Player spawn constants
   val PLAYER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
-  val PLAYER_DEFAULT_HP: Int = 10
+  val PLAYER_DEFAULT_HP: Int = 50
   val PLAYER_DEFAULT_ARMOR: Int = 5
 
   val PLAYER_DEFAULT_IMAGE_PATH: String = "/res/Characters/Soldier/idle/soldierIdle_0.png"
   val PLAYER_DEFAULT_VELOCITY: Double = 4.0
   val PLAYER_DEFAULT_DAMAGE: Int = 8
-  val PLAYER_DEFAULT_COINS: Int = 100
+  val PLAYER_DEFAULT_COINS: Int = 1000000
 
   //* ------------------------* */
     // Tower constants
   val ENEMY_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
-  val ENEMY_DEFAULT_HP: Int = 10
+  val ENEMY_DEFAULT_HP: Int = 5
   val ENEMY_DEFAULT_ARMOR: Int = 1
 
   val ENEMY_DEFAULT_IMAGE_PATH: String = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png"
   val ENEMY_DEFAULT_VELOCITY: Double = 1.8
-  val ENEMY_DEFAULT_DAMAGE: Int = 2
+  val ENEMY_DEFAULT_DAMAGE: Int = 1
 
   //* ------------------------* */
     // Tower constants
@@ -112,7 +112,7 @@ object Constants {
 
   //* ------------------------* */
     // Waves constants -> time in milliseconds
-  val WAVE_TIME: Int = 180_000
+  val WAVE_TIME: Int = 60_000
   val WAVE_PAUSE_TIME: Int = 10_000
 
   //* ------------------------* */

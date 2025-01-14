@@ -25,11 +25,11 @@ object AnimationsResources {
   val ANIM_SOLDIER_WALK: mutable.ListBuffer[String] = {
     mutable.ListBuffer(
       "/res/Characters/Soldier/walk/soldierWalk_0.png",
-      "/res/Characters/Soldier/walk/soldierWalk_1.png",
+      //"/res/Characters/Soldier/walk/soldierWalk_1.png",
       "/res/Characters/Soldier/walk/soldierWalk_2.png",
-      "/res/Characters/Soldier/walk/soldierWalk_3.png",
+      //"/res/Characters/Soldier/walk/soldierWalk_3.png",
       "/res/Characters/Soldier/walk/soldierWalk_4.png",
-      "/res/Characters/Soldier/walk/soldierWalk_5.png",
+      //"/res/Characters/Soldier/walk/soldierWalk_5.png",
       "/res/Characters/Soldier/walk/soldierWalk_6.png",
       "/res/Characters/Soldier/walk/soldierWalk_7.png"
     )}
@@ -63,11 +63,11 @@ object AnimationsResources {
     mutable.ListBuffer(
       "/res/Characters/Enemy/Orc/walk/orcWalk_0.png", // TO FIX A FLICKERING PROBLEM
 
-      "/res/Characters/Enemy/Orc/attack1/orcAttack1_0.png",
-      "/res/Characters/Enemy/Orc/attack1/orcAttack1_1.png",
+      //"/res/Characters/Enemy/Orc/attack1/orcAttack1_0.png",
+      //"/res/Characters/Enemy/Orc/attack1/orcAttack1_1.png",
       "/res/Characters/Enemy/Orc/attack1/orcAttack1_2.png",
       "/res/Characters/Enemy/Orc/attack1/orcAttack1_3.png",
-      "/res/Characters/Enemy/Orc/attack1/orcAttack1_4.png",
+      //"/res/Characters/Enemy/Orc/attack1/orcAttack1_4.png",
       "/res/Characters/Enemy/Orc/attack1/orcAttack1_5.png",
 
     )}
@@ -75,11 +75,11 @@ object AnimationsResources {
   val ANIM_ORC_WALK: mutable.ListBuffer[String] = {
     mutable.ListBuffer(
       "/res/Characters/Enemy/Orc/walk/orcWalk_0.png",
-      "/res/Characters/Enemy/Orc/walk/orcWalk_1.png",
+      //"/res/Characters/Enemy/Orc/walk/orcWalk_1.png",
       "/res/Characters/Enemy/Orc/walk/orcWalk_2.png",
-      "/res/Characters/Enemy/Orc/walk/orcWalk_3.png",
+      //"/res/Characters/Enemy/Orc/walk/orcWalk_3.png",
       "/res/Characters/Enemy/Orc/walk/orcWalk_4.png",
-      "/res/Characters/Enemy/Orc/walk/orcWalk_5.png",
+      //"/res/Characters/Enemy/Orc/walk/orcWalk_5.png",
       "/res/Characters/Enemy/Orc/walk/orcWalk_6.png",
       "/res/Characters/Enemy/Orc/walk/orcWalk_7.png"
     )}
@@ -88,16 +88,16 @@ object AnimationsResources {
   val ANIM_TOWER_IDLE: mutable.ListBuffer[String] = {
     mutable.ListBuffer(
       "/res/Tower/IdleAnimation/tower_00.png",
-      "/res/Tower/IdleAnimation/tower_01.png",
-      "/res/Tower/IdleAnimation/tower_02.png",
+      //"/res/Tower/IdleAnimation/tower_01.png",
+      //"/res/Tower/IdleAnimation/tower_02.png",
       "/res/Tower/IdleAnimation/tower_03.png",
-      "/res/Tower/IdleAnimation/tower_04.png",
-      "/res/Tower/IdleAnimation/tower_05.png",
+      //"/res/Tower/IdleAnimation/tower_04.png",
+      //"/res/Tower/IdleAnimation/tower_05.png",
       "/res/Tower/IdleAnimation/tower_06.png",
-      "/res/Tower/IdleAnimation/tower_07.png",
-      "/res/Tower/IdleAnimation/tower_08.png",
+      //"/res/Tower/IdleAnimation/tower_07.png",
+      //"/res/Tower/IdleAnimation/tower_08.png",
       "/res/Tower/IdleAnimation/tower_09.png",
-      "/res/Tower/IdleAnimation/tower_10.png",
+      //"/res/Tower/IdleAnimation/tower_10.png",
       "/res/Tower/IdleAnimation/tower_11.png"
     )
   }

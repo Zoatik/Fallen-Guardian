@@ -34,11 +34,16 @@ object GameManager {
   InputManager.bindKey(KeyEvent.VK_ENTER, (_, pressed) => if(!pressed) isReadyToStart = true)
 
   private def changeGameMode(): Unit = {
-    EntitiesManager.player.get.isBuilding = !EntitiesManager.player.get.isBuilding
-    Grid.highlightOnMouse = EntitiesManager.player.get.isBuilding
+    val player: Player = EntitiesManager.player.getOrElse(return)
+    player.isBuilding = !player.isBuilding
+    Grid.highlightOnMouse = player.isBuilding
     Grid.restoreHighlightedCells()
-    if(EntitiesManager.player.get.isBuilding)
-      changeCursor(CURSOR_BUILD)
+    if(player.isBuilding) {
+      if(player.canAffordBuild())
+        changeCursor(CURSOR_BUILD)
+      else
+        changeCursor(CURSOR_NO_BUILD)
+    }
     else
       changeCursor(CURSOR_DEFAULT)
   }
@@ -89,6 +94,7 @@ object GameManager {
   def stopWave(): Unit = {
     isWavePlaying = false
     prevWaveEndedTime = gameTimer
+    println("Wave Stopped")
   }
 
   private def update(): Unit = {
@@ -127,7 +133,7 @@ object GameManager {
     while (true) {
       InputManager.handleKeys()
       InputManager.handleMouse()
-
+      println(Renderer.deltaT)
       if(!isPaused) {
         gameTimer += System.currentTimeMillis() - prevTime
         prevTime = System.currentTimeMillis()
@@ -150,10 +156,11 @@ object GameManager {
     ensureInitialized()
     if(isPaused)
       return
+    val player: Player = EntitiesManager.player.getOrElse(return)
     if (!pressed){
-      if(EntitiesManager.player.get.isBuilding){
+      if(player.isBuilding){
         if (mouseButton == MouseEvent.BUTTON1 && cell.state == CellStates.EMPTY) {
-          EntitiesManager.player.get.build(cell)
+          player.build(cell)
         }
         else if(mouseButton == MouseEvent.BUTTON3){
           changeGameMode()
@@ -162,9 +169,9 @@ object GameManager {
 
       else {
         if (mouseButton == MouseEvent.BUTTON1) {
-          EntitiesManager.player.get.target = None
-          EntitiesManager.player.get.isAttacking = false
-          EntitiesManager.player.get.calculatePath(cell.pos._1, cell.pos._2)
+          player.target = None
+          player.isAttacking = false
+          player.calculatePath(cell.pos._1, cell.pos._2)
 
         }
       }
@@ -190,7 +197,7 @@ object GameManager {
           entity match {
             case enemy: Enemy => player.setTarget(enemy)
             case building: Building =>
-              if(player.upgrade(building) && player.coins < building.price)
+              if(player.upgrade(building) && player.canAffordUpgrade(building))
                 changeCursor(CURSOR_NO_UPGRADE)
 
             case _ => return
@@ -215,7 +222,7 @@ object GameManager {
       entity match {
         case enemy : Enemy => changeCursor(CURSOR_ATTACK)
         case building: Building =>
-          if(player.coins >= building.price)
+          if(player.canAffordUpgrade(building))
             changeCursor(CURSOR_UPGRADE)
           else
             changeCursor(CURSOR_NO_UPGRADE)
@@ -226,9 +233,20 @@ object GameManager {
   }
 
   def handleOnEntityLeft(entity: Entity): Unit = {
-    entity match {
-      case _: Enemy => changeCursor(CURSOR_DEFAULT)
-      case _ => changeCursor(CURSOR_DEFAULT)
+    val player = EntitiesManager.player.getOrElse(return)
+    if(player.isBuilding) {
+      entity match {
+        case _ =>
+          if(player.canAffordBuild())
+            changeCursor(CURSOR_BUILD)
+          else
+            changeCursor(CURSOR_NO_BUILD)
+      }
+    }
+    else {
+      entity match {
+        case _ => changeCursor(CURSOR_DEFAULT)
+      }
     }
   }
 

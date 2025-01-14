@@ -97,11 +97,22 @@ class Character(
     pathQueue.removeAll()
     val startCell: Cell = Grid.getCell(this.pos._1, this.pos._2).getOrElse(Grid.getCell(0,0).get)
     val targetCell: Cell = Grid.getCell(posX, posY).getOrElse(Grid.getCell(0,0).get)
-    for(cell <- Grid.findPath(startCell, targetCell).getOrElse(Array.empty)){
+    var path: Option[Array[Cell]] = Grid.findPath(startCell, targetCell)
+    if(path.isEmpty){
+      path = Grid.findPathToNextCollider(startCell, targetCell)
+      println("path : " + path)
+      if(path.nonEmpty){
+        target = path.get.last.entityPlaced
+        updateTargetPos(true)
+      }
+
+    }
+    if(path.isEmpty)
+      return false
+    for(cell <- path.get){
       this.pathQueue.enqueue(cell)
     }
-    if(pathQueue.isEmpty)
-      return false
+
     nextStep = this.pathQueue.dequeue().absolutePos
     checkTargetReached()
     if(!hasReachedTarget)
@@ -123,9 +134,12 @@ class Character(
     isMoving = false
   }
 
-  def updateTargetPos(): Unit = {
+  def updateTargetPos(forceUpdate: Boolean = false): Unit = {
+    if(target.isDefined && target.get.isInstanceOf[Building] && !forceUpdate)
+      return
     this.calculatePath(target.getOrElse(return).getPosition()._1, target.getOrElse(return).getPosition()._2)
   }
+
 
   private def checkTargetReached(): Unit = {
     if(target.isDefined && collisionBox2D.collidesWith(target.get.collisionBox2D)) {

@@ -93,11 +93,13 @@ object Grid {
 
   def build(cell: Cell, buildSelected: Int, lvl: Int): Unit = {
     cell.state = CellStates.BLOCK_PATH
-    EntitiesManager.addBuilding(cell.pos, buildSelected, lvl)
+    EntitiesManager.addBuilding(cell, buildSelected, lvl)
   }
 
   def removeBuilding(building: Building): Unit = {
-    getCell(building.getPosition()._1, building.getPosition()._2).getOrElse(return).state = CellStates.EMPTY
+    val cell = getCell(building.getPosition()._1, building.getPosition()._2).getOrElse(return)
+    cell.state = CellStates.EMPTY
+    cell.entityPlaced = None
     EntitiesManager.destroyEntity(building)
   }
 
@@ -161,6 +163,20 @@ object Grid {
     None
   }
 
+  def findPathToNextCollider(start: Cell, target: Cell): Option[Array[Cell]] = {
+    val pathWithoutCollision: Option[Array[Cell]] = findPath(start, target, ignoreCollisions = true)
+    var newPath: mutable.ListBuffer[Cell] = mutable.ListBuffer()
+    if(pathWithoutCollision.nonEmpty){
+      var stop: Boolean = false
+      for(cell <- pathWithoutCollision.get if !stop){
+        newPath += cell
+        if(cell.state == CellStates.BLOCK_PATH)
+          stop = true
+      }
+    }
+    Some(newPath.toArray)
+  }
+
   /**
    * Get the neighbours from a given cell
    *
@@ -220,6 +236,8 @@ class Cell(val pos: (Int, Int),
   val sprite: Sprite = new Sprite(defaultImagePath, absolutePos)
   val box2D: Box = Box(absolutePos._1, absolutePos._2, size, size)
   val collisionBox: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(box2D)
+  var entityPlaced: Option[Entity] = None
+
   collisionBox.onMouseEnter(() => startHover())
   collisionBox.onMouseLeave(() => endHover())
   //collisionBox.onMousePressed(mouseButton: Int => mousePressed(mouseButton))

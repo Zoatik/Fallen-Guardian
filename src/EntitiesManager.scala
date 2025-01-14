@@ -30,11 +30,13 @@ object EntitiesManager {
     val oscour: Enemy = new Enemy(pos, waveCounter)
     enemies += oscour
     oscour.target = base
+    println("Enemy spawned")
   }
 
-  def addBuilding(pos: (Int, Int), buildType: Int, lvl: Int): Unit = {
+  def addBuilding(cell: Cell, buildType: Int, lvl: Int): Unit = {
     if(buildType == Constants.BUILD_TOWER){
-      towers += new Tower(pos, lvl)
+      towers += new Tower(cell.pos, lvl)
+      cell.entityPlaced = Some(towers.last)
     }
   }
 
@@ -55,17 +57,18 @@ object EntitiesManager {
 
   def startWave(waveCounter: Int): Unit = {
     startTime = GameManager.gameTimer
+    prevSpawnTime = 0
     waveTimer = 0
     this.waveCounter = waveCounter
     maxEnemies += 5 * (waveCounter - 1)
+    println("NEW WAVE STARTED : " + waveCounter)
   }
 
   def updateWave(): Boolean = {
     waveTimer = GameManager.gameTimer - startTime
     if(waveTimer < Constants.WAVE_TIME) {
       if (enemies.length < maxEnemies) {
-
-        val spawnChance: Int = math.pow(waveCounter, 2).toInt + waveTimer.toInt / 10000
+        val spawnChance: Int = math.pow(waveCounter, 2).toInt + waveTimer.toInt / 1000
 
         val randNum = rand.nextInt(5000)
         if (waveTimer - prevSpawnTime > 100 && (randNum < spawnChance || enemies.length < 1)) {
