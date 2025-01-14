@@ -72,6 +72,11 @@ class Player(
       }
   }
 
+  def playerMoveAudio(): Audio = {
+    var ad: Audio = new Audio(s"/res/Audio/PlayerAudio/WalkAudio/Walk_${(math.random() * (15 - 1) + 1).toInt}.wav")
+    ad
+  }
+
   def build(cell: Cell): Boolean = {
     val price = buildSelected match {
       case Constants.BUILD_TOWER => Constants.BUILD_TOWER_PRICE

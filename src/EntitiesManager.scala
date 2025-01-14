@@ -152,7 +152,7 @@ object EntitiesManager {
       prevUpdateTime = currentTime
     }
 
-    //if(player.get.isMoving){Constants.PLAYER_MOVE_AUDIO.play()}
+    if (player.get.isMoving) {player.get.playerMoveAudio().play()}
 
     player.get.moveToTarget()
     player.get.tryToAttack()
