@@ -1,9 +1,7 @@
-import hevs.graphics.utils.GraphicsBitmap
-
 class Enemy(
              _pos: (Int, Int),
              _hp: Int,
-             _baseImageBitmap: GraphicsBitmap,
+             _baseImageBitmap: BetterGraphicsBitmap,
              _velocity: Double,
              _damage: Int,
              _armor: Int,

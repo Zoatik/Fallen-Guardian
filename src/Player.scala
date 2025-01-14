@@ -1,13 +1,10 @@
-import hevs.graphics.utils.GraphicsBitmap
-
-import java.awt.event.KeyEvent
 
 class Player(
               _pos: (Int, Int) = Constants.PLAYER_DEFAULT_POS,
               _hp: Int = Constants.PLAYER_DEFAULT_HP,
               _armor: Int = Constants.PLAYER_DEFAULT_ARMOR,
               _lvl: Int = 1,
-              _baseImageBitmap: GraphicsBitmap = Constants.PLAYER_DEFAULT_IMAGE_BITMAP,
+              _baseImageBitmap: BetterGraphicsBitmap = Constants.PLAYER_DEFAULT_IMAGE_BITMAP,
               _velocity: Double = Constants.PLAYER_DEFAULT_VELOCITY,
               _damage: Int = Constants.PLAYER_DEFAULT_DAMAGE,
               var coins: Int = Constants.PLAYER_DEFAULT_COINS

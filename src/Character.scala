@@ -1,5 +1,3 @@
-import hevs.graphics.utils.GraphicsBitmap
-
 import scala.collection.mutable
 
 class Character(
@@ -7,7 +5,7 @@ class Character(
                  _hp: Int,
                  _armor: Int,
                  _lvl: Int,
-                 _baseImageBitmap: GraphicsBitmap,
+                 _baseImageBitmap: BetterGraphicsBitmap,
                  var velocity: Double, // Vitesse de déplacement (dx, dy)
                  var damage: Int // Quantité de dégâts infligés
                ) extends Entity(_pos, _hp, _armor, _lvl, _baseImageBitmap) {

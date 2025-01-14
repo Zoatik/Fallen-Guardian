@@ -1,5 +1,4 @@
 import Constants._
-import hevs.graphics.utils.GraphicsBitmap
 
 import scala.collection.mutable
 /**
@@ -14,7 +13,7 @@ class Entity(
               protected var hp: Int,
               protected var armor: Int,
               protected var lvl: Int,
-              protected val baseImageBitmap: GraphicsBitmap,
+              protected val baseImageBitmap: BetterGraphicsBitmap,
               protected val spriteAnchor: Int = ANCHOR_BOTTOM_MIDDLE
 ) {
   val sprite: Sprite = new Sprite(baseImageBitmap, _anchor = spriteAnchor)
@@ -146,12 +145,12 @@ class Entity(
   }
 
   private def mouseEntered(): Unit = {
-    //sprite.brighten(2)
+    sprite.brighten(2)
     GameManager.handleOnEntityEntered(this)
   }
 
   private def mouseLeft(): Unit = {
-    //sprite.restoreImage()
+    sprite.restoreImage(this.baseImageBitmap)
     GameManager.handleOnEntityLeft(this)
   }
 

@@ -1,11 +1,10 @@
-import hevs.graphics.utils.GraphicsBitmap
 
 class Tower(
              _pos: (Int, Int),
              _hp: Int,
              _armor: Int,
              _lvl: Int,
-             _baseImageBitmap: GraphicsBitmap,
+             _baseImageBitmap: BetterGraphicsBitmap,
              _price: Int,
              _blockPath: Boolean,
              _isTargetable: Boolean,

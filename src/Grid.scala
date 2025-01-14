@@ -1,5 +1,4 @@
 import AnimationsResources._
-import hevs.graphics.utils.GraphicsBitmap
 
 import scala.collection.mutable
 
@@ -30,7 +29,7 @@ object Grid {
     cells = Array.ofDim(size._1, size._2)
     for(i <- cells.indices){
       for(j <- cells(0).indices){
-        var baseImageBitmap: GraphicsBitmap = BITMAP_CELL_GRASS_0
+        var baseImageBitmap: BetterGraphicsBitmap = BITMAP_CELL_GRASS_0
         val randNum: Int = rand.nextInt(100)
         if (randNum > 50 && randNum <= 80)
           baseImageBitmap = BITMAP_CELL_GRASS_1
@@ -234,7 +233,7 @@ object Grid {
 class Cell(val pos: (Int, Int),
            val size: Int,
            var state: CellStates.CellState,
-           var defaultImageBitmap: GraphicsBitmap = BITMAP_CELL_GRASS_0) {
+           var defaultImageBitmap: BetterGraphicsBitmap = BITMAP_CELL_GRASS_0) {
   val absolutePos: (Int, Int) = (pos._1 * size, pos._2 * size)
   val sprite: Sprite = new Sprite(defaultImageBitmap, absolutePos)
   val box2D: Box = Box(absolutePos._1, absolutePos._2, size, size)

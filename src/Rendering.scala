@@ -1,9 +1,7 @@
 import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH}
 import hevs.graphics.FunGraphics
-import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.Color
-import java.awt.image.BufferedImage
 import scala.collection.mutable
 
 /**
@@ -19,13 +17,13 @@ class Sprite(var imagePath: String,
              var scale: Double ,
              var angle: Double ,
              var anchor: Int ,
-             _bm: GraphicsBitmap
+             _bm: BetterGraphicsBitmap
             ) {
-  var bm: GraphicsBitmap = if(imagePath != "") new GraphicsBitmap(imagePath) else _bm
+  var bm: BetterGraphicsBitmap = if(imagePath != "") new BetterGraphicsBitmap(imagePath) else _bm
   private var brightness: Double = 1.0
 
 
-  def this(bitmap: GraphicsBitmap,
+  def this(bitmap: BetterGraphicsBitmap,
            _pos: (Int, Int) = (0,0),
            _scale: Double = 1,
            _angle: Double = 0,
@@ -42,20 +40,20 @@ class Sprite(var imagePath: String,
    */
   /*def changeImage(newImagePath: String): Unit = {
     this.imagePath = newImagePath
-    this.bm = new GraphicsBitmap(newImagePath)
+    this.bm = new BetterGraphicsBitmap(newImagePath)
     brighten(brightness)
   }*/
 
-  def changeImage(newBitmap: GraphicsBitmap): Unit = {
+  def changeImage(newBitmap: BetterGraphicsBitmap): Unit = {
     this.bm = newBitmap
-    //brighten(brightness)
+    brighten(brightness)
   }
 
-  /*def brighten(factor: Double = 1.5): Unit = {
+  def brighten(factor: Double = 1.5): Unit = {
+    if (factor == 1.0)
+      return
     brightness = factor
-    val bufferedImage = bm.getBufferedImage
-    bm = Constants.PLACE_HOLDER_BITMAP
-    bm.mBitmap = bufferedImage
+    bm = bm.copy()
     val w = bm.getBufferedImage.getWidth()
     val h = bm.getBufferedImage.getHeight()
     for(x <- 0 until w; y <- 0 until h){
@@ -81,10 +79,10 @@ class Sprite(var imagePath: String,
 
   }
 
-  def restoreImage(): Unit = {
+  def restoreImage(original: BetterGraphicsBitmap): Unit = {
     brightness = 1
-    brighten(0.5)
-  }*/
+    bm = original
+  }
 
   /**
    * Sets the absolute position of the sprite
@@ -206,7 +204,7 @@ object Renderer {
    * @param fg      FunGraphics target
    * @param layers  layers to render
    */
-  def render(fg: FunGraphics): Unit = {
+  def render(fg: BetterFunGraphics): Unit = {
     // Rendering (note the synchronized)
     fg.frontBuffer.synchronized {
       fg.clear(Color.white)

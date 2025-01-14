@@ -10,7 +10,7 @@ import java.awt.{Component, Cursor}
  */
 object GameManager {
   // Window and Grid setup
-  val fg = new FunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Fallen Guardian", false)
+  val fg = new BetterFunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Fallen Guardian", false)
 
   //fg.mainFrame.setCursor(Cursor.HAND_CURSOR)
 
@@ -133,7 +133,6 @@ object GameManager {
     while (true) {
       InputManager.handleKeys()
       InputManager.handleMouse()
-      println(Renderer.deltaT)
       if(!isPaused) {
         gameTimer += System.currentTimeMillis() - prevTime
         prevTime = System.currentTimeMillis()

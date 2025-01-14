@@ -1,4 +1,3 @@
-import hevs.graphics.utils.GraphicsBitmap
 
 import scala.collection.mutable
 
@@ -23,7 +22,7 @@ object AnimationsManager {
 }
 
 class Animation( var spriteTarget: Sprite,
-                 var imagesBitmapArray: Array[GraphicsBitmap],
+                 var imagesBitmapArray: Array[BetterGraphicsBitmap],
                  var duration: Int,
                  var loop: Boolean = true,
                  private var active: Boolean = true
@@ -44,7 +43,7 @@ class Animation( var spriteTarget: Sprite,
     this(spriteTarget, Array.empty, 0, false, false)
   }
 
-  def init( imagesBitmapArray: Array[GraphicsBitmap],
+  def init( imagesBitmapArray: Array[BetterGraphicsBitmap],
             duration: Int,
             loop: Boolean = true,
             active: Boolean = true
@@ -63,7 +62,7 @@ class Animation( var spriteTarget: Sprite,
     val minDeltaT: Int = duration / imagesBitmapArray.length
     if (System.currentTimeMillis() - prevTime > minDeltaT){
       nextIndex()
-      val nextImage: GraphicsBitmap = imagesBitmapArray(indexCounter)
+      val nextImage: BetterGraphicsBitmap = imagesBitmapArray(indexCounter)
       this.spriteTarget.changeImage(nextImage)
       prevTime = System.currentTimeMillis()
     }

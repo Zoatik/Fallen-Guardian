@@ -1,11 +1,9 @@
-import hevs.graphics.utils.GraphicsBitmap
-
 import scala.collection.mutable
 
 class Bullet(
               _pos: (Int, Int),
               _hp: Int,
-              _baseImageBitmap: GraphicsBitmap,
+              _baseImageBitmap: BetterGraphicsBitmap,
               _armor: Int,
               _lvl: Int,
               var sourceTower: Tower,

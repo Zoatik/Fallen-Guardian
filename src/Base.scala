@@ -1,11 +1,10 @@
-import hevs.graphics.utils.GraphicsBitmap
 
 class Base(
             _pos: (Int, Int),
             _hp: Int,
             _armor: Int,
             _lvl: Int = 1,
-            _baseImageBitmap: GraphicsBitmap,
+            _baseImageBitmap: BetterGraphicsBitmap,
             _spriteAnchor: Int
            ) extends Entity(_pos, _hp, _armor, _lvl, _baseImageBitmap, _spriteAnchor) {
 
