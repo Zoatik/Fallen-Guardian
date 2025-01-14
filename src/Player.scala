@@ -177,5 +177,7 @@ class Player(
   this.animations("attack1").onAnimationStarted(() => isAttacking = true)
   this.animations("attack1").onAnimationEnded(() => isAttacking = false)
 
+  var playerHealthBarSprite: Sprite = new Sprite(Constants.PLAYER_HP_BAR_1, this.getAbsPosition)
+  Layers.addSprite(Constants.LAYER_UI_MOBILE, playerHealthBarSprite)
 
 }

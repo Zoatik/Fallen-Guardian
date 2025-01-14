@@ -11,9 +11,6 @@ object EntitiesManager {
   var player: Option[Player] = Some(new Player())
   var base: Option[Base] = Some(new Base())
 
-  var GameUI: UI_Manager = new UI_Manager
-  GameUI.initPlayerUI()
-
 
   //Constants.THEME_SONG.audioClip.loop(999999)
 
@@ -34,7 +31,6 @@ object EntitiesManager {
     enemies += oscour
     oscour.target = base
     println("Enemy spawned")
-    GameUI.initEnemyUI()
   }
 
   def addBuilding(cell: Cell, buildType: Int, lvl: Int): Unit = {
@@ -160,7 +156,7 @@ object EntitiesManager {
 
     player.get.moveToTarget()
     player.get.tryToAttack()
-    GameUI.updateUI()
+    UI_Manager.updateUI()
 
     towers.foreach(tower => {
       tower.towerTryToAttack()
