@@ -80,14 +80,23 @@ object Constants {
   val BITMAP_CELL_EMPTY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/cellEmpty.png")
 
   //* ------------------------* */
+  // HP bar UI constants
+
+  val PLAYER_HP_BAR_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health1.png")
+  val PLAYER_HP_BAR_2: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health2.png")
+  val PLAYER_HP_BAR_3: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health3.png")
+  val PLAYER_HP_BAR_4: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health4.png")
+  val PLAYER_HP_BAR_5: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health5.png")
+
+  //* ------------------------* */
     // Player spawn constants
   val PLAYER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
   val PLAYER_DEFAULT_HP: Int = 50
-  val PLAYER_DEFAULT_ARMOR: Int = 5
+  val PLAYER_DEFAULT_ARMOR: Int = 0
 
   val PLAYER_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Characters/Soldier/idle/soldierIdle_0.png")
   val PLAYER_DEFAULT_VELOCITY: Double = 4.0
-  val PLAYER_DEFAULT_DAMAGE: Int = 8
+  val PLAYER_DEFAULT_DAMAGE: Int = 2
   val PLAYER_DEFAULT_COINS: Int = 1000000
 
   //* ------------------------* */
