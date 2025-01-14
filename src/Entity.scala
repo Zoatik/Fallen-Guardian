@@ -10,12 +10,14 @@ import scala.collection.mutable
  */
 abstract class Entity(
               protected var pos: (Int, Int),
-              protected var hp: Int,
+              protected var maxHp: Int,
               protected var armor: Int,
               protected var lvl: Int,
               protected val baseImageBitmap: BetterGraphicsBitmap,
               protected val spriteAnchor: Int = ANCHOR_BOTTOM_MIDDLE
 ) {
+
+  protected var hp: Int = maxHp
   val sprite: Sprite = new Sprite(baseImageBitmap, _anchor = spriteAnchor)
   protected var absPos: (Int, Int) = (pos._1 * CELL_SIZE, pos._2 * CELL_SIZE)
 
@@ -155,6 +157,8 @@ abstract class Entity(
   }
 
   def getHp(): Int = hp
+
+  def getMaxHp(): Int = maxHp
 
   def getLvl(): Int = lvl
 }

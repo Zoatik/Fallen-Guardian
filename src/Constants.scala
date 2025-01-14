@@ -71,8 +71,13 @@ object Constants {
   val CURSOR_NO_SELL: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorNoSellImage, hotspotTopLeft, "no sell Cursor")
   val CURSOR_ATTACK: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorAttackImage, hotspotCenter, "attack Cursor")
 
-
-  val PLACE_HOLDER_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/cellEmpty.png")
+  //* ------------------------* */
+  // Cell images constants
+  val BITMAP_CELL_GRASS_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_grass_0.png")
+  val BITMAP_CELL_GRASS_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_grass_1.png")
+  val BITMAP_CELL_STONE_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_stone_0.png")
+  val BITMAP_CELL_FLOWER_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_flower_0.png")
+  val BITMAP_CELL_EMPTY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/cellEmpty.png")
 
   //* ------------------------* */
     // Player spawn constants

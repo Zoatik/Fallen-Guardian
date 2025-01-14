@@ -1,18 +1,18 @@
 import Constants._
 class Enemy(
              _pos: (Int, Int),
-             _hp: Int,
+             _maxHp: Int,
              _baseImageBitmap: BetterGraphicsBitmap,
              _velocity: Double,
              _damage: Int,
              _armor: Int,
              _lvl: Int
-           ) extends Character(_pos, _hp, _armor, _lvl,  _baseImageBitmap, _velocity, _damage) {
+           ) extends Character(_pos, _maxHp, _armor, _lvl,  _baseImageBitmap, _velocity, _damage) {
 
   def this(pos: (Int, Int), lvl: Int){
     this(
       _pos = pos,
-      _hp = Constants.ENEMY_DEFAULT_HP * lvl,
+      _maxHp = Constants.ENEMY_DEFAULT_HP * lvl,
       _baseImageBitmap = Constants.ENEMY_DEFAULT_IMAGE_BITMAP,
       _velocity = Constants.ENEMY_DEFAULT_VELOCITY,
       _damage = Constants.ENEMY_DEFAULT_DAMAGE * lvl,
@@ -32,7 +32,8 @@ class Enemy(
 
   override def levelUp(): Unit = {
     super.levelUp()
-    this.hp = Constants.ENEMY_DEFAULT_HP * lvl
+    this.maxHp = Constants.ENEMY_DEFAULT_HP * lvl
+    this.hp = maxHp
     this.damage = Constants.ENEMY_DEFAULT_DAMAGE * lvl
     this.armor = Constants.ENEMY_DEFAULT_ARMOR * lvl
   }

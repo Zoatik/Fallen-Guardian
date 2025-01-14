@@ -1,4 +1,4 @@
-import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH}
+import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH}
 import hevs.graphics.FunGraphics
 
 import java.awt.Color
@@ -15,8 +15,8 @@ import scala.collection.mutable
 class Sprite(var imagePath: String,
              var pos: (Int, Int) ,
              var scale: Double ,
-             var angle: Double ,
-             var anchor: Int ,
+             var angle: Double,
+             var anchor: Int,
              _bm: BetterGraphicsBitmap
             ) {
   var bm: BetterGraphicsBitmap = if(imagePath != "") new BetterGraphicsBitmap(imagePath) else _bm

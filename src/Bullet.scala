@@ -4,14 +4,14 @@ import scala.collection.mutable
 
 class Bullet(
               _pos: (Int, Int),
-              _hp: Int,
+              _maxHp: Int,
               _baseImageBitmap: BetterGraphicsBitmap,
               _armor: Int,
               _lvl: Int,
               var sourceTower: Tower,
               var target: Option[Entity],
               var velocity: Int
-           ) extends Entity(_pos, _hp, _armor, _lvl,  _baseImageBitmap) {
+           ) extends Entity(_pos, _maxHp, _armor, _lvl,  _baseImageBitmap) {
 
   protected val pathQueue: mutable.Queue[(Int, Int)] = mutable.Queue()
   private var direction: (Int, Int) = (0,0)
@@ -27,7 +27,7 @@ class Bullet(
 
   def this(posOffset: (Int, Int), newSourceTower: Tower) = this(
     _pos = (newSourceTower.getPosition()._1 + posOffset._1, newSourceTower.getPosition()._2 + posOffset._2),
-    _hp = 0,
+    _maxHp = 0,
     _baseImageBitmap = Constants.BULLET_DEFAULT_IMAGE_BITMAP,
     _armor = 0,
     _lvl = 0,

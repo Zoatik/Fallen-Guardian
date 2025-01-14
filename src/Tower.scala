@@ -1,7 +1,7 @@
 
 class Tower(
              _pos: (Int, Int),
-             _hp: Int,
+             _maxHp: Int,
              _armor: Int,
              _lvl: Int,
              _baseImageBitmap: BetterGraphicsBitmap,
@@ -12,12 +12,12 @@ class Tower(
              var range: Int,
              var attackSpeed: Double,
              var target: Option[Enemy] = None
-           ) extends Building(_pos, _hp, _armor, _lvl, _baseImageBitmap, _price, _blockPath, _isTargetable) {
+           ) extends Building(_pos, _maxHp, _armor, _lvl, _baseImageBitmap, _price, _blockPath, _isTargetable) {
 
 
   def this(pos: (Int, Int), lvl: Int) = this(
     _pos = pos,
-    _hp = Constants.TOWER_DEFAULT_HP,
+    _maxHp = Constants.TOWER_DEFAULT_HP,
     _armor = Constants.TOWER_DEFAULT_ARMOR,
     _lvl = lvl,
     _baseImageBitmap = Constants.TOWER_DEFAULT_IMAGE_BITMAP,
@@ -31,6 +31,7 @@ class Tower(
 
   override def levelUp(): Unit = {
     super.levelUp()
+    maxHp += maxHp/5
     damage = Constants.TOWER_DEFAULT_DAMAGE * lvl
     range = Constants.TOWER_DEFAULT_RANGE * (1 + lvl / 5)
     attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED * (1 + lvl/10.0)

@@ -1,14 +1,14 @@
 import Constants._
 
 class Building(_pos: (Int, Int),
-               _hp: Int,
+               _maxHp: Int,
                _armor: Int,
                _lvl: Int,
                _baseImageBitmap: BetterGraphicsBitmap,
                var price: Int,
                var blockPath: Boolean,
                var isTargetable: Boolean
-              ) extends Entity(_pos, _hp, _armor, _lvl, _baseImageBitmap){
+              ) extends Entity(_pos, _maxHp, _armor, _lvl, _baseImageBitmap){
 
   override val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
     x = sprite.getTopLeftPos()._1,

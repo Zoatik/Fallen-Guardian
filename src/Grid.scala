@@ -1,4 +1,4 @@
-import AnimationsResources._
+import Constants._
 
 import scala.collection.mutable
 

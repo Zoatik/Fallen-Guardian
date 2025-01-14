@@ -4,11 +4,6 @@ import scala.collection.mutable
 
 object AnimationsResources {
 
-  val BITMAP_CELL_GRASS_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_grass_0.png")
-  val BITMAP_CELL_GRASS_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_grass_1.png")
-  val BITMAP_CELL_STONE_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_stone_0.png")
-  val BITMAP_CELL_FLOWER_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_flower_0.png")
-  val BITMAP_CELL_EMPTY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/cellEmpty.png")
 
   val ANIM_SOLDIER_IDLE: Array[BetterGraphicsBitmap] = {
     Array(

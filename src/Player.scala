@@ -2,14 +2,14 @@ import Constants._
 
 class Player(
               _pos: (Int, Int) = Constants.PLAYER_DEFAULT_POS,
-              _hp: Int = Constants.PLAYER_DEFAULT_HP,
+              _maxHp: Int = Constants.PLAYER_DEFAULT_HP,
               _armor: Int = Constants.PLAYER_DEFAULT_ARMOR,
               _lvl: Int = 1,
               _baseImageBitmap: BetterGraphicsBitmap = Constants.PLAYER_DEFAULT_IMAGE_BITMAP,
               _velocity: Double = Constants.PLAYER_DEFAULT_VELOCITY,
               _damage: Int = Constants.PLAYER_DEFAULT_DAMAGE,
               var coins: Int = Constants.PLAYER_DEFAULT_COINS
-            ) extends Character(_pos, _hp, _armor, _lvl, _baseImageBitmap, _velocity, _damage) {
+            ) extends Character(_pos, _maxHp, _armor, _lvl, _baseImageBitmap, _velocity, _damage) {
 
 
   override val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
@@ -32,7 +32,7 @@ class Player(
   def this(pos: (Int, Int), lvl: Int) =
     this(
       _pos = pos,
-      _hp = Constants.PLAYER_DEFAULT_HP * lvl,
+      _maxHp = Constants.PLAYER_DEFAULT_HP * lvl,
       _armor = Constants.PLAYER_DEFAULT_ARMOR * lvl,
       _lvl = lvl,
       _baseImageBitmap = Constants.PLAYER_DEFAULT_IMAGE_BITMAP,
@@ -47,7 +47,8 @@ class Player(
 
   override def levelUp(): Unit = {
     super.levelUp()
-    this.hp = Constants.PLAYER_DEFAULT_HP * lvl
+    this.maxHp = Constants.PLAYER_DEFAULT_HP * lvl
+    this.hp = maxHp
     this.damage = Constants.PLAYER_DEFAULT_DAMAGE * lvl
     this.armor = Constants.PLAYER_DEFAULT_ARMOR * lvl
   }

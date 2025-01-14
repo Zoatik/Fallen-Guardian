@@ -2,12 +2,12 @@ import Constants.COLLISION_LAYER_BUILDING
 
 class Base(
             _pos: (Int, Int),
-            _hp: Int,
+            _maxHp: Int,
             _armor: Int,
             _lvl: Int = 1,
             _baseImageBitmap: BetterGraphicsBitmap,
             _spriteAnchor: Int
-           ) extends Entity(_pos, _hp, _armor, _lvl, _baseImageBitmap, _spriteAnchor) {
+           ) extends Entity(_pos, _maxHp, _armor, _lvl, _baseImageBitmap, _spriteAnchor) {
 
 
   for(i <- 0 until 3; j <- 0 until 3){
@@ -16,7 +16,7 @@ class Base(
 
   def this() = this(
     _pos = Constants.BASE_DEFAULT_POS,
-    _hp = Constants.BASE_DEFAULT_HP,
+    _maxHp = Constants.BASE_DEFAULT_HP,
     _armor = Constants.BASE_DEFAULT_ARMOR,
     _lvl = 1,
     _baseImageBitmap = Constants.BASE_DEFAULT_IMAGE_BITMAP,
