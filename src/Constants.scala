@@ -123,7 +123,7 @@ object Constants {
     // Audio constants
   val THEME_SONG: Audio = new Audio("/res/Audio/theme.wav")
 
-  val PLAYER_MOVE_AUDIO: Audio = new Audio(s"/res/Audio/PlayerAudio/WalkAudio/Walk_${(math.random() * (15-1) + 1).toInt}.wav")
+  val PLAYER_MOVE_AUDIO: Audio = new Audio(s"/res/Audio/PlayerAudio/WalkAudio/Walk_-${(math.random() * (14-1) + 2).toInt}.wav")
   val PLAYER_HIT_AUDIO: Audio = new Audio("/res/Audio/PlayerAudio/player_hit.wav")
   val PLAYER_DEATH_AUDIO: Audio = new Audio("/res/Audio/PlayerAudio/player_death.wav")
   val PLAYER_ATTACK_AUDIO: Audio = new Audio("/res/Audio/PlayerAudio/AttackAudio/Sword_slash2.wav")
