@@ -32,6 +32,7 @@ class Enemy(
   override def updateTarget(): Unit = {}
 
   override protected def attack(): Unit = {
+    Constants.GOBLIN_ATTACK_AUDIO.play()
     super.attack()
     if(!isStunned && target.isDefined){
       if(target.get.takeDamage(damage, this)){
@@ -46,9 +47,11 @@ class Enemy(
     lastTimeStunned = GameManager.gameTimer
     val isDead = super.takeDamage(amount, source)
     if (!isDead) {
+      Constants.PLAYER_ATTACK_AUDIO.play()
       Constants.GOBLIN_HURT_AUDIO.play()
     }
     else {
+      Constants.PLAYER_KILL_ATTACK_AUDIO.play()
       Constants.GOBLIN_DEATH_AUDIO.play()
     }
     this.target = Some(source)

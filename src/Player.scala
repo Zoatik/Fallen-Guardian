@@ -31,6 +31,11 @@ class Player(
       _damage = Constants.PLAYER_DEFAULT_DAMAGE * lvl
     )
 
+  override def takeDamage(amount: Int, source: Entity): Boolean = {
+    Constants.PLAYER_HIT_AUDIO.play()
+    super.takeDamage(amount, source)
+  }
+
   override def levelUp(): Unit = {
     super.levelUp()
     this.hp = Constants.PLAYER_DEFAULT_HP * lvl
@@ -55,7 +60,8 @@ class Player(
   override def updateTarget(): Unit = {}
 
   override protected def attack(): Unit = {
-    Constants.PLAYER_ATTACK_AUDIO.play()
+    //trying death vs. normal attack slashes.. look in Enemy.scala
+    //Constants.PLAYER_ATTACK_AUDIO.play()
     super.attack()
     if(!isStunned && target.isDefined)
       if(target.get.takeDamage(damage, this)){

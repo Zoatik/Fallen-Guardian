@@ -12,7 +12,7 @@ object EntitiesManager {
   var base: Option[Base] = Some(new Base())
 
 
-  Constants.THEME_SONG.audioClip.loop(999999)
+  //Constants.THEME_SONG.audioClip.loop(999999)
 
 
   var waveTimer: Long = 0
@@ -120,6 +120,7 @@ object EntitiesManager {
     val newLvl: Int = if(player.get.getLvl() > 5) player.get.getLvl() - 5 else 1
     val newPos: (Int, Int) = base.get.getPosition()
     player = Some(new Player(_pos = newPos, _lvl = newLvl))
+    Constants.PLAYER_DEATH_AUDIO.play()
   }
 
   var prevUpdateTime: Long = 0
@@ -150,7 +151,7 @@ object EntitiesManager {
       prevUpdateTime = currentTime
     }
 
-    if(player.get.isMoving){Constants.PLAYER_MOVE_AUDIO.play()}
+    //if(player.get.isMoving){Constants.PLAYER_MOVE_AUDIO.play()}
 
     player.get.moveToTarget()
     player.get.tryToAttack()

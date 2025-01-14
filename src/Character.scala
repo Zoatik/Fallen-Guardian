@@ -121,12 +121,15 @@ class Character(
     true
   }
 
+  //c'était private mais j'ai enlevé, comme ca je pouvais y accéder
+  //dans Player pour pouvoir bind l'audio de marche
   private def startMoving(): Unit = {
     if(this.animations("idle").playing)
       this.playAnimation("walk")
     isMoving = true
   }
 
+  //idem pour celui-ci
   private def stopMoving(): Unit = {
     if(this.animations("walk").playing) {
       this.playAnimation("idle")
