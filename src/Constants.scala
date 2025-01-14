@@ -26,7 +26,9 @@ object Constants {
   val LAYER_GROUND = 0
   val LAYER_ENTITIES = 1
   val LAYER_PLAYER = 2
-  val LAYER_UI = 3
+  val LAYER_UI_MOBILE = 3
+  val LAYER_UI_0 = 4
+  val LAYER_UI_1 = 5
 
   //*-------------------------*//
   // Collision Layers Constants

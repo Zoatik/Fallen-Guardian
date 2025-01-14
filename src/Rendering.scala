@@ -1,4 +1,4 @@
-import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH}
+import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH}
 import hevs.graphics.FunGraphics
 
 import java.awt.Color
@@ -196,11 +196,22 @@ object Renderer {
     // Rendering (note the synchronized)
     fg.frontBuffer.synchronized {
       fg.clear(Color.white)
-      for (layer <- Layers.layerArray) {
+      for (layer <- Layers.layerArray; if (layer.z <= LAYER_UI_MOBILE)) {
         for (sprite <- layer.spritesList) {
           val topLeftPos = sprite.getTopLeftPos()
           val x = topLeftPos._1 + sprite.bm.getWidth/2 + offsetX
           val y = topLeftPos._2 + sprite.bm.getHeight/2 + offsetY
+          val angle = sprite.angle
+          val scale = sprite.scale
+          val bm = sprite.bm
+          fg.drawTransformedPicture(x, y, angle, scale, bm)
+        }
+      }
+      for(layer <- Layers.layerArray; if(layer.z > LAYER_UI_MOBILE)){
+        for (sprite <- layer.spritesList) {
+          val topLeftPos = sprite.getTopLeftPos()
+          val x = topLeftPos._1 + sprite.bm.getWidth/2
+          val y = topLeftPos._2 + sprite.bm.getHeight/2
           val angle = sprite.angle
           val scale = sprite.scale
           val bm = sprite.bm
