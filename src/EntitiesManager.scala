@@ -37,11 +37,12 @@ object EntitiesManager {
     if(buildType == Constants.BUILD_TOWER){
       towers += new Tower(cell.pos, lvl)
       cell.entityPlaced = Some(towers.last)
+      towers.last.collisionBox2D.checkMouseCollision(GameManager.mouseX - Renderer.offsetX, GameManager.mouseY - Renderer.offsetY)
     }
   }
 
-  def spawnBullet(pos: (Int, Int), sourceTower: Tower): Unit = {
-    bullets += new Bullet((0,-1), sourceTower)
+  def spawnBullet(posOffset: (Int, Int), sourceTower: Tower): Unit = {
+    bullets += new Bullet(posOffset, sourceTower)
   }
 
 

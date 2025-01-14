@@ -39,6 +39,7 @@ class Entity(
   collisionBox2D.onMouseEnter(() => mouseEntered())
   collisionBox2D.onMouseLeave(() => mouseLeft())
 
+
   val animations: mutable.Map[String, Animation] = mutable.Map()
 
   def levelUp(): Unit = {

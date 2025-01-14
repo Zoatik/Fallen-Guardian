@@ -114,6 +114,11 @@ class CollisionBox2D (val id: String, initialBox: Box) {
     false
   }
 
+  def mouseLeave(): Unit = {
+    isMouseOver = false
+    mouseLeaveListeners.foreach(_())
+  }
+
   /**
    * Calls all listeners when mouse is pressed
    * @return true if the event is fired - false otherwise
@@ -159,7 +164,9 @@ object CollisionBox2DManager {
 
 
   def destroy(collisionBox2D: CollisionBox2D): Unit = {
-    layers.find(layer => layer.contains(collisionBox2D)).getOrElse(return) -= collisionBox2D
+    val targetLayer = layers.find(layer => layer.contains(collisionBox2D)).getOrElse(return)
+    collisionBox2D.mouseLeave()
+    targetLayer -= collisionBox2D
   }
   /**
   * Adds a new collision Area to the Manager

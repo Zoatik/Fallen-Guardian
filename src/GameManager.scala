@@ -160,7 +160,11 @@ object GameManager {
     if (!pressed){
       if(player.isBuilding){
         if (mouseButton == MouseEvent.BUTTON1 && cell.state == CellStates.EMPTY) {
-          player.build(cell)
+          if(player.build(cell)) {
+            if(cell.entityPlaced.isDefined && cell.entityPlaced.get.isInstanceOf[Building]) {
+              changeCursor(CURSOR_SELL)
+            }
+          }
         }
         else if(mouseButton == MouseEvent.BUTTON3){
           changeGameMode()
@@ -197,7 +201,9 @@ object GameManager {
           entity match {
             case enemy: Enemy => player.setTarget(enemy)
             case building: Building =>
-              if(player.upgrade(building) && player.canAffordUpgrade(building))
+              if(player.upgrade(building))
+                changeCursor(CURSOR_UPGRADE)
+              else
                 changeCursor(CURSOR_NO_UPGRADE)
 
             case _ => return

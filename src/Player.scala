@@ -72,7 +72,7 @@ class Player(
       }
   }
 
-  def build(cell: Cell): Unit = {
+  def build(cell: Cell): Boolean = {
     val price = buildSelected match {
       case Constants.BUILD_TOWER => Constants.BUILD_TOWER_PRICE
       case Constants.BUILD_BARRICADE => Constants.BUILD_BARRICADE_PRICE
@@ -81,7 +81,9 @@ class Player(
     if(coins >= price) {
       coins -= price
       Grid.build(cell, buildSelected, lvl)
+      return true
     }
+    false
   }
 
   def canAffordBuild(): Boolean = {
