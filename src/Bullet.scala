@@ -1,3 +1,5 @@
+import Constants._
+
 import scala.collection.mutable
 
 class Bullet(
@@ -14,6 +16,14 @@ class Bullet(
   protected val pathQueue: mutable.Queue[(Int, Int)] = mutable.Queue()
   private var direction: (Int, Int) = (0,0)
 
+  override val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
+    x = sprite.getTopLeftPos()._1,
+    y = sprite.getTopLeftPos()._2,
+    width = sprite.bm.getWidth,
+    height = sprite.bm.getHeight
+  ), layer = COLLISION_LAYER_BUILDING)
+
+  setCollisionListeners()
 
   def this(posOffset: (Int, Int), newSourceTower: Tower) = this(
     _pos = (newSourceTower.getPosition()._1 + posOffset._1, newSourceTower.getPosition()._2 + posOffset._2),

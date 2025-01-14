@@ -34,15 +34,6 @@ class Sprite(var imagePath: String,
                                                   anchor = _anchor,
                                                   _bm = bitmap)
 
-  /**
-   * Changes the base image of the sprite
-   * @param newImagePath new image path
-   */
-  /*def changeImage(newImagePath: String): Unit = {
-    this.imagePath = newImagePath
-    this.bm = new BetterGraphicsBitmap(newImagePath)
-    brighten(brightness)
-  }*/
 
   def changeImage(newBitmap: BetterGraphicsBitmap): Unit = {
     this.bm = newBitmap
@@ -63,16 +54,13 @@ class Sprite(var imagePath: String,
       val g = (rgb >> 8) & 0xFF
       val b = rgb & 0xFF
 
-      // Augmenter la luminosité en limitant à 255
       val newR = Math.min((r * factor).toInt, 255)
       val newG = Math.min((g * factor).toInt, 255)
       val newB = Math.min((b * factor).toInt, 255)
 
 
-      // Recomposer la nouvelle valeur RGB
       val newRgb = (alpha << 24) | (newR << 16) | (newG << 8) | newB
 
-      // Mettre à jour le pixel
       bm.getBufferedImage.setRGB(x, y, newRgb)
     }
 

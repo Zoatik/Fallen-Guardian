@@ -29,6 +29,16 @@ object Constants {
   val LAYER_UI = 3
 
   //*-------------------------*//
+  // Collision Layers Constants
+  val NUMBER_OF_COLLISION_LAYERS: Int = 6
+  val COLLISION_LAYER_GROUND = 0
+  val COLLISION_LAYER_ENTITIES = 1
+  val COLLISION_LAYER_BUILDING = 2
+  val COLLISION_LAYER_ENEMIES = 3
+  val COLLISION_LAYER_PLAYER = 4
+  val COLLISION_LAYER_UI = 5
+
+  //*-------------------------*//
     // Sprite Constants
   val ANCHOR_TOP_LEFT = 0
   val ANCHOR_MIDDLE = 1

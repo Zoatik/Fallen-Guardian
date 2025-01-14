@@ -8,7 +8,7 @@ import scala.collection.mutable
  * @param armor           armor
  * @param baseImagePath   base Image path
  */
-class Entity(
+abstract class Entity(
               protected var pos: (Int, Int),
               protected var hp: Int,
               protected var armor: Int,
@@ -19,7 +19,7 @@ class Entity(
   val sprite: Sprite = new Sprite(baseImageBitmap, _anchor = spriteAnchor)
   protected var absPos: (Int, Int) = (pos._1 * CELL_SIZE, pos._2 * CELL_SIZE)
 
-  private var spritePos = spriteAnchor match {
+  private val spritePos = spriteAnchor match {
     case ANCHOR_TOP_LEFT => (pos._1 * CELL_SIZE, pos._2 * CELL_SIZE)
     case ANCHOR_MIDDLE => (pos._1 * CELL_SIZE + CELL_SIZE/2, pos._2 * CELL_SIZE + CELL_SIZE/2)
     case ANCHOR_BOTTOM_MIDDLE => (pos._1 * CELL_SIZE + CELL_SIZE/2, pos._2 * CELL_SIZE + CELL_SIZE)
@@ -28,17 +28,9 @@ class Entity(
   sprite.setPosition(spritePos)
 
 
-  val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
-    x = sprite.getTopLeftPos()._1,
-    y = sprite.getTopLeftPos()._2,
-    width = sprite.bm.getWidth,
-    height = sprite.bm.getHeight
-  ), layer = LAYER_ENTITIES)
+  val collisionBox2D: CollisionBox2D
 
-  collisionBox2D.onMouseReleased(mouseButton => mouseReleased(mouseButton))
-  collisionBox2D.onMouseEnter(() => mouseEntered())
-  collisionBox2D.onMouseLeave(() => mouseLeft())
-
+  setCollisionListeners()
 
   val animations: mutable.Map[String, Animation] = mutable.Map()
 
@@ -139,6 +131,14 @@ class Entity(
    * @return Absolute position in 2D space (pixels)
    */
   def getAbsPosition: (Int, Int) = absPos
+
+  def setCollisionListeners(): Unit = {
+    if(collisionBox2D != null) {
+      collisionBox2D.onMouseReleased(mouseButton => mouseReleased(mouseButton))
+      collisionBox2D.onMouseEnter(() => mouseEntered())
+      collisionBox2D.onMouseLeave(() => mouseLeft())
+    }
+  }
 
   def mouseReleased(mouseButton: Int): Unit = {
     GameManager.handleEntityMouseAction(mouseButton, pressed = false, this)

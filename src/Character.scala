@@ -1,6 +1,6 @@
 import scala.collection.mutable
 
-class Character(
+abstract class Character(
                  _pos: (Int, Int),
                  _hp: Int,
                  _armor: Int,

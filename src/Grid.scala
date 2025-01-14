@@ -237,7 +237,7 @@ class Cell(val pos: (Int, Int),
   val absolutePos: (Int, Int) = (pos._1 * size, pos._2 * size)
   val sprite: Sprite = new Sprite(defaultImageBitmap, absolutePos)
   val box2D: Box = Box(absolutePos._1, absolutePos._2, size, size)
-  val collisionBox: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(box2D)
+  val collisionBox: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(box2D, Constants.COLLISION_LAYER_GROUND)
   var entityPlaced: Option[Entity] = None
 
   collisionBox.onMouseEnter(() => startHover())
@@ -279,7 +279,7 @@ class Cell(val pos: (Int, Int),
    * @param mouseButton mouse button keyCode
    */
   def mouseReleased(mouseButton: Int): Unit = {
-    GameManager.handleCellAction(mouseButton, false, this)
+    GameManager.handleCellAction(mouseButton, pressed = false, this)
   }
 
   /**

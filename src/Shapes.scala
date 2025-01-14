@@ -126,6 +126,8 @@ class CollisionBox2D (val id: String, initialBox: Box) {
   def mousePressed(mouseButton: Int): Boolean = {
     if(!isMouseOver)
       return false
+    println("CELL PRESSED: " + id)
+
     mousePressedListeners.foreach(_(mouseButton))
     true
   }
@@ -153,7 +155,7 @@ class CollisionBox2D (val id: String, initialBox: Box) {
  */
 object CollisionBox2DManager {
   private val layers: Array[mutable.ListBuffer[CollisionBox2D]] =
-                        Array.fill(Constants.NUMBER_OF_LAYERS)(mutable.ListBuffer[CollisionBox2D]())
+                        Array.fill(Constants.NUMBER_OF_COLLISION_LAYERS)(mutable.ListBuffer[CollisionBox2D]())
   private var boxesCounter: Int = 0
   private var prevTime: Long = 0
   private var isMouseDown: Boolean = false
@@ -178,6 +180,8 @@ object CollisionBox2DManager {
     require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
     val newBox = new CollisionBox2D(s"Box$boxesCounter", initialBox)
     register(newBox, layer)
+    //DEBUG
+    println(s"new collisionBox: $newBox, on layer $layer")
     newBox
   }
 
@@ -216,7 +220,7 @@ object CollisionBox2DManager {
     for (layer <- layers.indices.reverse) { // Parcourir les couches de la plus haute à la plus basse
       val collidedBox = layers(layer).find(_.checkMouseCollision(mouseX, mouseY))
       if (collidedBox.isDefined) {
-        // Une collision a été trouvée dans ce layer, donc on arrête
+        // collision detected -> stop
         return
       }
     }

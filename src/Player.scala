@@ -1,3 +1,4 @@
+import Constants._
 
 class Player(
               _pos: (Int, Int) = Constants.PLAYER_DEFAULT_POS,
@@ -10,6 +11,15 @@ class Player(
               var coins: Int = Constants.PLAYER_DEFAULT_COINS
             ) extends Character(_pos, _hp, _armor, _lvl, _baseImageBitmap, _velocity, _damage) {
 
+
+  override val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
+    x = sprite.getTopLeftPos()._1,
+    y = sprite.getTopLeftPos()._2,
+    width = sprite.bm.getWidth,
+    height = sprite.bm.getHeight
+  ), layer = COLLISION_LAYER_PLAYER)
+
+  setCollisionListeners()
 
   override val attackCooldown: Int = 400
   var xp: Int = 0

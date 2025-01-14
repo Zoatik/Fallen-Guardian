@@ -1,3 +1,4 @@
+import Constants._
 class Enemy(
              _pos: (Int, Int),
              _hp: Int,
@@ -19,6 +20,15 @@ class Enemy(
       _lvl = lvl
     )
   }
+
+  override val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
+    x = sprite.getTopLeftPos()._1,
+    y = sprite.getTopLeftPos()._2,
+    width = sprite.bm.getWidth,
+    height = sprite.bm.getHeight
+  ), layer = COLLISION_LAYER_ENEMIES)
+
+  setCollisionListeners()
 
   override def levelUp(): Unit = {
     super.levelUp()

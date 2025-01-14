@@ -1,3 +1,4 @@
+import Constants.COLLISION_LAYER_BUILDING
 
 class Base(
             _pos: (Int, Int),
@@ -21,6 +22,13 @@ class Base(
     _baseImageBitmap = Constants.BASE_DEFAULT_IMAGE_BITMAP,
     _spriteAnchor = Constants.ANCHOR_TOP_LEFT
   )
+
+  override val collisionBox2D: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(Box(
+    x = sprite.getTopLeftPos()._1,
+    y = sprite.getTopLeftPos()._2,
+    width = sprite.bm.getWidth,
+    height = sprite.bm.getHeight
+  ), layer = COLLISION_LAYER_BUILDING)
 
   override def takeDamage(amount: Int, source: Entity): Boolean = {
     val isDead: Boolean = super.takeDamage(amount, source)

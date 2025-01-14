@@ -1,5 +1,4 @@
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
-import hevs.graphics.FunGraphics
 import Constants._
 
 import java.awt.{Component, Cursor}
@@ -11,8 +10,6 @@ import java.awt.{Component, Cursor}
 object GameManager {
   // Window and Grid setup
   val fg = new BetterFunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Fallen Guardian", false)
-
-  //fg.mainFrame.setCursor(Cursor.HAND_CURSOR)
 
 
   val camera2D: Camera2D = new Camera2D()
