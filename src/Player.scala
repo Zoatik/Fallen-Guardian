@@ -73,7 +73,7 @@ class Player(
   }
 
   def playerMoveAudio(): Audio = {
-    var ad: Audio = new Audio(s"/res/Audio/PlayerAudio/WalkAudio/Walk_${(math.random() * (15 - 1) + 1).toInt}.wav")
+    var ad: Audio = new Audio(s"/res/Audio/PlayerAudio/WalkAudio/Walk_-${(math.random() * (14-1) + 2).toInt}.wav")
     ad
   }
 
