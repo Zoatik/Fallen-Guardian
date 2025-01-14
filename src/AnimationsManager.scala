@@ -1,3 +1,5 @@
+import hevs.graphics.utils.GraphicsBitmap
+
 import scala.collection.mutable
 
 object AnimationsManager {
@@ -21,7 +23,7 @@ object AnimationsManager {
 }
 
 class Animation( var spriteTarget: Sprite,
-                 var imagesPathBuffer: mutable.ListBuffer[String],
+                 var imagesBitmapArray: Array[GraphicsBitmap],
                  var duration: Int,
                  var loop: Boolean = true,
                  private var active: Boolean = true
@@ -39,15 +41,15 @@ class Animation( var spriteTarget: Sprite,
 
 
   def this(spriteTarget: Sprite) {
-    this(spriteTarget, mutable.ListBuffer.empty, 0, false, false)
+    this(spriteTarget, Array.empty, 0, false, false)
   }
 
-  def init( imagesPathBuffer: mutable.ListBuffer[String],
+  def init( imagesBitmapArray: Array[GraphicsBitmap],
             duration: Int,
             loop: Boolean = true,
             active: Boolean = true
           ): Unit = {
-    this.imagesPathBuffer = imagesPathBuffer
+    this.imagesBitmapArray = imagesBitmapArray
     this.duration = duration
     this.loop = loop
     this.active = active
@@ -58,10 +60,10 @@ class Animation( var spriteTarget: Sprite,
   def next(): Unit = {
     if(finished || !playing)
       return
-    val minDeltaT: Int = duration / imagesPathBuffer.length
+    val minDeltaT: Int = duration / imagesBitmapArray.length
     if (System.currentTimeMillis() - prevTime > minDeltaT){
       nextIndex()
-      val nextImage: String = imagesPathBuffer(indexCounter)
+      val nextImage: GraphicsBitmap = imagesBitmapArray(indexCounter)
       this.spriteTarget.changeImage(nextImage)
       prevTime = System.currentTimeMillis()
     }
@@ -106,7 +108,7 @@ class Animation( var spriteTarget: Sprite,
   def isActive: Boolean = active
 
   private def nextIndex(): Unit = {
-    indexCounter = (indexCounter + 1) % imagesPathBuffer.length
+    indexCounter = (indexCounter + 1) % imagesBitmapArray.length
     if(indexCounter == 0 && !loop) {
       finished = true
       this.stop()

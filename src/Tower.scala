@@ -1,9 +1,11 @@
+import hevs.graphics.utils.GraphicsBitmap
+
 class Tower(
              _pos: (Int, Int),
              _hp: Int,
              _armor: Int,
              _lvl: Int,
-             _baseImagePath: String,
+             _baseImageBitmap: GraphicsBitmap,
              _price: Int,
              _blockPath: Boolean,
              _isTargetable: Boolean,
@@ -11,7 +13,7 @@ class Tower(
              var range: Int,
              var attackSpeed: Double,
              var target: Option[Enemy] = None
-           ) extends Building(_pos, _hp, _armor, _lvl, _baseImagePath, _price, _blockPath, _isTargetable) {
+           ) extends Building(_pos, _hp, _armor, _lvl, _baseImageBitmap, _price, _blockPath, _isTargetable) {
 
 
   def this(pos: (Int, Int), lvl: Int) = this(
@@ -19,7 +21,7 @@ class Tower(
     _hp = Constants.TOWER_DEFAULT_HP,
     _armor = Constants.TOWER_DEFAULT_ARMOR,
     _lvl = lvl,
-    _baseImagePath = Constants.TOWER_DEFAULT_IMAGE_PATH,
+    _baseImageBitmap = Constants.TOWER_DEFAULT_IMAGE_BITMAP,
     _price = Constants.BUILD_TOWER_PRICE,
     _blockPath = true,
     _isTargetable = true,
@@ -66,7 +68,8 @@ class Tower(
   }
 
   def towerTryToAttack(): Unit = {
-    target = findTarget()
+    if(target.isEmpty)
+      target = findTarget()
     //have to make an alternative to the cooldown function like there was in the character class
     //and use the attack speed value instead.
     if (target.isDefined) {
@@ -85,7 +88,7 @@ class Tower(
 
   this.addAnimation("idle", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_TOWER_IDLE,
+    imagesBitmapArray = AnimationsResources.ANIM_TOWER_IDLE,
     duration = 1000,
     loop = true,
     active = true

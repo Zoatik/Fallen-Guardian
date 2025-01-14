@@ -1,12 +1,13 @@
+import hevs.graphics.utils.GraphicsBitmap
 
 class Base(
-           _pos: (Int, Int),
-           _hp: Int,
-           _armor: Int ,
-           _lvl: Int = 1,
-           _baseImagePath: String ,
-           _spriteAnchor: Int
-           ) extends Entity(_pos, _hp, _armor, _lvl, _baseImagePath, _spriteAnchor) {
+            _pos: (Int, Int),
+            _hp: Int,
+            _armor: Int,
+            _lvl: Int = 1,
+            _baseImageBitmap: GraphicsBitmap,
+            _spriteAnchor: Int
+           ) extends Entity(_pos, _hp, _armor, _lvl, _baseImageBitmap, _spriteAnchor) {
 
 
   for(i <- 0 until 3; j <- 0 until 3){
@@ -18,7 +19,7 @@ class Base(
     _hp = Constants.BASE_DEFAULT_HP,
     _armor = Constants.BASE_DEFAULT_ARMOR,
     _lvl = 1,
-    _baseImagePath = Constants.BASE_DEFAULT_IMAGE_PATH,
+    _baseImageBitmap = Constants.BASE_DEFAULT_IMAGE_BITMAP,
     _spriteAnchor = Constants.ANCHOR_TOP_LEFT
   )
 
@@ -30,7 +31,7 @@ class Base(
 
   this.addAnimation("hurt", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_BASE_HURT,
+    imagesBitmapArray = AnimationsResources.ANIM_BASE_HURT,
     duration = 1000,
     loop = false,
     active = false

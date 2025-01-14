@@ -1,3 +1,5 @@
+import hevs.graphics.utils.GraphicsBitmap
+
 import java.awt.event.KeyEvent
 
 class Player(
@@ -5,11 +7,11 @@ class Player(
               _hp: Int = Constants.PLAYER_DEFAULT_HP,
               _armor: Int = Constants.PLAYER_DEFAULT_ARMOR,
               _lvl: Int = 1,
-              _baseImagePath: String = Constants.PLAYER_DEFAULT_IMAGE_PATH,
+              _baseImageBitmap: GraphicsBitmap = Constants.PLAYER_DEFAULT_IMAGE_BITMAP,
               _velocity: Double = Constants.PLAYER_DEFAULT_VELOCITY,
               _damage: Int = Constants.PLAYER_DEFAULT_DAMAGE,
               var coins: Int = Constants.PLAYER_DEFAULT_COINS
-            ) extends Character(_pos, _hp, _armor, _lvl, _baseImagePath, _velocity, _damage) {
+            ) extends Character(_pos, _hp, _armor, _lvl, _baseImageBitmap, _velocity, _damage) {
 
 
   override val attackCooldown: Int = 400
@@ -26,7 +28,7 @@ class Player(
       _hp = Constants.PLAYER_DEFAULT_HP * lvl,
       _armor = Constants.PLAYER_DEFAULT_ARMOR * lvl,
       _lvl = lvl,
-      _baseImagePath = Constants.PLAYER_DEFAULT_IMAGE_PATH,
+      _baseImageBitmap = Constants.PLAYER_DEFAULT_IMAGE_BITMAP,
       _velocity = Constants.PLAYER_DEFAULT_VELOCITY,
       _damage = Constants.PLAYER_DEFAULT_DAMAGE * lvl
     )
@@ -126,7 +128,7 @@ class Player(
 
   this.addAnimation("idle", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_IDLE,
+    imagesBitmapArray = AnimationsResources.ANIM_SOLDIER_IDLE,
     duration = 1000,
     loop = true,
     active = true
@@ -134,7 +136,7 @@ class Player(
 
   this.addAnimation("hurt", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_HURT,
+    imagesBitmapArray = AnimationsResources.ANIM_SOLDIER_HURT,
     duration = 300,
     loop = false,
     active = false
@@ -142,7 +144,7 @@ class Player(
 
   this.addAnimation("walk", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_WALK,
+    imagesBitmapArray = AnimationsResources.ANIM_SOLDIER_WALK,
     duration = 1000,
     loop = true,
     active = false
@@ -150,7 +152,7 @@ class Player(
 
   this.addAnimation("attack1", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_SOLDIER_ATTACK_1,
+    imagesBitmapArray = AnimationsResources.ANIM_SOLDIER_ATTACK_1,
     duration = 100,
     loop = false,
     active = false

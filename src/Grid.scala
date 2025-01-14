@@ -1,3 +1,6 @@
+import AnimationsResources._
+import hevs.graphics.utils.GraphicsBitmap
+
 import scala.collection.mutable
 
 /**
@@ -27,15 +30,15 @@ object Grid {
     cells = Array.ofDim(size._1, size._2)
     for(i <- cells.indices){
       for(j <- cells(0).indices){
-        var baseImagePath: String = "/res/ground/TX_grass_0.png"
+        var baseImageBitmap: GraphicsBitmap = BITMAP_CELL_GRASS_0
         val randNum: Int = rand.nextInt(100)
         if (randNum > 50 && randNum <= 80)
-          baseImagePath = "/res/ground/TX_grass_1.png"
+          baseImageBitmap = BITMAP_CELL_GRASS_1
         else if (randNum > 80 && randNum <= 90)
-          baseImagePath = "/res/ground/TX_flower_0.png"
+          baseImageBitmap = BITMAP_CELL_FLOWER_0
 
         val cellPos: (Int, Int) = (i , j)
-        cells(i)(j) = new Cell(cellPos, cellSize, CellStates.EMPTY, baseImagePath)
+        cells(i)(j) = new Cell(cellPos, cellSize, CellStates.EMPTY, baseImageBitmap)
       }
     }
 
@@ -53,7 +56,7 @@ object Grid {
   }
 
   def restoreHighlightedCells(): Unit = {
-    highLightedCells.foreach(cell => cell.sprite.changeImage(cell.defaultImagePath))
+    highLightedCells.foreach(cell => cell.sprite.changeImage(cell.defaultImageBitmap))
   }
 
   /**
@@ -231,9 +234,9 @@ object Grid {
 class Cell(val pos: (Int, Int),
            val size: Int,
            var state: CellStates.CellState,
-           var defaultImagePath: String = "/res/ground/TX_grass_0.png") {
+           var defaultImageBitmap: GraphicsBitmap = BITMAP_CELL_GRASS_0) {
   val absolutePos: (Int, Int) = (pos._1 * size, pos._2 * size)
-  val sprite: Sprite = new Sprite(defaultImagePath, absolutePos)
+  val sprite: Sprite = new Sprite(defaultImageBitmap, absolutePos)
   val box2D: Box = Box(absolutePos._1, absolutePos._2, size, size)
   val collisionBox: CollisionBox2D = CollisionBox2DManager.newCollisionBox2D(box2D)
   var entityPlaced: Option[Entity] = None
@@ -250,7 +253,7 @@ class Cell(val pos: (Int, Int),
   def startHover(): Unit = {
     if(Grid.highlightOnMouse) {
       Grid.highLightedCells += this
-      this.sprite.changeImage("/res/ground/cellEmpty.png")
+      this.sprite.changeImage(BITMAP_CELL_EMPTY)
     }
   }
 
@@ -260,7 +263,7 @@ class Cell(val pos: (Int, Int),
   def endHover(): Unit = {
     if(Grid.highlightOnMouse) {
       Grid.highLightedCells -= this
-      this.sprite.changeImage(defaultImagePath)
+      this.sprite.changeImage(defaultImageBitmap)
     }
   }
 

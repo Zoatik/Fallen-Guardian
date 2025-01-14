@@ -3,6 +3,7 @@ import hevs.graphics.FunGraphics
 import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.Color
+import java.awt.image.BufferedImage
 import scala.collection.mutable
 
 /**
@@ -14,26 +15,47 @@ import scala.collection.mutable
  * @param angle     rotation angle of the image
  */
 class Sprite(var imagePath: String,
-             var pos: (Int, Int) = (0,0),
-             var scale: Double = 1,
-             var angle: Double = 0,
-             var anchor: Int = ANCHOR_TOP_LEFT
+             var pos: (Int, Int) ,
+             var scale: Double ,
+             var angle: Double ,
+             var anchor: Int ,
+             _bm: GraphicsBitmap
             ) {
-  var bm = new GraphicsBitmap(imagePath)
+  var bm: GraphicsBitmap = if(imagePath != "") new GraphicsBitmap(imagePath) else _bm
   private var brightness: Double = 1.0
+
+
+  def this(bitmap: GraphicsBitmap,
+           _pos: (Int, Int) = (0,0),
+           _scale: Double = 1,
+           _angle: Double = 0,
+           _anchor: Int = ANCHOR_TOP_LEFT) = this(imagePath = "",
+                                                  pos = _pos,
+                                                  scale = _scale,
+                                                  angle = _angle,
+                                                  anchor = _anchor,
+                                                  _bm = bitmap)
 
   /**
    * Changes the base image of the sprite
    * @param newImagePath new image path
    */
-  def changeImage(newImagePath: String): Unit = {
+  /*def changeImage(newImagePath: String): Unit = {
     this.imagePath = newImagePath
     this.bm = new GraphicsBitmap(newImagePath)
     brighten(brightness)
+  }*/
+
+  def changeImage(newBitmap: GraphicsBitmap): Unit = {
+    this.bm = newBitmap
+    //brighten(brightness)
   }
 
-  def brighten(factor: Double = 1.5): Unit = {
+  /*def brighten(factor: Double = 1.5): Unit = {
     brightness = factor
+    val bufferedImage = bm.getBufferedImage
+    bm = Constants.PLACE_HOLDER_BITMAP
+    bm.mBitmap = bufferedImage
     val w = bm.getBufferedImage.getWidth()
     val h = bm.getBufferedImage.getHeight()
     for(x <- 0 until w; y <- 0 until h){
@@ -60,10 +82,9 @@ class Sprite(var imagePath: String,
   }
 
   def restoreImage(): Unit = {
-    bm = new GraphicsBitmap(imagePath)
     brightness = 1
-
-  }
+    brighten(0.5)
+  }*/
 
   /**
    * Sets the absolute position of the sprite

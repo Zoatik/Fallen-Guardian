@@ -1,18 +1,20 @@
+import hevs.graphics.utils.GraphicsBitmap
+
 class Enemy(
              _pos: (Int, Int),
              _hp: Int,
-             _baseImagePath: String,
+             _baseImageBitmap: GraphicsBitmap,
              _velocity: Double,
              _damage: Int,
              _armor: Int,
              _lvl: Int
-           ) extends Character(_pos, _hp, _armor, _lvl,  _baseImagePath, _velocity, _damage) {
+           ) extends Character(_pos, _hp, _armor, _lvl,  _baseImageBitmap, _velocity, _damage) {
 
   def this(pos: (Int, Int), lvl: Int){
     this(
       _pos = pos,
       _hp = Constants.ENEMY_DEFAULT_HP * lvl,
-      _baseImagePath = Constants.ENEMY_DEFAULT_IMAGE_PATH,
+      _baseImageBitmap = Constants.ENEMY_DEFAULT_IMAGE_BITMAP,
       _velocity = Constants.ENEMY_DEFAULT_VELOCITY,
       _damage = Constants.ENEMY_DEFAULT_DAMAGE * lvl,
       _armor = Constants.ENEMY_DEFAULT_ARMOR * lvl,
@@ -61,7 +63,7 @@ class Enemy(
 
   this.addAnimation("idle", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_ORC_IDLE,
+    imagesBitmapArray = AnimationsResources.ANIM_ORC_IDLE,
     duration = 1000,
     loop = true,
     active = true
@@ -69,7 +71,7 @@ class Enemy(
 
   this.addAnimation("hurt", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_ORC_HURT,
+    imagesBitmapArray = AnimationsResources.ANIM_ORC_HURT,
     duration = 300,
     loop = false,
     active = false
@@ -77,7 +79,7 @@ class Enemy(
 
   this.addAnimation("attack1", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_ORC_ATTACK_1,
+    imagesBitmapArray = AnimationsResources.ANIM_ORC_ATTACK_1,
     duration = 200,
     loop = false,
     active = false
@@ -85,7 +87,7 @@ class Enemy(
 
   this.addAnimation("walk", new Animation(
     spriteTarget = this.sprite,
-    imagesPathBuffer = AnimationsResources.ANIM_ORC_WALK,
+    imagesBitmapArray = AnimationsResources.ANIM_ORC_WALK,
     duration = 1000,
     loop = true,
     active = false

@@ -1,3 +1,5 @@
+import hevs.graphics.utils.GraphicsBitmap
+
 import java.awt.{Cursor, Point, Toolkit}
 import java.awt.event.KeyEvent
 import javax.imageio.ImageIO
@@ -59,13 +61,15 @@ object Constants {
   val CURSOR_ATTACK: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorAttackImage, hotspotCenter, "attack Cursor")
 
 
+  val PLACE_HOLDER_BITMAP: GraphicsBitmap = new GraphicsBitmap("/res/ground/cellEmpty.png")
+
   //* ------------------------* */
     // Player spawn constants
   val PLAYER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
   val PLAYER_DEFAULT_HP: Int = 50
   val PLAYER_DEFAULT_ARMOR: Int = 5
 
-  val PLAYER_DEFAULT_IMAGE_PATH: String = "/res/Characters/Soldier/idle/soldierIdle_0.png"
+  val PLAYER_DEFAULT_IMAGE_BITMAP: GraphicsBitmap = new GraphicsBitmap("/res/Characters/Soldier/idle/soldierIdle_0.png")
   val PLAYER_DEFAULT_VELOCITY: Double = 4.0
   val PLAYER_DEFAULT_DAMAGE: Int = 8
   val PLAYER_DEFAULT_COINS: Int = 1000000
@@ -76,7 +80,7 @@ object Constants {
   val ENEMY_DEFAULT_HP: Int = 5
   val ENEMY_DEFAULT_ARMOR: Int = 1
 
-  val ENEMY_DEFAULT_IMAGE_PATH: String = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png"
+  val ENEMY_DEFAULT_IMAGE_BITMAP: GraphicsBitmap = new GraphicsBitmap("/res/Characters/Enemy/Orc/idle/orcIdle_0.png")
   val ENEMY_DEFAULT_VELOCITY: Double = 1.8
   val ENEMY_DEFAULT_DAMAGE: Int = 1
 
@@ -86,7 +90,7 @@ object Constants {
   val TOWER_DEFAULT_HP: Int = 100
   val TOWER_DEFAULT_ARMOR: Int = 50
 
-  val TOWER_DEFAULT_IMAGE_PATH: String = "/res/Tower/IdleAnimation/tower_00.png"
+  val TOWER_DEFAULT_IMAGE_BITMAP: GraphicsBitmap = new GraphicsBitmap("/res/Tower/IdleAnimation/tower_00.png")
   val TOWER_DEFAULT_DAMAGE: Int = 4
   val TOWER_DEFAULT_RANGE: Int = 128
   val TOWER_DEFAULT_ATTACK_SPEED: Double = 3000
@@ -94,14 +98,14 @@ object Constants {
   //* ------------------------* */
     // Tower bullet constants
   val BULLET_VELOCITY: Int = 5
-  val BULLET_DEFAULT_IMAGE_PATH: String = "/res/Characters/Enemy/Orc/idle/orcIdle_0.png"//"/res/Tower/bullet/bullet_0.png"
+  val BULLET_DEFAULT_IMAGE_BITMAP: GraphicsBitmap = new GraphicsBitmap("/res/Characters/Enemy/Orc/idle/orcIdle_0.png")//"/res/Tower/bullet/bullet_0.png"
 
   //* ------------------------* */
     // Base constants
   val BASE_DEFAULT_POS: (Int, Int) = (29, 29)
   val BASE_DEFAULT_HP: Int = 100
   val BASE_DEFAULT_ARMOR: Int = 1
-  val BASE_DEFAULT_IMAGE_PATH: String = "/res/Base/base_0.png"//"/res/Tower/bullet/bullet_0.png"
+  val BASE_DEFAULT_IMAGE_BITMAP: GraphicsBitmap = new GraphicsBitmap("/res/Base/base_0.png")//"/res/Tower/bullet/bullet_0.png"
 
   //* ------------------------* */
     // Build system constants
