@@ -10,12 +10,12 @@ object UI_Manager {
 
   def checkPlayerUI(): Unit = {
     player.getOrElse(return).playerHealthBarSprite.setPosition(player.get.getAbsPosition._1, player.get.getAbsPosition._2 - 11)
-    player.get.playerHealthBarSprite.changeImage(checkHealthBar(player.get.getHp(), player.get.getMaxHp()))
+    player.get.playerHealthBarSprite.changeImage(checkHealthBar(player.get.getHp, player.get.getMaxHp))
   }
   def checkEnemyUI(): Unit = {
     enemies.foreach(enemy=>{
       enemy.enemyHealthBarSprite.setPosition(enemy.getAbsPosition._1, enemy.getAbsPosition._2)
-      enemy.enemyHealthBarSprite.changeImage(checkHealthBar(enemy.getHp(), enemy.getMaxHp()))
+      enemy.enemyHealthBarSprite.changeImage(checkHealthBar(enemy.getHp, enemy.getMaxHp))
     })
    }
 

@@ -150,14 +150,14 @@ object Constants {
   val TOWER_DEFAULT_ARMOR: Int = 50
 
   val TOWER_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Tower/IdleAnimation/tower_00.png")
-  val TOWER_DEFAULT_DAMAGE: Int = 4
+  val TOWER_DEFAULT_DAMAGE: Int = 1
   val TOWER_DEFAULT_RANGE: Int = 128
   val TOWER_DEFAULT_ATTACK_SPEED: Double = 3000
 
   //* ------------------------* */
     // Tower bullet constants
   val BULLET_VELOCITY: Int = 5
-  val BULLET_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/idle/orcIdle_0.png")//"/res/Tower/bullet/bullet_0.png"
+  val BULLET_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Tower/Bullet/bullet_0.png")//"/res/Tower/bullet/bullet_0.png"
 
   //* ------------------------* */
     // Base constants

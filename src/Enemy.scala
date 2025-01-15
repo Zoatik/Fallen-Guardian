@@ -63,7 +63,7 @@ class Enemy(
   override protected def attack(): Unit = {
     Constants.GOBLIN_ATTACK_AUDIO.play()
     super.attack()
-    if(!isStunned && target.isDefined){
+    if(target.isDefined){
       if(target.get.takeDamage(damage, this)){
         hasReachedTarget = false
         EntitiesManager.destroyEntity(target.get)

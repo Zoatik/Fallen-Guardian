@@ -126,7 +126,6 @@ class CollisionBox2D (val id: String, initialBox: Box) {
   def mousePressed(mouseButton: Int): Boolean = {
     if(!isMouseOver)
       return false
-    println("CELL PRESSED: " + id)
 
     mousePressedListeners.foreach(_(mouseButton))
     true
@@ -181,7 +180,6 @@ object CollisionBox2DManager {
     val newBox = new CollisionBox2D(s"Box$boxesCounter", initialBox)
     register(newBox, layer)
     //DEBUG
-    println(s"new collisionBox: $newBox, on layer $layer")
     newBox
   }
 

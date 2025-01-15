@@ -68,7 +68,7 @@ object GameManager {
     var spriteUi: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
     var textUi: Ui_text = new Ui_text("LIIIIFE")
     var testUiElement: StaticUiElement = new StaticUiElement(spriteUi,textUi)
-    //Layers.addStaticUiElement(LAYER_STATIC_UI_0, testUiElement)
+    Layers.addStaticUiElement(LAYER_STATIC_UI_0, testUiElement)
     fg.displayFPS(true)
 
     initialized = true

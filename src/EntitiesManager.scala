@@ -30,7 +30,6 @@ object EntitiesManager {
     val oscour: Enemy = new Enemy(pos, waveCounter)
     enemies += oscour
     oscour.target = base
-    println("Enemy spawned")
   }
 
   def addBuilding(cell: Cell, buildType: Int, lvl: Int): Unit = {
@@ -97,7 +96,6 @@ object EntitiesManager {
       case bullet: Bullet =>
         bullets -= bullet
         towers.foreach(_.target = None)
-        player.get.target = None
       case base: Base =>
         enemies.foreach(enemy => {
           if(enemy.target.get == base)
@@ -118,7 +116,7 @@ object EntitiesManager {
   }
 
   private def playerKilled(): Unit = {
-    val newLvl: Int = if(player.get.getLvl() > 5) player.get.getLvl() - 5 else 1
+    val newLvl: Int = if(player.get.getLvl > 5) player.get.getLvl - 5 else 1
     val newPos: (Int, Int) = base.get.getPosition()
     player = Some(new Player(_pos = newPos, _lvl = newLvl))
     Constants.PLAYER_DEATH_AUDIO.play()

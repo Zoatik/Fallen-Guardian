@@ -102,5 +102,14 @@ object AnimationsResources {
     )
   }
 
+  val ANIM_TOWER_BULLET: Array[BetterGraphicsBitmap] = {
+    Array(
+      new BetterGraphicsBitmap("/res/Tower/Bullet/bullet_0.png"),
+      new BetterGraphicsBitmap("/res/Tower/Bullet/bullet_1.png"),
+      new BetterGraphicsBitmap("/res/Tower/Bullet/bullet_2.png"),
+      new BetterGraphicsBitmap("/res/Tower/Bullet/bullet_3.png")
+    )
+  }
+
 
 }

@@ -74,14 +74,23 @@ class Bullet(
 
   def hit(): Unit = {
     if (target.get.takeDamage(sourceTower.damage, sourceTower)) {
-        EntitiesManager.player.get.coins += target.get.getLvl()
+        EntitiesManager.player.get.coins += target.get.getLvl
         EntitiesManager.destroyEntity(target.get)
       }
     EntitiesManager.destroyEntity(this)
   }
 
+  this.addAnimation("idle", new Animation(
+    spriteTarget = this.sprite,
+    imagesBitmapArray = AnimationsResources.ANIM_TOWER_BULLET,
+    duration = 600,
+    loop = true,
+    active = true
+  ))
+
 
   Layers.addSprite(Constants.LAYER_PLAYER, this.sprite)
+  this.playAnimation("idle")
 
 
 }

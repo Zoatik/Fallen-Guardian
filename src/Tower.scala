@@ -34,8 +34,7 @@ class Tower(
     maxHp += maxHp/5
     damage = Constants.TOWER_DEFAULT_DAMAGE * lvl
     range = Constants.TOWER_DEFAULT_RANGE * (1 + lvl / 5)
-    attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED / (1 + lvl/10.0)
-    println("TOWER UPGRADED")
+    attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED / (1 + lvl/2)
   }
 
   override def destroy(): Unit = {
@@ -86,7 +85,6 @@ class Tower(
   protected def towerAttack(): Unit = {
     if(target.isDefined && ( GameManager.gameTimer - prevTowerAttackTime )>= attackSpeed){
       EntitiesManager.spawnBullet((0, -1), this)
-      println("TOWER SPAWN BULLET at : " + pos)
       prevTowerAttackTime = GameManager.gameTimer
     }
   }

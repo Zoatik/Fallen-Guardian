@@ -154,10 +154,10 @@ abstract class Entity(
     GameManager.handleOnEntityLeft(this)
   }
 
-  def getHp(): Int = hp
+  def getHp: Int = hp
 
-  def getMaxHp(): Int = maxHp
+  def getMaxHp: Int = maxHp
 
-  def getLvl(): Int = lvl
+  def getLvl: Int = lvl
 }
 
