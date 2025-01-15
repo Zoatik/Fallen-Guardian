@@ -21,7 +21,7 @@ class Building(_pos: (Int, Int),
 
   override def levelUp(): Unit = {
     super.levelUp()
-    price *= 2
+    price += 25
   }
 
 }
