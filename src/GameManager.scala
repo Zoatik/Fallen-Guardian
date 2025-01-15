@@ -4,6 +4,7 @@ import UI_Manager.{StaticUiElement, Ui_text}
 import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.{Color, Component, Cursor}
+import javax.sound.sampled.Clip.LOOP_CONTINUOUSLY
 
 
 /**
@@ -67,6 +68,8 @@ object GameManager {
 
     this.setInputListeners()
     this.createHUD()
+    BetterAudio.playNewAudio("main theme",new BetterAudio(Constants.THEME_SONG_CHILL), LOOP_CONTINUOUSLY)
+
 
     initialized = true
   }
@@ -148,13 +151,15 @@ object GameManager {
     waveCounter += 1
     isWavePlaying = true
     EntitiesManager.startWave(waveCounter)
+    BetterAudio.playNewAudio("main theme",new BetterAudio(Constants.THEME_SONG_HARD), LOOP_CONTINUOUSLY)
   }
 
 
   def stopWave(): Unit = {
     isWavePlaying = false
     prevWaveEndedTime = gameTimer
-    println("Wave Stopped")
+    new BetterAudio(Constants.THEME_SONG_TRANS).play()
+    BetterAudio.playNewAudio("main theme",new BetterAudio(Constants.THEME_SONG_CHILL), LOOP_CONTINUOUSLY)
   }
 
   private def update(): Unit = {

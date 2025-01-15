@@ -16,10 +16,10 @@ object BetterAudio {
     audioList.clear()
   }
 
-  def playNewAudio(id: String, betterAudio: BetterAudio, count: Int = -1): Unit = {
+  def playNewAudio(id: String, betterAudio: BetterAudio, count: Int = -2): Unit = {
     audioList.toList.foreach(el => if(el._2.audioClip.isOpen) stop(el._1))
     addAudio(id, betterAudio)
-    if(count >= 0)
+    if(count >= -1)
       betterAudio.play(count)
     else
       betterAudio.play()

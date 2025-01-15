@@ -33,6 +33,7 @@ class Tower(
     new Audio(Constants.TOWER_LEVEL_UP_AUDIO).play()
     super.levelUp()
     maxHp += maxHp/5
+    hp = maxHp
     damage = Constants.TOWER_DEFAULT_DAMAGE * lvl
     range = Constants.TOWER_DEFAULT_RANGE * (1 + lvl / 5)
     attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED / (1 + lvl/2)
