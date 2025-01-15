@@ -38,5 +38,9 @@ object UI_Manager {
     }
   }
 
+  case class Ui_text(var text: String = "", var offsetX: Int = 0, var offsetY: Int = 0){}
+  
+  class StaticUiElement(var sprite : Sprite, var text: Ui_text = Ui_text()){}
+
 
 }

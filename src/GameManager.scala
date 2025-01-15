@@ -1,5 +1,6 @@
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import Constants._
+import UI_Manager.{StaticUiElement, Ui_text}
 import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.{Component, Cursor}
