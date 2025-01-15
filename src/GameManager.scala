@@ -1,5 +1,6 @@
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import Constants._
+import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.{Component, Cursor}
 
@@ -31,6 +32,8 @@ object GameManager {
   InputManager.bindKey(KeyEvent.VK_ENTER, (_, pressed) => if(!pressed) isReadyToStart = true)
 
   private def changeGameMode(): Unit = {
+
+
     val player: Player = EntitiesManager.player.getOrElse(return)
     player.isBuilding = !player.isBuilding
     Grid.highlightOnMouse = player.isBuilding
@@ -61,6 +64,10 @@ object GameManager {
     changeCursor(CURSOR_DEFAULT)
 
     this.setInputListeners()
+    var spriteUi: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
+    var textUi: Ui_text = new Ui_text("LIIIIFE")
+    var testUiElement: StaticUiElement = new StaticUiElement(spriteUi,textUi)
+    Layers.addStaticUiElement(LAYER_STATIC_UI_0, testUiElement)
     fg.displayFPS(true)
 
     initialized = true

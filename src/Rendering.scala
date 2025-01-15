@@ -1,4 +1,4 @@
-import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH, pixelFont, pixelSizedFont}
+import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, NUMBER_OF_STATIC_UI_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH, pixelFont, pixelSizedFont}
 import hevs.graphics.FunGraphics
 
 import java.awt.Color
@@ -105,10 +105,15 @@ class Sprite(var imagePath: String,
  * Layers object - contains all layers infos
  */
 object Layers{
-  var size: Int = NUMBER_OF_LAYERS
-  var layerArray: Array[Layer] = Array.ofDim(size)
-  for (i <- 0 until size){
+  var layersSize: Int = NUMBER_OF_LAYERS
+  var staticUiLayersSize: Int = NUMBER_OF_STATIC_UI_LAYERS
+  var layerArray: Array[Layer] = Array.ofDim(layersSize)
+  var staticUiArray: Array[StaticUiLayer] = Array.ofDim(staticUiLayersSize)
+  for (i <- 0 until layersSize){
     layerArray(i) = new Layer(i)
+  }
+  for(i <- 0 until staticUiLayersSize){
+    staticUiArray(i) = new StaticUiLayer(i)
   }
 
   /**
@@ -122,12 +127,17 @@ object Layers{
     layerArray.find(layer => layer.spritesList.contains(sprite)).getOrElse(return).spritesList -= sprite
   }
 
+  def addStaticUiElement(z: Int, el: StaticUiElement): Unit = staticUiArray(z).addStaticUiElement(el)
+
+  def removeStaticUiElement(el: StaticUiElement): Unit = {
+    staticUiArray.find(layer => layer.staticUiList.contains(el)).getOrElse(return).staticUiList -= el
+  }
   /**
    * creates a new layer
    */
   def addLayer(): Unit = {
-    layerArray :+= new Layer(size)
-    size += 1
+    layerArray :+= new Layer(layersSize)
+    layersSize += 1
   }
 
   /**
@@ -152,6 +162,12 @@ class Layer(var z: Int){
    * @param sprite sprite to add
    */
   def addSprite(sprite: Sprite): Unit = spritesList += sprite
+}
+
+class StaticUiLayer(var z: Int){
+  var staticUiList:  mutable.ListBuffer[StaticUiElement] = mutable.ListBuffer()
+
+  def addStaticUiElement(staticUiElement: StaticUiElement): Unit = staticUiList += staticUiElement
 }
 
 /**
@@ -196,7 +212,7 @@ object Renderer {
     // Rendering (note the synchronized)
     fg.frontBuffer.synchronized {
       fg.clear(Color.white)
-      for (layer <- Layers.layerArray; if (layer.z <= LAYER_UI_MOBILE)) {
+      for (layer <- Layers.layerArray) {
         for (sprite <- layer.spritesList) {
           val topLeftPos = sprite.getTopLeftPos()
           val x = topLeftPos._1 + sprite.bm.getWidth/2 + offsetX
@@ -207,18 +223,23 @@ object Renderer {
           fg.drawTransformedPicture(x, y, angle, scale, bm)
         }
       }
-      for(layer <- Layers.layerArray; if(layer.z > LAYER_UI_MOBILE)){
-        for (sprite <- layer.spritesList) {
-          val topLeftPos = sprite.getTopLeftPos()
-          val x = topLeftPos._1 + sprite.bm.getWidth/2
-          val y = topLeftPos._2 + sprite.bm.getHeight/2
-          val angle = sprite.angle
-          val scale = sprite.scale
-          val bm = sprite.bm
+
+      for(layer <- Layers.staticUiArray) {
+        for (staticUiElement <- layer.staticUiList) {
+          val topLeftPos = staticUiElement.sprite.getTopLeftPos()
+          val x = topLeftPos._1 + staticUiElement.sprite.bm.getWidth / 2
+          val y = topLeftPos._2 + staticUiElement.sprite.bm.getHeight / 2
+          val angle = staticUiElement.sprite.angle
+          val scale = staticUiElement.sprite.scale
+          val bm = staticUiElement.sprite.bm
+          val textX = topLeftPos._1 + staticUiElement.text.offsetX
+          val textY = topLeftPos._2 + staticUiElement.text.offsetY
+          val text: String = staticUiElement.text.text
           fg.drawTransformedPicture(x, y, angle, scale, bm)
+          fg.drawString(textX, textY, text, pixelSizedFont, Color.BLACK)
+          //fg.drawString(0, 30, "HELLO WORLD IN PIXEL FONT", pixelSizedFont, Color.BLACK)
         }
       }
-      fg.drawString(0,30,"HELLO WORLD IN PIXEL FONT", pixelSizedFont, Color.BLACK)
     }
 
 

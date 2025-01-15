@@ -32,12 +32,14 @@ object Constants {
   //*-------------------------*//
     // Layers Constants
   val NUMBER_OF_LAYERS: Int = 4
+  val NUMBER_OF_STATIC_UI_LAYERS: Int = 3
   val LAYER_GROUND = 0
   val LAYER_ENTITIES = 1
   val LAYER_PLAYER = 2
   val LAYER_UI_MOBILE = 3
-  val LAYER_UI_0 = 4
-  val LAYER_UI_1 = 5
+  val LAYER_STATIC_UI_0 = 0
+  val LAYER_STATIC_UI_1 = 1
+  val LAYER_STATIC_UI_2 = 2
 
   //*-------------------------*//
   // Collision Layers Constants
