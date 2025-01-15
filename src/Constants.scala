@@ -191,5 +191,11 @@ object Constants {
   val GOBLIN_ATTACK_AUDIO: Audio = new Audio("/res/Audio/GoblinAudio/goblin_attack.wav")
   val GOBLIN_HURT_AUDIO: Audio = new Audio("/res/Audio/GoblinAudio/goblin_hurt.wav")
   val GOBLIN_DEATH_AUDIO: Audio = new Audio("/res/Audio/GoblinAudio/goblin_death.wav")
+
+  val PLAYER_XP_GAIN_AUDIO: Audio = new Audio("/res/Audio/Interactions/xpAudio.wav")
+  val PLAYER_LEVEL_UP_AUDIO: Audio = new Audio("/res/Audio/Interactions/playerLevelUp.wav")
+  val TOWER_PLACEMENT_AUDIO: Audio = new Audio("/res/Audio/Interactions/towerPlacement.wav")
+  val TOWER_LEVEL_UP_AUDIO: Audio = new Audio("/res/Audio/Interactions/towerLevelUp.wav")
+  val SELL_AUDIO: Audio = new Audio("/res/Audio/Interactions/sellAudio.wav")
 }
 
