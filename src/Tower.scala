@@ -34,7 +34,7 @@ class Tower(
     maxHp += maxHp/5
     damage = Constants.TOWER_DEFAULT_DAMAGE * lvl
     range = Constants.TOWER_DEFAULT_RANGE * (1 + lvl / 5)
-    attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED * (1 + lvl/10.0)
+    attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED / (1 + lvl/10.0)
     println("TOWER UPGRADED")
   }
 
@@ -43,7 +43,7 @@ class Tower(
     Renderer.destroy(towerHealthBarSprite)
   }
 
-  override def updateTarget(): Unit = {
+  def updateTarget(): Unit = {
     if (target.isDefined) {
       return
     }

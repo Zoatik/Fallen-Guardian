@@ -20,6 +20,7 @@ class Building(_pos: (Int, Int),
   setCollisionListeners()
 
   override def levelUp(): Unit = {
+    super.levelUp()
     price *= 2
   }
 

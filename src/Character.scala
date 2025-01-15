@@ -36,6 +36,8 @@ abstract class Character(
     this.setAbsPosition((newX, newY))
   }
 
+  def updateTarget(newTarget: Option[Entity]): Unit
+
   def moveToTarget(): Boolean = {
     if(isStunned && GameManager.gameTimer - lastTimeStunned < 500)
       return false
@@ -100,10 +102,8 @@ abstract class Character(
     var path: Option[Array[Cell]] = Grid.findPath(startCell, targetCell)
     if(path.isEmpty){
       path = Grid.findPathToNextCollider(startCell, targetCell)
-      println("path : " + path)
       if(path.nonEmpty){
-        target = path.get.last.entityPlaced
-        updateTargetPos(true)
+        updateTarget(path.get.last.entityPlaced)
       }
 
     }
@@ -135,11 +135,7 @@ abstract class Character(
     isMoving = false
   }
 
-  def updateTargetPos(forceUpdate: Boolean = false): Unit = {
-    if(target.isDefined && target.get.isInstanceOf[Building] && !forceUpdate)
-      return
-    this.calculatePath(target.getOrElse(return).getPosition()._1, target.getOrElse(return).getPosition()._2)
-  }
+
 
 
   private def checkTargetReached(): Unit = {

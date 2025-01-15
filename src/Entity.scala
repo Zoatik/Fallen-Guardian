@@ -57,8 +57,6 @@ abstract class Entity(
     hp == 0
   }
 
-  def updateTarget(): Unit = {}
-
   def findTarget(): Option[Entity] = None
 
   def addAnimation(id: String, newAnimation: Animation): Unit = animations.update(id, newAnimation)

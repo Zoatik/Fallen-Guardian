@@ -66,13 +66,21 @@ class Player(
     }
   }
 
+  override def updateTarget(newTarget: Option[Entity]): Unit = {
+    if (newTarget.isEmpty || !newTarget.get.isInstanceOf[Enemy])
+      return
 
-  def setTarget(entity: Enemy): Unit = {
-    this.target = Some(entity)
-    updateTargetPos()
+    target = newTarget
+    this.updateTargetPos()
   }
 
-  override def updateTarget(): Unit = {}
+  def updateTargetPos(): Unit = {
+    if(target.isEmpty)
+      return
+    this.calculatePath(target.get.getPosition()._1, target.get.getPosition()._2)
+  }
+
+
 
   override protected def attack(): Unit = {
     //trying death vs. normal attack slashes.. look in Enemy.scala

@@ -45,7 +45,20 @@ class Enemy(
 
   override val attackCooldown: Int = 1000
 
-  override def updateTarget(): Unit = {}
+  override def updateTarget(newTarget: Option[Entity]): Unit = {
+    if(target.isDefined && target.get.isInstanceOf[Tower])
+        return
+    target = newTarget
+    this.updateTargetPos(true)
+  }
+
+  def updateTargetPos(forceUpdate: Boolean = false): Unit = {
+    if(target.isEmpty)
+      return
+    if(target.get.isInstanceOf[Building] && !forceUpdate)
+      return
+    this.calculatePath(target.get.getPosition()._1, target.get.getPosition()._2)
+  }
 
   override protected def attack(): Unit = {
     Constants.GOBLIN_ATTACK_AUDIO.play()
@@ -70,8 +83,7 @@ class Enemy(
       Constants.PLAYER_KILL_ATTACK_AUDIO.play()
       Constants.GOBLIN_DEATH_AUDIO.play()
     }
-    this.target = Some(source)
-    this.updateTargetPos()
+    this.updateTarget(Some(source))
     isDead
   }
 
