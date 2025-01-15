@@ -38,9 +38,19 @@ object UI_Manager {
     }
   }
 
-  case class Ui_text(var text: String = "", var offsetX: Int = 0, var offsetY: Int = 0){}
-  
-  class StaticUiElement(var sprite : Sprite, var text: Ui_text = Ui_text()){}
+  def createUiElement(sprite: Sprite, z: Int, textStr: String = "", offsetX: Int = 0, offsetY: Int = 0): Unit = {
+    val uiElement: StaticUiElement = {
+      if(textStr.nonEmpty)
+        new StaticUiElement(sprite, new Ui_text(textStr, offsetX, offsetY))
+      else
+        new StaticUiElement(sprite)
+    }
+
+    Layers.addStaticUiElement(z, uiElement)
+  }
+
+  class Ui_text(var text: String = "", var offsetX: Int = 0, var offsetY: Int = 0){}
+  class StaticUiElement(var sprite : Sprite, var text: Ui_text = new Ui_text()){}
 
 
 }

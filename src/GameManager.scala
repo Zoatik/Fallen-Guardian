@@ -65,10 +65,8 @@ object GameManager {
     changeCursor(CURSOR_DEFAULT)
 
     this.setInputListeners()
-    var spriteUi: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
-    var textUi: Ui_text = new Ui_text("LIIIIFE")
-    var testUiElement: StaticUiElement = new StaticUiElement(spriteUi,textUi)
-    Layers.addStaticUiElement(LAYER_STATIC_UI_0, testUiElement)
+    val spriteUi: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
+    UI_Manager.createUiElement(spriteUi, LAYER_STATIC_UI_0, "LIIIFE")
     fg.displayFPS(true)
 
     initialized = true
