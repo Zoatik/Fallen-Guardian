@@ -18,7 +18,6 @@ object UiManager {
     staticUiElements.foreach(_.playLogics())
   }
 
-
   def checkPlayerUI(): Unit = {
     player.getOrElse(return).playerHealthBarSprite.setPosition(player.get.getAbsPosition._1, player.get.getAbsPosition._2 - 11)
     player.get.playerHealthBarSprite.changeImage(checkHealthBar(player.get))
@@ -35,7 +34,6 @@ object UiManager {
       tower.towerHealthBarSprite.changeImage(checkHealthBar(tower))
     })
   }
-
 
   def checkHealthBar(entity: Entity): BetterGraphicsBitmap = {
     if (entity.getHp >= 85 * entity.getMaxHp / 100) {
@@ -139,6 +137,5 @@ object UiManager {
     }
 
   }
-
 
 }

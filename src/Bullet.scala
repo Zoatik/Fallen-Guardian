@@ -52,7 +52,6 @@ class Bullet(
     else {
       move(direction._1, direction._2)
     }
-
   }
 
   private def hasReachedTarget(): Boolean = {
@@ -69,7 +68,6 @@ class Bullet(
                                             (pathVect._2 / dist * velocity * (1 + Renderer.deltaT) / 10).toInt)
       direction = pathVectNormalized
     }
-
   }
 
   def hit(): Unit = {
@@ -88,9 +86,7 @@ class Bullet(
     active = true
   ))
 
-
   Layers.addSprite(Constants.LAYER_PLAYER, this.sprite)
   this.playAnimation("idle")
-
 
 }

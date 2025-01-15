@@ -6,8 +6,8 @@ abstract class Character(
                  _armor: Int,
                  _lvl: Int,
                  _baseImageBitmap: BetterGraphicsBitmap,
-                 var velocity: Double, // Vitesse de déplacement (dx, dy)
-                 var damage: Int // Quantité de dégâts infligés
+                 var velocity: Double,
+                 var damage: Int
                ) extends Entity(_pos, _maxHp, _armor, _lvl, _baseImageBitmap) {
 
   protected val pathQueue: mutable.Queue[Cell] = mutable.Queue()
@@ -21,7 +21,6 @@ abstract class Character(
   protected val attackCooldown: Int = 1000
   protected var prevAttackTime: Long = 0
   var target: Option[Entity] = None
-
 
 
   override def destroy(): Unit = {
@@ -48,7 +47,6 @@ abstract class Character(
 
     if(animations("idle").playing)
       playAnimation("walk")
-
 
     var dist = this.absDistanceTo(this.nextStep)
     checkTargetReached()
@@ -121,7 +119,6 @@ abstract class Character(
     true
   }
 
-
   private def startMoving(): Unit = {
     if(this.animations("idle").playing)
       this.playAnimation("walk")
@@ -135,16 +132,12 @@ abstract class Character(
     isMoving = false
   }
 
-
-
-
   private def checkTargetReached(): Unit = {
     if(target.isDefined && collisionBox2D.collidesWith(target.get.collisionBox2D)) {
       hasReachedTarget = true
     }
     else
       hasReachedTarget = false
-
   }
 
   def tryToAttack(): Unit = {
@@ -167,7 +160,6 @@ abstract class Character(
     playAnimation("hurt")
     isDead
   }
-
 
 }
 

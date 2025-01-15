@@ -2,18 +2,14 @@ import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import Constants._
 import UiManager.{StaticUiElement, Ui_text}
 import hevs.graphics.utils.GraphicsBitmap
-
 import java.awt.{Color, Component, Cursor}
 import javax.sound.sampled.Clip.LOOP_CONTINUOUSLY
-
 
 /**
  * Main Manager that handles the game logics
  */
 object GameManager {
-  // Window and Grid setup
   val fg = new BetterFunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Fallen Guardian", false)
-
 
   val camera2D: Camera2D = new Camera2D()
   var mouseX: Int = 0
@@ -29,13 +25,11 @@ object GameManager {
   var isReadyToStart: Boolean = false
   var isGameOver: Boolean = false
 
-
   InputManager.bindKey(KeyEvent.VK_B, (_, pressed) => if(!pressed) changeGameMode())
   InputManager.bindKey(KeyEvent.VK_ESCAPE, (_, pressed) => if(!pressed) isPaused = !isPaused)
   InputManager.bindKey(KeyEvent.VK_ENTER, (_, pressed) => if(!pressed) ready())
 
   private def changeGameMode(): Unit = {
-
 
     val player: Player = EntitiesManager.player.getOrElse(return)
     player.isBuilding = !player.isBuilding
@@ -51,14 +45,13 @@ object GameManager {
       changeCursor(CURSOR_DEFAULT)
   }
 
-
   /**
    * Initialize all necessary components
    */
   def init(): Unit = {
     /*---Grid initialisation---*/
     Grid.init((GRID_SIZE,GRID_SIZE), CELL_SIZE)
-    for(el <- Grid.cells){ // Adds sprite to layer for each cell
+    for(el <- Grid.cells){
       for(cell <- el){
         Layers.addSprite(LAYER_GROUND, cell.sprite)
       }
@@ -70,10 +63,8 @@ object GameManager {
     this.createHUD()
     BetterAudio.playNewAudio("main theme",new BetterAudio(Constants.THEME_SONG_CHILL), LOOP_CONTINUOUSLY)
 
-
     initialized = true
   }
-
 
   /**
    * ensures that the Game Manager is initialized before use
@@ -201,7 +192,6 @@ object GameManager {
     BetterAudio.playNewAudio("main theme",new BetterAudio(Constants.THEME_SONG_HARD), LOOP_CONTINUOUSLY)
   }
 
-
   def stopWave(): Unit = {
     isWavePlaying = false
     prevWaveEndedTime = gameTimer
@@ -242,7 +232,6 @@ object GameManager {
    *  - Update the deltaT
    */
   def loop(): Unit = {
-
     while (true) {
       InputManager.handleKeys()
       InputManager.handleMouse()
@@ -254,10 +243,7 @@ object GameManager {
       }
       AnimationsManager.run()
 
-
       Renderer.render(fg)
-
-
     }
   }
 
@@ -285,13 +271,11 @@ object GameManager {
           changeGameMode()
         }
       }
-
       else {
         if (mouseButton == MouseEvent.BUTTON1) {
           player.target = None
           player.isAttacking = false
           player.calculatePath(cell.pos._1, cell.pos._2)
-
         }
       }
     }
@@ -381,7 +365,7 @@ object GameManager {
    *  - mouseDragged - mouseMoved
    */
   private def setInputListeners(): Unit = {
-    fg.setKeyManager(new KeyAdapter() { // Will be called when a key has been pressed
+    fg.setKeyManager(new KeyAdapter() {
       override def keyPressed(e: KeyEvent): Unit = {
 
         InputManager.handleKeyPressed(e.getKeyCode)
@@ -404,7 +388,6 @@ object GameManager {
 
     fg.addMouseMotionListener(new MouseAdapter() {
       override def mouseMoved(e: MouseEvent): Unit = {
-        // Get the mouse position from the event
         mouseX = e.getX
         mouseY = e.getY
         InputManager.handleMouseMoved(mouseX - Renderer.offsetX, mouseY- Renderer.offsetY)

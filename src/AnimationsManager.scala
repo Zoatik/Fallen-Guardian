@@ -35,9 +35,7 @@ class Animation( var spriteTarget: Sprite,
   var finished: Boolean = false
   var playing: Boolean = false
 
-  if (active)
-    this.activate()
-
+  if (active) {this.activate()}
 
   def this(spriteTarget: Sprite) {
     this(spriteTarget, Array.empty, 0, false, false)
@@ -66,7 +64,6 @@ class Animation( var spriteTarget: Sprite,
       this.spriteTarget.changeImage(nextImage)
       prevTime = System.currentTimeMillis()
     }
-
   }
 
   def onAnimationStarted(f: () => Unit): Unit = animationStartedListeners += f
@@ -87,14 +84,12 @@ class Animation( var spriteTarget: Sprite,
       this.animationStarted()
     }
   }
-
   def stop(): Unit = {
     if(playing) {
       playing = false
       this.animationEnded()
     }
   }
-
   def activate(): Unit = {
       AnimationsManager.add(this)
       active = true
@@ -103,8 +98,7 @@ class Animation( var spriteTarget: Sprite,
       AnimationsManager.remove(this)
       active = false
   }
-
-  def isActive: Boolean = active
+  def isActive: Boolean = {active}
 
   private def nextIndex(): Unit = {
     indexCounter = (indexCounter + 1) % imagesBitmapArray.length

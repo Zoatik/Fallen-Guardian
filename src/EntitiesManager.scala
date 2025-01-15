@@ -12,8 +12,6 @@ object EntitiesManager {
   var player: Option[Player] = Some(new Player())
   var base: Option[Base] = Some(new Base())
 
-
-
   var waveTimer: Long = 0
   private var startTime: Long = 0
   private var waveCounter: Int = 0
@@ -44,7 +42,6 @@ object EntitiesManager {
   def spawnBullet(posOffset: (Int, Int), sourceTower: Tower): Unit = {
     bullets += new Bullet(posOffset, sourceTower)
   }
-
 
   private def findSpawnPoint(): (Int, Int) = {
     val maxX: Int = Constants.GRID_SIZE
@@ -80,7 +77,7 @@ object EntitiesManager {
       return true
     }
 
-    else if(enemies.isEmpty) // returns false only when the time is up and no more enemies are alive
+    else if(enemies.isEmpty)
       return false
     true
   }
@@ -177,4 +174,5 @@ object EntitiesManager {
       enemy.moveToTarget()
     })
   }
+
 }

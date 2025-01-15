@@ -24,10 +24,8 @@ class Player(
   override val attackCooldown: Int = 400
   var xp: Int = 0
 
-  // player game mode infos
   var isBuilding = false
   var buildSelected: Int = Constants.BUILD_TOWER
-
 
   def this(pos: (Int, Int), lvl: Int) =
     this(
@@ -82,11 +80,7 @@ class Player(
     this.calculatePath(target.get.getPosition()._1, target.get.getPosition()._2)
   }
 
-
-
   override protected def attack(): Unit = {
-    //trying death vs. normal attack slashes.. look in Enemy.scala
-    //Constants.PLAYER_ATTACK_AUDIO.play()
     super.attack()
     if(target.isDefined)
       if(target.get.takeDamage(damage, this)){
@@ -107,7 +101,6 @@ class Player(
       case Constants.BUILD_TOWER => Constants.BUILD_TOWER_PRICE
       case Constants.BUILD_BARRICADE => Constants.BUILD_BARRICADE_PRICE
     }
-
     if(coins >= price) {
       coins -= price
       Grid.build(cell, buildSelected, lvl)
@@ -121,7 +114,6 @@ class Player(
       case Constants.BUILD_TOWER => Constants.BUILD_TOWER_PRICE
       case Constants.BUILD_BARRICADE => Constants.BUILD_BARRICADE_PRICE
     }
-
     coins >= price
   }
 
@@ -148,7 +140,6 @@ class Player(
     Grid.removeBuilding(building)
     println("tower sold, coins : " + coins)
   }
-
 
   this.addAnimation("idle", new Animation(
     spriteTarget = this.sprite,

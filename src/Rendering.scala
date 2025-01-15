@@ -23,7 +23,6 @@ class Sprite(var imagePath: String,
   var bm: BetterGraphicsBitmap = if(imagePath != "") new BetterGraphicsBitmap(imagePath) else _bm
   private var brightness: Double = 1.0
 
-
   def this(bitmap: BetterGraphicsBitmap,
            _pos: (Int, Int) = (0,0),
            _scale: Double = 1,
@@ -59,13 +58,10 @@ class Sprite(var imagePath: String,
       val newG = Math.min((g * factor).toInt, 255)
       val newB = Math.min((b * factor).toInt, 255)
 
-
       val newRgb = (alpha << 24) | (newR << 16) | (newG << 8) | newB
 
       bm.getBufferedImage.setRGB(x, y, newRgb)
     }
-
-
   }
 
   def restoreImage(original: BetterGraphicsBitmap): Unit = {
@@ -81,13 +77,12 @@ class Sprite(var imagePath: String,
     this.pos = newPos
   }
 
-
   def setTopLeftPosition(newTopLeftPos: (Int, Int)): Unit = {
     if(this.anchor == ANCHOR_TOP_LEFT)
       this.pos = newTopLeftPos
     else if(this.anchor == ANCHOR_MIDDLE)
       this.pos = (newTopLeftPos._1 + bm.getWidth/2, newTopLeftPos._2 + bm.getHeight/2)
-    else // ANCHOR_BOTTOM_MIDDLE
+    else
       this.pos = (newTopLeftPos._1 + bm.getWidth/2, newTopLeftPos._2 + bm.getHeight)
   }
 
@@ -97,7 +92,7 @@ class Sprite(var imagePath: String,
     }
     if(this.anchor == ANCHOR_MIDDLE)
       return (this.pos._1 - bm.getWidth/2, this.pos._2 - bm.getHeight/2)
-    // ANCHOR_BOTTOM_MIDDLE
+
     (this.pos._1 - bm.getWidth/2, this.pos._2 - bm.getHeight)
   }
 }
@@ -181,7 +176,6 @@ object Renderer {
   private var prevTime: Long = System.currentTimeMillis()
   var deltaT: Long = 0
 
-
   def destroy(sprite: Sprite): Unit = {
     Layers.removeSprite(sprite)
   }
@@ -210,7 +204,6 @@ object Renderer {
    * @param layers  layers to render
    */
   def render(fg: BetterFunGraphics): Unit = {
-    // Rendering (note the synchronized)
     fg.frontBuffer.synchronized {
       fg.clear(Color.white)
       for (layer <- Layers.layerArray) {
@@ -244,7 +237,6 @@ object Renderer {
       }
     }
 
-
     /**
      * Pause for constant frame rate
      */
@@ -253,4 +245,5 @@ object Renderer {
     prevTime = currTime
     fg.syncGameLogic(60)
   }
+
 }
