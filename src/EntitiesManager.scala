@@ -88,25 +88,25 @@ object EntitiesManager {
     entity match {
       case enemy: Enemy =>
         enemies -= enemy
-        player.get.target = None
+        player.getOrElse(return).target = None
         towers.foreach(_.target = None)
       case tower: Tower =>
         towers -= tower
-        player.get.target = None
+        enemies.foreach(enemy => enemy.target = this.base)
       case bullet: Bullet =>
         bullets -= bullet
         towers.foreach(_.target = None)
       case base: Base =>
         enemies.foreach(enemy => {
-          if(enemy.target.get == base)
+          if(enemy.target.isDefined && enemy.target.get == base)
             enemy.target = None
         })
         this.base = None
         GameManager.gameOver(false)
       case player: Player =>
         enemies.foreach(enemy => {
-          if(enemy.target.get == player)
-            enemy.target = None
+          if(enemy.target.isDefined && enemy.target.get == player)
+            enemy.target = this.base
         })
         playerKilled()
       case _ =>
@@ -116,10 +116,16 @@ object EntitiesManager {
   }
 
   private def playerKilled(): Unit = {
-    val newLvl: Int = if(player.get.getLvl > 5) player.get.getLvl - 5 else 1
-    val newPos: (Int, Int) = base.get.getPosition()
-    player = Some(new Player(_pos = newPos, _lvl = newLvl))
-    Constants.PLAYER_DEATH_AUDIO.play()
+    if(base.isEmpty) {
+      player.get.destroy()
+      this.player = None
+    }
+    else {
+      val newLvl: Int = if (player.get.getLvl > 5) player.get.getLvl - 5 else 1
+      val newPos: (Int, Int) = base.get.getPosition()
+      player = Some(new Player(_pos = newPos, _lvl = newLvl))
+      Constants.PLAYER_DEATH_AUDIO.play()
+    }
   }
 
   var prevUpdateTime: Long = 0

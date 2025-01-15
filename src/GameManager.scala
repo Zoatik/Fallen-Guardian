@@ -26,6 +26,7 @@ object GameManager {
   var gameTimer: Long = 0
   var isPaused: Boolean = false
   var isReadyToStart: Boolean = false
+  var isGameOver: Boolean = false
 
 
   InputManager.bindKey(KeyEvent.VK_B, (_, pressed) => if(!pressed) changeGameMode())
@@ -88,7 +89,14 @@ object GameManager {
 
   private def createHUD(): Unit = {
     val spriteUi: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
-    UI_Manager.createUiElement(spriteUi, LAYER_STATIC_UI_0, "LIIIFE")
+    val uiElement = UI_Manager.createUiElement(spriteUi, LAYER_STATIC_UI_0)
+    uiElement.addLogic(() => {
+      var baseHp = 0
+      if(EntitiesManager.base.isDefined) {
+        baseHp = EntitiesManager.base.get.getHp
+      }
+      uiElement.text.text = s"LIFE : $baseHp"
+    })
   }
 
   def startWave(): Unit = {
@@ -119,6 +127,7 @@ object GameManager {
 
   def gameOver(win: Boolean): Unit = {
     isWavePlaying = false
+    isGameOver = true
     if(win){
       println("YOU WON")
     }
@@ -140,12 +149,14 @@ object GameManager {
     while (true) {
       InputManager.handleKeys()
       InputManager.handleMouse()
-      if(!isPaused) {
+      if(!isPaused && !isGameOver) {
         gameTimer += System.currentTimeMillis() - prevTime
         prevTime = System.currentTimeMillis()
         GameManager.update()
+        UI_Manager.updateLogics()
       }
       AnimationsManager.run()
+
 
       Renderer.render(fg)
 

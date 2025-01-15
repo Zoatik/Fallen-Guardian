@@ -141,7 +141,7 @@ object Constants {
 
   val ENEMY_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/idle/orcIdle_0.png")
   val ENEMY_DEFAULT_VELOCITY: Double = 1.8
-  val ENEMY_DEFAULT_DAMAGE: Int = 1
+  val ENEMY_DEFAULT_DAMAGE: Int = 2
 
   //* ------------------------* */
     // Tower constants
@@ -163,7 +163,7 @@ object Constants {
     // Base constants
   val BASE_DEFAULT_POS: (Int, Int) = (29, 29)
   val BASE_DEFAULT_HP: Int = 100
-  val BASE_DEFAULT_ARMOR: Int = 1
+  val BASE_DEFAULT_ARMOR: Int = 0
   val BASE_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Base/base_0.png")//"/res/Tower/bullet/bullet_0.png"
 
   //* ------------------------* */
