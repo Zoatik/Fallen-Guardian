@@ -67,7 +67,6 @@ object GameManager {
 
     this.setInputListeners()
     this.createHUD()
-    fg.displayFPS(true)
 
     initialized = true
   }
@@ -88,40 +87,60 @@ object GameManager {
   }
 
   private def createHUD(): Unit = {
-    val spriteUi: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
-    val uiElement = UI_Manager.createUiElement(spriteUi, LAYER_STATIC_UI_0, color = Color.WHITE)
-    uiElement.addAnimation("lowLife", new Animation(
-      spriteTarget = uiElement.sprite,
+    /** BASE LIFE BAR */
+    val baseLifeBarSprite: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
+    val baseLifeBar = UI_Manager.createUiElement(baseLifeBarSprite, LAYER_STATIC_UI_0, color = Color.WHITE)
+    baseLifeBar.addAnimation("lowLife", new Animation(
+      spriteTarget = baseLifeBar.sprite,
       imagesBitmapArray = AnimationsResources.ANIM_UI_BASE_LOW,
       duration = 400,
       loop = true,
       active = false
     ))
-    uiElement.addLogic(() => {
+    baseLifeBar.addLogic(() => {
       var baseHp = 0
       if(EntitiesManager.base.isDefined) {
         val base: Base = EntitiesManager.base.get
         baseHp = base.getHp
-        if(baseHp > base.getMaxHp * 0.25 && uiElement.isAnimationPlaying("lowLife"))
-          uiElement.stopAnimation("lowLife")
+        if(baseHp > base.getMaxHp * 0.25 && baseLifeBar.isAnimationPlaying("lowLife"))
+          baseLifeBar.stopAnimation("lowLife")
         if(baseHp > base.getMaxHp * 0.75 && base.sprite.bm != UI_BASE_LIFE_100)
-          uiElement.sprite.changeImage(UI_BASE_LIFE_100)
+          baseLifeBar.sprite.changeImage(UI_BASE_LIFE_100)
         else if(baseHp > base.getMaxHp * 0.5 && base.sprite.bm != UI_BASE_LIFE_75)
-          uiElement.sprite.changeImage(UI_BASE_LIFE_75)
+          baseLifeBar.sprite.changeImage(UI_BASE_LIFE_75)
         else if(baseHp > base.getMaxHp * 0.25 && base.sprite.bm != UI_BASE_LIFE_50)
-          uiElement.sprite.changeImage(UI_BASE_LIFE_50)
+          baseLifeBar.sprite.changeImage(UI_BASE_LIFE_50)
         else if(baseHp > base.getMaxHp * 0.1 && base.sprite.bm != UI_BASE_LIFE_25)
-          uiElement.sprite.changeImage(UI_BASE_LIFE_25)
-        else if(baseHp > 0 && !uiElement.isAnimationPlaying("lowLife")) {
-          uiElement.playAnimation("lowLife")
-          println("PLAY")
+          baseLifeBar.sprite.changeImage(UI_BASE_LIFE_25)
+        else if(baseHp > 0 && !baseLifeBar.isAnimationPlaying("lowLife")) {
+          baseLifeBar.playAnimation("lowLife")
         }
         else if (baseHp == 0)
-          uiElement.sprite.changeImage(UI_BASE_LIFE_0)
+          baseLifeBar.sprite.changeImage(UI_BASE_LIFE_0)
       }
-      uiElement.text.text = s"LIFE : $baseHp"
+      baseLifeBar.text.text = s"LIFE : $baseHp"
+    })
 
+    /** USER INFOS */
+    val playerDisplaySprite: Sprite = new Sprite(UI_PLAYER_DISPLAY,(20, WINDOW_HEIGHT - UI_PLAYER_DISPLAY.getHeight - 20))
+    val playerSprite: Sprite = new Sprite(PLAYER_DEFAULT_IMAGE_BITMAP, (45, WINDOW_HEIGHT - PLAYER_DEFAULT_IMAGE_BITMAP.getHeight - 38))
+    val playerDisplay = UI_Manager.createUiElement(playerDisplaySprite, LAYER_STATIC_UI_0, offsetX = 110, offsetY = 66, color = Color.WHITE)
+    val playerUI = UI_Manager.createUiElement(playerSprite, LAYER_STATIC_UI_1)
+    playerDisplay.addLogic(() => {
+      if(EntitiesManager.player.isDefined){
+        val player: Player = EntitiesManager.player.get
+        playerDisplay.text.text = player.coins.toString
+      }
+    })
 
+    playerUI.addLogic(() => {
+      if(EntitiesManager.player.isDefined){
+        val player: Player = EntitiesManager.player.get
+        if(!playerUI.sprite.bm.name.contains(player.sprite.bm.name)){
+          playerUI.sprite.changeImage(player.sprite.bm.copy())
+          playerUI.sprite.scale = 2
+        }
+      }
     })
   }
 

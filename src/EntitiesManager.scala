@@ -90,6 +90,8 @@ object EntitiesManager {
         enemies -= enemy
         player.getOrElse(return).target = None
         towers.foreach(_.target = None)
+        bullets.foreach(bullet => bullet.destroy())
+        bullets.clear()
       case tower: Tower =>
         towers -= tower
         enemies.foreach(enemy => enemy.target = this.base)

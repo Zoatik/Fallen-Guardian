@@ -1,8 +1,8 @@
-import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, NUMBER_OF_STATIC_UI_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH, pixelFont, pixelSizedFont}
+import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, NUMBER_OF_STATIC_UI_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH, pixelFont}
 import UI_Manager.StaticUiElement
 import hevs.graphics.FunGraphics
 
-import java.awt.Color
+import java.awt.{Color, Font}
 import scala.collection.mutable
 
 /**
@@ -237,8 +237,9 @@ object Renderer {
           val textY = topLeftPos._2 + staticUiElement.text.offsetY
           val text: String = staticUiElement.text.text
           val textColor: Color = staticUiElement.text.color
+          val font: Font = staticUiElement.text.font
           fg.drawTransformedPicture(x, y, angle, scale, bm)
-          fg.drawString(textX, textY, text, pixelSizedFont, textColor)
+          fg.drawString(textX, textY, text, font, textColor)
         }
       }
     }

@@ -1,6 +1,7 @@
+import Constants.pixelFont
 import EntitiesManager.{enemies, player, towers}
 
-import java.awt.Color
+import java.awt.{Color, Font}
 import scala.collection.mutable
 
 object UI_Manager {
@@ -79,17 +80,24 @@ object UI_Manager {
     }
   }
 
-  def createUiElement(sprite: Sprite, z: Int, textStr: String = "", offsetX: Int = 0, offsetY: Int = 0, color: Color = Color.BLACK): StaticUiElement = {
-    val uiElement: StaticUiElement = new StaticUiElement(sprite, new Ui_text(textStr, offsetX, offsetY, color))
-
-
-
+  def createUiElement(sprite: Sprite,
+                      z: Int, textStr: String = "",
+                      offsetX: Int = 0,
+                      offsetY: Int = 0,
+                      color: Color = Color.BLACK,
+                      font: Font = pixelFont): StaticUiElement = {
+    val uiElement: StaticUiElement = new StaticUiElement(sprite, new Ui_text(textStr, offsetX, offsetY, color, font))
     Layers.addStaticUiElement(z, uiElement)
     staticUiElements += uiElement
     uiElement
   }
 
-  class Ui_text(var text: String = "", var offsetX: Int = 0, var offsetY: Int = 0, var color: Color = Color.BLACK){}
+  class Ui_text(var text: String = "",
+                var offsetX: Int = 0,
+                var offsetY: Int = 0,
+                var color: Color = Color.BLACK,
+                var font: Font = pixelFont){}
+
   class StaticUiElement(var sprite : Sprite, var text: Ui_text = new Ui_text()) {
     val logics: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
     val animations: mutable.Map[String, Animation] = mutable.Map()
@@ -127,7 +135,6 @@ object UI_Manager {
       false
     }
     def isAnimationPlaying(id: String): Boolean = {
-      println(animations(id).playing)
       animations.contains(id) && animations(id).playing
     }
 

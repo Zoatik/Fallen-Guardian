@@ -13,14 +13,17 @@ object Constants {
   val COLLISION_TIME_DELAY: Int = 10
 
   //*-------------------------*//
-    // Fonts constants
-  val fontStream = getClass.getResourceAsStream("/res/Fonts/MinimalPixel v2.ttf")
+  // Fonts constants
+  private val fontStream = getClass.getResourceAsStream("/res/Fonts/MinimalPixel v2.ttf")
   if (fontStream == null) throw new IllegalArgumentException("Font not found in resources!")
-  val pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontStream)
-  val pixelSizedFont = pixelFont.deriveFont(24f)
+  val pixelFont: Font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(18f)
+  val pixelFontSmall: Font = pixelFont.deriveFont(12f)
+  val pixelFontBig: Font = pixelFont.deriveFont(24f)
   fontStream.close() // Fermez le flux après utilisation
   GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFont)
-  GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelSizedFont)
+  GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFontSmall)
+  GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFontBig)
+
 
   //*-------------------------*//
     // Camera constants
