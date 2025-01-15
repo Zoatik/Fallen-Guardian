@@ -1,5 +1,6 @@
 import EntitiesManager.{enemies, player, towers}
 
+import java.awt.Color
 import scala.collection.mutable
 
 object UI_Manager {
@@ -78,22 +79,20 @@ object UI_Manager {
     }
   }
 
-  def createUiElement(sprite: Sprite, z: Int, textStr: String = "", offsetX: Int = 0, offsetY: Int = 0): StaticUiElement = {
-    val uiElement: StaticUiElement = {
-      if(textStr.nonEmpty)
-        new StaticUiElement(sprite, new Ui_text(textStr, offsetX, offsetY))
-      else
-        new StaticUiElement(sprite)
-    }
+  def createUiElement(sprite: Sprite, z: Int, textStr: String = "", offsetX: Int = 0, offsetY: Int = 0, color: Color = Color.BLACK): StaticUiElement = {
+    val uiElement: StaticUiElement = new StaticUiElement(sprite, new Ui_text(textStr, offsetX, offsetY, color))
+
+
 
     Layers.addStaticUiElement(z, uiElement)
     staticUiElements += uiElement
     uiElement
   }
 
-  class Ui_text(var text: String = "", var offsetX: Int = 0, var offsetY: Int = 0){}
+  class Ui_text(var text: String = "", var offsetX: Int = 0, var offsetY: Int = 0, var color: Color = Color.BLACK){}
   class StaticUiElement(var sprite : Sprite, var text: Ui_text = new Ui_text()) {
     val logics: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
+    val animations: mutable.Map[String, Animation] = mutable.Map()
     def addLogic(f: () => Unit): Unit = {
       logics += f
     }
@@ -101,6 +100,37 @@ object UI_Manager {
     def playLogics(): Unit = {
       logics.foreach(_())
     }
+
+    def addAnimation(id: String, newAnimation: Animation): Unit = animations.update(id, newAnimation)
+
+    def playAnimation(id: String): Unit = {
+      stopAllAnimations()
+      val anim = animations.getOrElse(id,{println(s"animation $id not found"); return})
+      anim.activate()
+      anim.play()
+    }
+
+    def stopAnimation(id: String): Unit = {
+      animations.getOrElse(id, return).stop()
+      animations(id).deactivate()
+    }
+
+    def stopAllAnimations(): Unit = {
+      animations.keys.foreach(id => stopAnimation(id))
+    }
+
+    def isAnimationPlaying(): Boolean = {
+      for(anim <- animations.values){
+        if(anim.playing)
+          return true
+      }
+      false
+    }
+    def isAnimationPlaying(id: String): Boolean = {
+      println(animations(id).playing)
+      animations.contains(id) && animations(id).playing
+    }
+
   }
 
 

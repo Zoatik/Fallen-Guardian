@@ -3,7 +3,7 @@ import Constants._
 import UI_Manager.{StaticUiElement, Ui_text}
 import hevs.graphics.utils.GraphicsBitmap
 
-import java.awt.{Component, Cursor}
+import java.awt.{Color, Component, Cursor}
 
 
 /**
@@ -89,13 +89,39 @@ object GameManager {
 
   private def createHUD(): Unit = {
     val spriteUi: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
-    val uiElement = UI_Manager.createUiElement(spriteUi, LAYER_STATIC_UI_0)
+    val uiElement = UI_Manager.createUiElement(spriteUi, LAYER_STATIC_UI_0, color = Color.WHITE)
+    uiElement.addAnimation("lowLife", new Animation(
+      spriteTarget = uiElement.sprite,
+      imagesBitmapArray = AnimationsResources.ANIM_UI_BASE_LOW,
+      duration = 400,
+      loop = true,
+      active = false
+    ))
     uiElement.addLogic(() => {
       var baseHp = 0
       if(EntitiesManager.base.isDefined) {
-        baseHp = EntitiesManager.base.get.getHp
+        val base: Base = EntitiesManager.base.get
+        baseHp = base.getHp
+        if(baseHp > base.getMaxHp * 0.25 && uiElement.isAnimationPlaying("lowLife"))
+          uiElement.stopAnimation("lowLife")
+        if(baseHp > base.getMaxHp * 0.75 && base.sprite.bm != UI_BASE_LIFE_100)
+          uiElement.sprite.changeImage(UI_BASE_LIFE_100)
+        else if(baseHp > base.getMaxHp * 0.5 && base.sprite.bm != UI_BASE_LIFE_75)
+          uiElement.sprite.changeImage(UI_BASE_LIFE_75)
+        else if(baseHp > base.getMaxHp * 0.25 && base.sprite.bm != UI_BASE_LIFE_50)
+          uiElement.sprite.changeImage(UI_BASE_LIFE_50)
+        else if(baseHp > base.getMaxHp * 0.1 && base.sprite.bm != UI_BASE_LIFE_25)
+          uiElement.sprite.changeImage(UI_BASE_LIFE_25)
+        else if(baseHp > 0 && !uiElement.isAnimationPlaying("lowLife")) {
+          uiElement.playAnimation("lowLife")
+          println("PLAY")
+        }
+        else if (baseHp == 0)
+          uiElement.sprite.changeImage(UI_BASE_LIFE_0)
       }
       uiElement.text.text = s"LIFE : $baseHp"
+
+
     })
   }
 

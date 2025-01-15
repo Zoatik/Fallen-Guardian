@@ -111,5 +111,12 @@ object AnimationsResources {
     )
   }
 
+  val ANIM_UI_BASE_LOW: Array[BetterGraphicsBitmap] = {
+    Array(
+      Constants.UI_BASE_LIFE_1,
+      Constants.UI_BASE_LIFE_1_HIGHLIGHTED,
+    )
+  }
+
 
 }

@@ -236,9 +236,9 @@ object Renderer {
           val textX = topLeftPos._1 + staticUiElement.text.offsetX
           val textY = topLeftPos._2 + staticUiElement.text.offsetY
           val text: String = staticUiElement.text.text
+          val textColor: Color = staticUiElement.text.color
           fg.drawTransformedPicture(x, y, angle, scale, bm)
-          fg.drawString(textX, textY, text, pixelSizedFont, Color.BLACK)
-          //fg.drawString(0, 30, "HELLO WORLD IN PIXEL FONT", pixelSizedFont, Color.BLACK)
+          fg.drawString(textX, textY, text, pixelSizedFont, textColor)
         }
       }
     }
