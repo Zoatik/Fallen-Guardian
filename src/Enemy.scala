@@ -38,6 +38,11 @@ class Enemy(
     this.armor = Constants.ENEMY_DEFAULT_ARMOR * lvl
   }
 
+  override def destroy(): Unit = {
+    super.destroy()
+    Renderer.destroy(enemyHealthBarSprite)
+  }
+
   override val attackCooldown: Int = 1000
 
   override def updateTarget(): Unit = {}

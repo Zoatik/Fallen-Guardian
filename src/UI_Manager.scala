@@ -1,7 +1,4 @@
-import EntitiesManager.{enemies, player}
-
-import scala.collection.mutable
-
+import EntitiesManager.{player, enemies, towers}
 
 object UI_Manager {
 
@@ -40,8 +37,6 @@ object UI_Manager {
       Constants.PLAYER_HP_BAR_5
     }
   }
+
+
 }
-
-case class Ui_text(var text: String = "", var offsetX: Int = 0, var offsetY: Int = 0){}
-
-class StaticUiElement(var sprite : Sprite, var text: Ui_text = Ui_text()){}
