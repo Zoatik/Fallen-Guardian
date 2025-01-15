@@ -1,4 +1,3 @@
-
 import java.awt.event.MouseEvent
 import scala.collection.mutable
 
@@ -24,9 +23,7 @@ case class Box(x: Int, y: Int, width: Int, height: Int) {
    * @return true if the point is in the 2D Box - false otherwise
    */
   def containsPoint(px: Int, py: Int): Boolean = {
-
     px >= x  && px < x + width && py >= y && py < y + height
-
   }
 }
 
@@ -44,7 +41,6 @@ class CollisionBox2D (val id: String, initialBox: Box) {
   private val mouseReleasedListeners: mutable.ListBuffer[Int => Unit] = mutable.ListBuffer()
 
   var isMouseOver: Boolean = false
-
 
   def collidesWith(other: CollisionBox2D): Boolean = this.box.intersects(other.box)
 
@@ -163,12 +159,12 @@ object CollisionBox2DManager {
   InputManager.bindMouseButton(MouseEvent.BUTTON1, (mouseButton, pressed) => handleMouseAction(mouseButton, pressed))
   InputManager.bindMouseButton(MouseEvent.BUTTON3, (mouseButton, pressed) => handleMouseAction(mouseButton, pressed))
 
-
   def destroy(collisionBox2D: CollisionBox2D): Unit = {
     val targetLayer = layers.find(layer => layer.contains(collisionBox2D)).getOrElse(return)
     collisionBox2D.mouseLeave()
     targetLayer -= collisionBox2D
   }
+
   /**
   * Adds a new collision Area to the Manager
   * @param initialBox  Box shape
@@ -179,7 +175,7 @@ object CollisionBox2DManager {
     require(layer >= 0 && layer < layers.length, s"Invalid layer: $layer")
     val newBox = new CollisionBox2D(s"Box$boxesCounter", initialBox)
     register(newBox, layer)
-    //DEBUG
+
     newBox
   }
 
@@ -215,10 +211,9 @@ object CollisionBox2DManager {
     if(GameManager.gameTimer - prevTime < Constants.COLLISION_TIME_DELAY)
       return
 
-    for (layer <- layers.indices.reverse) { // Parcourir les couches de la plus haute à la plus basse
+    for (layer <- layers.indices.reverse) {
       val collidedBox = layers(layer).find(_.checkMouseCollision(mouseX, mouseY))
       if (collidedBox.isDefined) {
-        // collision detected -> stop
         return
       }
     }
@@ -240,7 +235,6 @@ object CollisionBox2DManager {
       for (layer <- layers.indices.reverse) {
         val pressedBox = layers(layer).find(_.mousePressed(mouseButton))
         if (pressedBox.isDefined) {
-          // Une boîte a été pressée dans ce layer, donc on arrête
           return
         }
       }
@@ -250,7 +244,6 @@ object CollisionBox2DManager {
       for (layer <- layers.indices.reverse) {
         val releasedBox = layers(layer).find(_.mouseReleased(mouseButton))
         if (releasedBox.isDefined) {
-          // Une boîte a été relâchée dans ce layer, donc on arrête
           return
         }
       }
@@ -258,4 +251,3 @@ object CollisionBox2DManager {
   }
 
 }
-

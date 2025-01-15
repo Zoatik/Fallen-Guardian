@@ -17,7 +17,6 @@ class BetterFunGraphics(_width: Int, _height: Int, _title: String, _highQuality:
   }
 }
 
-
 /**
  * GraphicsBitmap contains the methods required to create a [[BufferedImage]] from a
  * [[String]] if the file exists
@@ -27,7 +26,7 @@ class BetterFunGraphics(_width: Int, _height: Int, _title: String, _highQuality:
  * @version 1.3, April 2011
  * @author <a href='mailto:pandre.mudry&#64;hevs.ch'> Pierre-Andre Mudry</a>
  */
-class BetterGraphicsBitmap(val name: String, var mBitmap: BufferedImage = null) { // Get optimized image
+class BetterGraphicsBitmap(val name: String, var mBitmap: BufferedImage = null) {
   final private var WIDTH = 0
   final private var HEIGHT = 0
   val gc: GraphicsConfiguration = GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice.getDefaultConfiguration
@@ -86,4 +85,3 @@ class BetterGraphicsBitmap(val name: String, var mBitmap: BufferedImage = null) 
     copyInstance
   }
 }
-

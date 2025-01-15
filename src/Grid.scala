@@ -25,7 +25,6 @@ object Grid {
     this.size = size
     this.cellSize = cellsize
 
-
     cells = Array.ofDim(size._1, size._2)
     for(i <- cells.indices){
       for(j <- cells(0).indices){
@@ -106,8 +105,6 @@ object Grid {
   }
 
   /*------------ PATH FINDING FUNCTIONS ------------*/
-
-
   /**
    * findPath function - public
    * @param start   start Cell
@@ -118,42 +115,34 @@ object Grid {
    */
   def findPath(start: Cell, target: Cell, ignoreTargetCollision: Boolean = true, ignoreCollisions: Boolean = false): Option[Array[Cell]] = {
     ensureInitialized()
-    // Open list (nœuds à explorer) avec priorité
+
     val openSet: mutable.PriorityQueue[(Cell, Double)] =
       mutable.PriorityQueue.empty[(Cell, Double)](Ordering.by[(Cell, Double), Double](_._2).reverse)
-    openSet.enqueue((start, 0.0)) // Ajouter le point de départ avec un coût de 0
+    openSet.enqueue((start, 0.0))
 
-    // Map pour suivre les parents (pour reconstruire le chemin)
     val cameFrom = mutable.Map[Cell, Cell]()
 
-    // Map pour suivre les coûts de chaque cellule
     val gScore = mutable.Map[Cell, Double]().withDefaultValue(Double.PositiveInfinity)
     gScore(start) = 0.0
 
-    // Map pour suivre le coût total estimé (f = g + h)
     val fScore = mutable.Map[Cell, Double]().withDefaultValue(Double.PositiveInfinity)
     fScore(start) = start.distanceTo(target)
 
     while (openSet.nonEmpty) {
       val (current, _) = openSet.dequeue()
 
-      // Si le nœud actuel est la cible, reconstruire le chemin
       if (current == target) {
-
         return Some(reconstructPath(cameFrom, current))
       }
 
-      // Explorer les voisins
       for ((neighbor, cost) <- getNeighbours(current, target, ignoreTargetCollision, ignoreCollisions)) {
         val tentativeGScore = gScore(current) + cost
 
         if (tentativeGScore < gScore(neighbor)) {
-          // Mise à jour des scores
           cameFrom(neighbor) = current
           gScore(neighbor) = tentativeGScore
           fScore(neighbor) = tentativeGScore + neighbor.distanceTo(target)
 
-          // Ajouter le voisin à l'open set si ce n'est pas déjà le cas
           if (!openSet.exists(_._1 == neighbor)) {
             openSet.enqueue((neighbor, fScore(neighbor)))
           }
@@ -161,7 +150,6 @@ object Grid {
       }
     }
 
-    // Si on atteint ici, aucun chemin n'a été trouvé
     None
   }
 
@@ -188,10 +176,10 @@ object Grid {
   private def getNeighbours(cell: Cell, target: Cell, ignoreTargetCollision: Boolean, ignoreCollision: Boolean): Array[(Cell, Double)] = {
     val neighbours = mutable.ListBuffer[(Cell, Double)]()
     for (i <- -1 to 1; j <- -1 to 1) {
-      if (!(i == 0 && j == 0)) { // Ignorer la cellule elle-même
+      if (!(i == 0 && j == 0)) {
         val otherX: Int = cell.pos._1  + i
         val otherY: Int = cell.pos._2  + j
-        val cost: Double = if (i != 0 && j != 0) math.sqrt(2) else 1.0 // Diagonaux coûtent sqrt(2)
+        val cost: Double = if (i != 0 && j != 0) math.sqrt(2) else 1.0
         if (isInGrid(otherX, otherY)) {
           if(ignoreCollision || cells(otherX)(otherY).state != CellStates.BLOCK_PATH) {
             neighbours += ((cells(otherX)(otherY), cost))
@@ -220,8 +208,6 @@ object Grid {
     }
     path
   }
-
-
 }
 
 /**
@@ -242,9 +228,7 @@ class Cell(val pos: (Int, Int),
 
   collisionBox.onMouseEnter(() => startHover())
   collisionBox.onMouseLeave(() => endHover())
-  //collisionBox.onMousePressed(mouseButton: Int => mousePressed(mouseButton))
   collisionBox.onMouseReleased(mouseButton => mouseReleased(mouseButton))
-
 
   /**
    * Defines the action to do when hovered
@@ -291,7 +275,7 @@ class Cell(val pos: (Int, Int),
   def distanceTo(other: Cell): Double = {
     val dx = math.abs(pos._1 - other.pos._1)
     val dy = math.abs(pos._2 - other.pos._2)
-    math.sqrt(dx * dx + dy * dy) // Distance euclidienne
+    math.sqrt(dx * dx + dy * dy)
   }
 }
 

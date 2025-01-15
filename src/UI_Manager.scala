@@ -5,7 +5,6 @@ import java.awt.{Color, Font}
 import scala.collection.mutable
 
 object UI_Manager {
-
   private val staticUiElements: mutable.ListBuffer[StaticUiElement] = mutable.ListBuffer()
 
   def updateUI(): Unit = {
@@ -17,7 +16,6 @@ object UI_Manager {
   def updateLogics(): Unit = {
     staticUiElements.foreach(_.playLogics())
   }
-
 
   def checkPlayerUI(): Unit = {
     player.getOrElse(return).playerHealthBarSprite.setPosition(player.get.getAbsPosition._1, player.get.getAbsPosition._2 - 11)
@@ -35,7 +33,6 @@ object UI_Manager {
       tower.towerHealthBarSprite.changeImage(checkHealthBar(tower))
     })
   }
-
 
   def checkHealthBar(entity: Entity): BetterGraphicsBitmap = {
     if (entity.getHp >= 85 * entity.getMaxHp / 100) {
@@ -139,6 +136,5 @@ object UI_Manager {
     }
 
   }
-
 
 }

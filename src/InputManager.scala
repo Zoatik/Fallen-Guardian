@@ -22,7 +22,6 @@ object InputManager {
   private val mouseButtonsEventBuffer: mutable.Queue[(Int, Boolean)] = mutable.Queue()
   private val mouseMotionEventBuffer: mutable.Queue[(Int, Int)] = mutable.Queue()
 
-
   /**
    * Binds a key to a function
    * @param keyCode Key code
@@ -30,7 +29,7 @@ object InputManager {
    */
   def bindKey(keyCode: Int, f: (Int, Boolean) => Unit): Unit = {
     val actions = keyBindings.getOrElseUpdate(keyCode, mutable.ListBuffer())
-    actions += f // Ajoute la fonction à la liste des bindings pour cette touche
+    actions += f
   }
 
   /**
@@ -51,7 +50,6 @@ object InputManager {
     mouseMotionBindings += f
   }
 
-
   /**
    * Adds the key pressed event to the keysEventBuffer
    * @param keyCode Key pressed code
@@ -60,8 +58,8 @@ object InputManager {
   def handleKeyPressed(keyCode: Int): Unit = {
     if(keysEventBuffer.length < Constants.MAX_INPUT_BUFFER_SIZE) {
       if (!activeKeys.contains(keyCode)) {
-        keysEventBuffer.enqueue((keyCode, true)) // Ajouter à la queue
-        activeKeys += keyCode // Marquer la touche comme active
+        keysEventBuffer.enqueue((keyCode, true))
+        activeKeys += keyCode
       }
     }
   }
@@ -74,8 +72,8 @@ object InputManager {
   def handleKeyReleased(keyCode: Int): Unit = {
     if(keysEventBuffer.length < Constants.MAX_INPUT_BUFFER_SIZE) {
       if (activeKeys.contains(keyCode)) {
-        keysEventBuffer.enqueue((keyCode, false)) // Ajouter l'événement de relâchement à la queue
-        activeKeys -= keyCode // Retirer la touche de l'ensemble
+        keysEventBuffer.enqueue((keyCode, false))
+        activeKeys -= keyCode
       }
     }
   }
@@ -88,12 +86,10 @@ object InputManager {
     while(keysEventBuffer.nonEmpty){
       val nextEvent: (Int, Boolean) = keysEventBuffer.dequeue()
       keyBindings.get(nextEvent._1).foreach(_.foreach(f => f(nextEvent._1, nextEvent._2)))
-
     }
     for(activeKey <- activeKeys){
       keysEventBuffer.enqueue((activeKey, true))
     }
-
   }
 
   /**
@@ -104,8 +100,8 @@ object InputManager {
   def handleMouseButtonPressed(mouseButton: Int): Unit = {
     if(mouseButtonsEventBuffer.length < Constants.MAX_INPUT_BUFFER_SIZE) {
       if (!activeMouseButtons.contains(mouseButton)) {
-        mouseButtonsEventBuffer.enqueue((mouseButton, true)) // Ajouter à la queue
-        activeMouseButtons += mouseButton // Marquer la touche comme active
+        mouseButtonsEventBuffer.enqueue((mouseButton, true))
+        activeMouseButtons += mouseButton
       }
     }
   }
@@ -118,8 +114,8 @@ object InputManager {
   def handleMouseButtonReleased(mouseButton: Int): Unit = {
     if(mouseButtonsEventBuffer.length < Constants.MAX_INPUT_BUFFER_SIZE) {
       if (activeMouseButtons.contains(mouseButton)) {
-        mouseButtonsEventBuffer.enqueue((mouseButton, false)) // Ajouter à la queue
-        activeMouseButtons -= mouseButton // Marquer la touche comme active
+        mouseButtonsEventBuffer.enqueue((mouseButton, false))
+        activeMouseButtons -= mouseButton
       }
     }
   }

@@ -1,9 +1,6 @@
-
-
 import scala.collection.mutable
 
 object AnimationsResources {
-
 
   val ANIM_SOLDIER_IDLE: Array[BetterGraphicsBitmap] = {
     Array(
@@ -22,11 +19,8 @@ object AnimationsResources {
   val ANIM_SOLDIER_WALK: Array[BetterGraphicsBitmap] = {
     Array(
       new BetterGraphicsBitmap("/res/Characters/Soldier/walk/soldierWalk_0.png"),
-      //"/res/Characters/Soldier/walk/soldierWalk_1.png",
       new BetterGraphicsBitmap("/res/Characters/Soldier/walk/soldierWalk_2.png"),
-      //"/res/Characters/Soldier/walk/soldierWalk_3.png",
       new BetterGraphicsBitmap("/res/Characters/Soldier/walk/soldierWalk_4.png"),
-      //"/res/Characters/Soldier/walk/soldierWalk_5.png",
       new BetterGraphicsBitmap("/res/Characters/Soldier/walk/soldierWalk_6.png"),
       new BetterGraphicsBitmap("/res/Characters/Soldier/walk/soldierWalk_7.png")
     )}
@@ -58,25 +52,18 @@ object AnimationsResources {
 
   val ANIM_ORC_ATTACK_1: Array[BetterGraphicsBitmap] = {
     Array(
-      new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/walk/orcWalk_0.png"), // TO FIX A FLICKERING PROBLEM
+      new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/walk/orcWalk_0.png"),
 
-      //"/res/Characters/Enemy/Orc/attack1/orcAttack1_0.png",
-      //"/res/Characters/Enemy/Orc/attack1/orcAttack1_1.png",
       new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/attack1/orcAttack1_2.png"),
         new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/attack1/orcAttack1_3.png"),
-      //"/res/Characters/Enemy/Orc/attack1/orcAttack1_4.png",
-        new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/attack1/orcAttack1_5.png"),
-
+        new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/attack1/orcAttack1_5.png")
     )}
 
   val ANIM_ORC_WALK: Array[BetterGraphicsBitmap] = {
     Array(
       new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/walk/orcWalk_0.png"),
-      //"/res/Characters/Enemy/Orc/walk/orcWalk_1.png",
       new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/walk/orcWalk_2.png"),
-      //"/res/Characters/Enemy/Orc/walk/orcWalk_3.png",
       new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/walk/orcWalk_4.png"),
-      //"/res/Characters/Enemy/Orc/walk/orcWalk_5.png",
       new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/walk/orcWalk_6.png"),
       new BetterGraphicsBitmap("/res/Characters/Enemy/Orc/walk/orcWalk_7.png")
     )}

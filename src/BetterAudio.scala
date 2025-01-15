@@ -29,7 +29,6 @@ object BetterAudio {
 
 class BetterAudio (path: String) extends Audio(path){
 
-
   def play(count: Int): Unit = {
     try {
       if (!audioClip.isOpen) audioClip.open()

@@ -13,17 +13,16 @@ object Constants {
   val COLLISION_TIME_DELAY: Int = 10
 
   //*-------------------------*//
-  // Fonts constants
+    // Fonts constants
   private val fontStream = getClass.getResourceAsStream("/res/Fonts/MinimalPixel v2.ttf")
   if (fontStream == null) throw new IllegalArgumentException("Font not found in resources!")
   val pixelFont: Font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(18f)
   val pixelFontSmall: Font = pixelFont.deriveFont(12f)
   val pixelFontBig: Font = pixelFont.deriveFont(24f)
-  fontStream.close() // Fermez le flux après utilisation
+  fontStream.close()
   GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFont)
   GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFontSmall)
   GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFontBig)
-
 
   //*-------------------------*//
     // Camera constants
@@ -45,7 +44,7 @@ object Constants {
   val LAYER_STATIC_UI_2 = 2
 
   //*-------------------------*//
-  // Collision Layers Constants
+    // Collision Layers Constants
   val NUMBER_OF_COLLISION_LAYERS: Int = 6
   val COLLISION_LAYER_GROUND = 0
   val COLLISION_LAYER_ENTITIES = 1
@@ -63,7 +62,6 @@ object Constants {
 
   //* ------------------------* */
     // UI Constants
-  //val COLLISION_FRAME_MAGNIFICATION = 15
   private val cursorDefaultImage = ImageIO.read(getClass.getResource("res/Cursors/defaultCursor.png"))
   private val cursorBuildImage = ImageIO.read(getClass.getResource("res/Cursors/buildCursor.png"))
   private val cursorNoBuildImage = ImageIO.read(getClass.getResource("res/Cursors/noBuildCursor.png"))
@@ -72,7 +70,6 @@ object Constants {
   private val cursorSellImage = ImageIO.read(getClass.getResource("res/Cursors/sellCursor.png"))
   private val cursorNoSellImage = ImageIO.read(getClass.getResource("res/Cursors/noSellCursor.png"))
   private val cursorAttackImage = ImageIO.read(getClass.getResource("res/Cursors/attackCursor.png"))
-
 
   private val hotspotTopLeft = new Point(0,0)
   private val hotspotCenter = new Point(16,16)
@@ -95,7 +92,6 @@ object Constants {
 
   //* ------------------------* */
     // HP bar UI constants
-
   val PLAYER_HP_BAR_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health1.png")
   val PLAYER_HP_BAR_2: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health2.png")
   val PLAYER_HP_BAR_3: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health3.png")
@@ -123,7 +119,6 @@ object Constants {
   val UI_BASE_LIFE_75: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_75.png")
   val UI_BASE_LIFE_100: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_100.png")
   val UI_BOARD: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/board.png")
-
 
   //* ------------------------* */
     // Player spawn constants

@@ -133,5 +133,4 @@ class Enemy(
   var enemyHealthBarSprite: Sprite = new Sprite(Constants.PLAYER_HP_BAR_1, this.getAbsPosition)
   Layers.addSprite(Constants.LAYER_UI_MOBILE, enemyHealthBarSprite)
 
-
 }

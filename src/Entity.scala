@@ -29,7 +29,6 @@ abstract class Entity(
 
   sprite.setPosition(spritePos)
 
-
   val collisionBox2D: CollisionBox2D
 
   setCollisionListeners()
@@ -155,9 +154,7 @@ abstract class Entity(
   }
 
   def getHp: Int = hp
-
   def getMaxHp: Int = maxHp
-
   def getLvl: Int = lvl
-}
 
+}

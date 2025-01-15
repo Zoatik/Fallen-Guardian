@@ -56,9 +56,6 @@ class Tower(
       var minDist: Double = Double.PositiveInfinity
       var closestTarget: Option[Enemy] = None
       EntitiesManager.enemies.foreach(enemy => {
-        //val currentDist: Double = this.absDistanceTo(enemy)
-        //je ne savais pas comment accéder à cette distance dans la partie towerTryToAttack
-        //j'ai donc créer une variable globale currentDist.
         val currentDist: Double = this.absDistanceTo(enemy)
         if (currentDist < minDist) {
           minDist = currentDist
@@ -76,8 +73,6 @@ class Tower(
   def towerTryToAttack(): Unit = {
     if(target.isEmpty)
       target = findTarget()
-    //have to make an alternative to the cooldown function like there was in the character class
-    //and use the attack speed value instead.
     if (target.isDefined) {
       towerAttack()
     }
