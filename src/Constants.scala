@@ -1,5 +1,5 @@
 
-import java.awt.{Cursor, Point, Toolkit}
+import java.awt.{Cursor, Font, GraphicsEnvironment, Point, Toolkit}
 import java.awt.event.KeyEvent
 import javax.imageio.ImageIO
 import java.io.File
@@ -12,6 +12,15 @@ object Constants {
   val MAX_INPUT_BUFFER_SIZE: Int = 10
   val COLLISION_TIME_DELAY: Int = 10
 
+  //*-------------------------*//
+    // Fonts constants
+  val fontStream = getClass.getResourceAsStream("/res/Fonts/MinimalPixel v2.ttf")
+  if (fontStream == null) throw new IllegalArgumentException("Font not found in resources!")
+  val pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontStream)
+  val pixelSizedFont = pixelFont.deriveFont(24f)
+  fontStream.close() // Fermez le flux après utilisation
+  GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFont)
+  GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelSizedFont)
 
   //*-------------------------*//
     // Camera constants

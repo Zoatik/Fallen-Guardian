@@ -143,7 +143,8 @@ object InputManager {
   def handleMouse(): Unit = {
     while(mouseButtonsEventBuffer.nonEmpty){
       val nextEvent: (Int, Boolean) = mouseButtonsEventBuffer.dequeue()
-      mouseBindings.get(nextEvent._1).foreach(_.foreach(f => f(nextEvent._1, nextEvent._2)))
+      if (nextEvent != null)
+        mouseBindings.get(nextEvent._1).foreach(_.foreach(f => f(nextEvent._1, nextEvent._2)))
 
     }
     while(mouseMotionEventBuffer.nonEmpty){

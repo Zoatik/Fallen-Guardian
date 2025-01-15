@@ -1,4 +1,4 @@
-import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH}
+import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH, pixelFont, pixelSizedFont}
 import hevs.graphics.FunGraphics
 
 import java.awt.Color
@@ -218,7 +218,9 @@ object Renderer {
           fg.drawTransformedPicture(x, y, angle, scale, bm)
         }
       }
+      fg.drawString(0,30,"HELLO WORLD IN PIXEL FONT", pixelSizedFont, Color.BLACK)
     }
+
 
     /**
      * Pause for constant frame rate

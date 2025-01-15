@@ -12,7 +12,7 @@ object EntitiesManager {
   var base: Option[Base] = Some(new Base())
 
 
-  //Constants.THEME_SONG.audioClip.loop(999999)
+  Constants.THEME_SONG.audioClip.loop(999999)
 
 
   var waveTimer: Long = 0

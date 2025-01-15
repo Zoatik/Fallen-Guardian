@@ -113,7 +113,7 @@ class Enemy(
   this.animations("attack1").onAnimationStarted(() => isAttacking = true)
   this.animations("attack1").onAnimationEnded(() => isAttacking = false)
 
-  var enemyHealthBarSprite: Sprite = new Sprite(Constants.ENEMY_HP_BAR_1, this.getAbsPosition)
+  var enemyHealthBarSprite: Sprite = new Sprite(Constants.PLAYER_HP_BAR_1, this.getAbsPosition)
   Layers.addSprite(Constants.LAYER_UI_MOBILE, enemyHealthBarSprite)
 
 

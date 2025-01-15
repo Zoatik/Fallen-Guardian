@@ -2,16 +2,10 @@ import EntitiesManager.{player, enemies}
 
 object UI_Manager {
 
-
-
-
   def updateUI(): Unit = {
     checkPlayerUI()
     checkEnemyUI()
   }
-
-  def initPlayerUI(): Unit =
-  def initEnemyUI(): Unit = {}
 
 
   def checkPlayerUI(): Unit = {
