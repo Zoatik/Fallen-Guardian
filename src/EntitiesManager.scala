@@ -1,5 +1,6 @@
 import java.awt.event.KeyEvent
 import scala.collection.mutable
+import javax.sound.sampled.Clip.LOOP_CONTINUOUSLY
 import scala.util.Random
 
 object EntitiesManager {
@@ -12,7 +13,7 @@ object EntitiesManager {
   var base: Option[Base] = Some(new Base())
 
 
-  Constants.THEME_SONG.audioClip.loop(999)
+  Constants.THEME_SONG.audioClip.loop(LOOP_CONTINUOUSLY)
 
 
   var waveTimer: Long = 0
@@ -126,7 +127,7 @@ object EntitiesManager {
       val newLvl: Int = if (player.get.getLvl > 5) player.get.getLvl - 5 else 1
       val newPos: (Int, Int) = base.get.getPosition()
       player = Some(new Player(_pos = newPos, _lvl = newLvl))
-      Constants.PLAYER_DEATH_AUDIO.play()
+      new Audio(Constants.PLAYER_DEATH_AUDIO).play()
     }
   }
 

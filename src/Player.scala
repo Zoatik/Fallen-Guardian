@@ -41,12 +41,12 @@ class Player(
     )
 
   override def takeDamage(amount: Int, source: Entity): Boolean = {
-    Constants.PLAYER_HIT_AUDIO.play()
+    new Audio(Constants.PLAYER_HIT_AUDIO).play()
     super.takeDamage(amount, source)
   }
 
   override def levelUp(): Unit = {
-    Constants.PLAYER_LEVEL_UP_AUDIO.play()
+    new Audio(Constants.PLAYER_LEVEL_UP_AUDIO).play()
     super.levelUp()
     this.maxHp = Constants.PLAYER_DEFAULT_HP * lvl
     this.hp = maxHp
@@ -60,7 +60,7 @@ class Player(
   }
 
   def gainXP(amount: Int): Unit = {
-    Constants.PLAYER_XP_GAIN_AUDIO.play()
+    new Audio(Constants.PLAYER_XP_GAIN_AUDIO).play()
     xp += amount
     if(xp > 1000){
       xp = 0
@@ -141,7 +141,7 @@ class Player(
   }
 
   def sell(building: Building): Unit = {
-    Constants.SELL_AUDIO.play()
+    new Audio(Constants.SELL_AUDIO).play()
     building match {
       case tower: Tower => coins += tower.price / 2
     }

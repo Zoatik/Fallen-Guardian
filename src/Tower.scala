@@ -30,7 +30,7 @@ class Tower(
   )
 
   override def levelUp(): Unit = {
-    Constants.TOWER_LEVEL_UP_AUDIO.play()
+    new Audio(Constants.TOWER_LEVEL_UP_AUDIO).play()
     super.levelUp()
     maxHp += maxHp/5
     damage = Constants.TOWER_DEFAULT_DAMAGE * lvl
@@ -105,6 +105,6 @@ class Tower(
   var towerHealthBarSprite: Sprite = new Sprite(Constants.TOWER_HP_BAR_1, this.getAbsPosition)
   Layers.addSprite(Constants.LAYER_UI_MOBILE, towerHealthBarSprite)
 
-  Constants.TOWER_PLACEMENT_AUDIO.play()
-  Constants.SELL_AUDIO.play()
+  new Audio(Constants.TOWER_PLACEMENT_AUDIO).play()
+  new Audio(Constants.SELL_AUDIO).play()
 }

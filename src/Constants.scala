@@ -185,20 +185,20 @@ object Constants {
     // Audio constants
   val THEME_SONG: Audio = new Audio("/res/Audio/FallenGuardianTheme.wav")
 
-  val PLAYER_MOVE_AUDIO: Audio = new Audio(s"/res/Audio/PlayerAudio/WalkAudio/Walk_-${(math.random() * (14-1) + 2).toInt}.wav")
-  val PLAYER_HIT_AUDIO: Audio = new Audio("/res/Audio/PlayerAudio/player_hit.wav")
-  val PLAYER_DEATH_AUDIO: Audio = new Audio("/res/Audio/PlayerAudio/player_death.wav")
-  val PLAYER_ATTACK_AUDIO: Audio = new Audio("/res/Audio/PlayerAudio/AttackAudio/Sword_slash2.wav")
-  val PLAYER_KILL_ATTACK_AUDIO: Audio = new Audio("/res/Audio/PlayerAudio/AttackAudio/final_sword_slash.wav")
+  val PLAYER_MOVE_AUDIO: String  = "/res/Audio/PlayerAudio/WalkAudio/Walk_-1.wav"
+  val PLAYER_HIT_AUDIO: String = "/res/Audio/PlayerAudio/player_hit.wav"
+  val PLAYER_DEATH_AUDIO: String = "/res/Audio/PlayerAudio/player_death.wav"
+  val PLAYER_ATTACK_AUDIO: String = "/res/Audio/PlayerAudio/AttackAudio/Sword_slash2.wav"
+  val PLAYER_KILL_ATTACK_AUDIO: String = "/res/Audio/PlayerAudio/AttackAudio/final_sword_slash.wav"
 
-  val GOBLIN_ATTACK_AUDIO: Audio = new Audio("/res/Audio/GoblinAudio/goblin_attack.wav")
-  val GOBLIN_HURT_AUDIO: Audio = new Audio("/res/Audio/GoblinAudio/goblin_hurt.wav")
-  val GOBLIN_DEATH_AUDIO: Audio = new Audio("/res/Audio/GoblinAudio/goblin_death.wav")
+  val GOBLIN_ATTACK_AUDIO: String = "/res/Audio/GoblinAudio/goblin_attack.wav"
+  val GOBLIN_HURT_AUDIO: String = "/res/Audio/GoblinAudio/goblin_hurt.wav"
+  val GOBLIN_DEATH_AUDIO: String = "/res/Audio/GoblinAudio/goblin_death.wav"
 
-  val PLAYER_XP_GAIN_AUDIO: Audio = new Audio("/res/Audio/Interactions/xpAudio.wav")
-  val PLAYER_LEVEL_UP_AUDIO: Audio = new Audio("/res/Audio/Interactions/playerLevelUp.wav")
-  val TOWER_PLACEMENT_AUDIO: Audio = new Audio("/res/Audio/Interactions/towerPlacement.wav")
-  val TOWER_LEVEL_UP_AUDIO: Audio = new Audio("/res/Audio/Interactions/towerLevelUp.wav")
-  val SELL_AUDIO: Audio = new Audio("/res/Audio/Interactions/sellAudio.wav")
+  val PLAYER_XP_GAIN_AUDIO: String = "/res/Audio/Interactions/xpAudio.wav"
+  val PLAYER_LEVEL_UP_AUDIO: String = "/res/Audio/Interactions/playerLevelUp.wav"
+  val TOWER_PLACEMENT_AUDIO: String = "/res/Audio/Interactions/towerPlacement.wav"
+  val TOWER_LEVEL_UP_AUDIO: String = "/res/Audio/Interactions/towerLevelUp.wav"
+  val SELL_AUDIO: String = "/res/Audio/Interactions/sellAudio.wav"
 }
 
