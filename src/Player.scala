@@ -53,6 +53,11 @@ class Player(
     this.armor = Constants.PLAYER_DEFAULT_ARMOR * lvl
   }
 
+  override def destroy(): Unit = {
+    super.destroy()
+    Renderer.destroy(playerHealthBarSprite)
+  }
+
   def gainXP(amount: Int): Unit = {
     xp += amount
     if(xp > 1000){

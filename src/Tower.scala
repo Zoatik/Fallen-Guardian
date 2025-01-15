@@ -38,6 +38,11 @@ class Tower(
     println("TOWER UPGRADED")
   }
 
+  override def destroy(): Unit = {
+    super.destroy()
+    Renderer.destroy(towerHealthBarSprite)
+  }
+
   override def updateTarget(): Unit = {
     if (target.isDefined) {
       return
@@ -95,9 +100,9 @@ class Tower(
   ))
 
 
-
-
-
   Layers.addSprite(Constants.LAYER_ENTITIES, this.sprite)
   this.playAnimation("idle")
+
+  var towerHealthBarSprite: Sprite = new Sprite(Constants.TOWER_HP_BAR_1, this.getAbsPosition)
+  Layers.addSprite(Constants.LAYER_UI_MOBILE, towerHealthBarSprite)
 }

@@ -81,7 +81,7 @@ object Constants {
   val CURSOR_ATTACK: Cursor = Toolkit.getDefaultToolkit.createCustomCursor(cursorAttackImage, hotspotCenter, "attack Cursor")
 
   //* ------------------------* */
-  // Cell images constants
+    // Cell images constants
   val BITMAP_CELL_GRASS_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_grass_0.png")
   val BITMAP_CELL_GRASS_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_grass_1.png")
   val BITMAP_CELL_STONE_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/TX_stone_0.png")
@@ -89,13 +89,25 @@ object Constants {
   val BITMAP_CELL_EMPTY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/ground/cellEmpty.png")
 
   //* ------------------------* */
-  // HP bar UI constants
+    // HP bar UI constants
 
   val PLAYER_HP_BAR_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health1.png")
   val PLAYER_HP_BAR_2: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health2.png")
   val PLAYER_HP_BAR_3: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health3.png")
   val PLAYER_HP_BAR_4: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health4.png")
   val PLAYER_HP_BAR_5: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/PlayerHealth/health5.png")
+
+  val ENEMY_HP_BAR_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/EnemyHealth/enemyHealth1.png")
+  val ENEMY_HP_BAR_2: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/EnemyHealth/enemyHealth2.png")
+  val ENEMY_HP_BAR_3: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/EnemyHealth/enemyHealth3.png")
+  val ENEMY_HP_BAR_4: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/EnemyHealth/enemyHealth4.png")
+  val ENEMY_HP_BAR_5: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/EnemyHealth/enemyHealth5.png")
+
+  val TOWER_HP_BAR_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/TowerHealth/towerHealth1.png")
+  val TOWER_HP_BAR_2: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/TowerHealth/towerHealth2.png")
+  val TOWER_HP_BAR_3: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/TowerHealth/towerHealth3.png")
+  val TOWER_HP_BAR_4: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/TowerHealth/towerHealth4.png")
+  val TOWER_HP_BAR_5: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/TowerHealth/towerHealth5.png")
 
   val UI_PLAYER_DISPLAY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/playerStats.png")
   val UI_BASE_LIFE_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_0.png")
