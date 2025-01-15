@@ -13,7 +13,7 @@ object EntitiesManager {
   var base: Option[Base] = Some(new Base())
 
 
-  Constants.THEME_SONG.audioClip.loop(LOOP_CONTINUOUSLY)
+  BetterAudio.playNewAudio("main theme",new BetterAudio(Constants.THEME_SONG))
 
 
   var waveTimer: Long = 0
@@ -26,6 +26,8 @@ object EntitiesManager {
   // DEBUG
   InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) spawnEnemy((20,20)))
   InputManager.bindKey(KeyEvent.VK_E, (_, pressed) => if(!pressed) destroyEntity(enemies.head))
+  InputManager.bindKey(KeyEvent.VK_Z, (_, pressed) => if(!pressed) BetterAudio.playNewAudio("main theme",new BetterAudio(Constants.THEME_SONG)))
+  InputManager.bindKey(KeyEvent.VK_U, (_, pressed) => if(!pressed) BetterAudio.stop("main theme"))
 
   private def spawnEnemy(pos: (Int, Int)): Unit = {
     val oscour: Enemy = new Enemy(pos, waveCounter)

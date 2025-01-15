@@ -17,7 +17,7 @@ object BetterAudio {
   }
 
   def playNewAudio(id: String, betterAudio: BetterAudio, count: Int = -1): Unit = {
-    audioList.toList.foreach(el => if(!el._2.audioClip.isOpen) removeAudio(el._1))
+    audioList.toList.foreach(el => if(el._2.audioClip.isOpen) stop(el._1))
     addAudio(id, betterAudio)
     if(count >= 0)
       betterAudio.play(count)
@@ -28,6 +28,7 @@ object BetterAudio {
 
 
 class BetterAudio (path: String) extends Audio(path){
+
 
   def play(count: Int): Unit = {
     try {

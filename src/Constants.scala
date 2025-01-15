@@ -183,7 +183,7 @@ object Constants {
 
   //* ------------------------* */
     // Audio constants
-  val THEME_SONG: Audio = new Audio("/res/Audio/FallenGuardianTheme.wav")
+  val THEME_SONG: String = "/res/Audio/FallenGuardianTheme.wav"
 
   val PLAYER_MOVE_AUDIO: String  = "/res/Audio/PlayerAudio/WalkAudio/Walk_-1.wav"
   val PLAYER_HIT_AUDIO: String = "/res/Audio/PlayerAudio/player_hit.wav"
