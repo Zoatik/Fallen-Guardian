@@ -19,6 +19,8 @@ object EntitiesManager {
   private val rand: Random = new Random()
   private var maxEnemies = 20
 
+  var enemiesKilled: Int = 0
+
   // DEBUG
   InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) spawnEnemy((20,20)))
   InputManager.bindKey(KeyEvent.VK_E, (_, pressed) => if(!pressed) destroyEntity(enemies.head))
@@ -90,6 +92,7 @@ object EntitiesManager {
         towers.foreach(_.target = None)
         bullets.foreach(bullet => bullet.destroy())
         bullets.clear()
+        enemiesKilled += 1
       case tower: Tower =>
         towers -= tower
         enemies.foreach(enemy => enemy.target = this.base)

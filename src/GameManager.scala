@@ -143,6 +143,9 @@ object GameManager {
     generalInfos.addLogic(() => {
       val timer: Double = 10 - (gameTimer - prevWaveEndedTime)/1000.0
       if(timer <= 5 && !isWavePlaying && isReadyToStart) {
+        generalInfos.text.offsetX = 0
+        generalInfos.text.offsetY = 0
+        generalInfos.text.font = pixelFontEnormous
         if (timer > 4) {
           if(generalInfos.text.text != "5") {
             generalInfos.text.text = "5"
@@ -170,9 +173,53 @@ object GameManager {
             }
         }
       }
-      else
+      else if(timer > -2 && timer < 0 && isReadyToStart) {
+        if(generalInfos.text.text != s"WAVE $waveCounter") {
+          generalInfos.text.offsetX = -180
+          generalInfos.text.text = s"WAVE $waveCounter"
+        }
+      }
+      else if(timer < 10 && timer > 5 && isReadyToStart){
+        if(generalInfos.text.text != "New Wave Coming..."){
+          generalInfos.text.offsetX = - WINDOW_WIDTH /2 + 200
+          generalInfos.text.offsetY = - WINDOW_HEIGHT /2 + 60
+          generalInfos.text.font = pixelFontBig
+          generalInfos.text.text = "New Wave Coming..."
+        }
+      }
+      else {
         generalInfos.text.text = ""
+        generalInfos.text.offsetX = 0
+      }
 
+    })
+    generalInfos.addLogic(() => {
+      if(!isReadyToStart){
+        if(generalInfos.text.text != "Press Enter To Begin"){
+          generalInfos.text.offsetX = -100
+          generalInfos.text.font = pixelFontBig
+          generalInfos.text.text = "Press Enter To Begin"
+        }
+      }
+    })
+
+    /** Infos Display */
+    val infosDisplaySprite: Sprite = new Sprite(UI_BOARD, (20,20))
+    val blankSprite: Sprite = new Sprite(UI_BLANK,(20,20), _anchor = ANCHOR_MIDDLE)
+    val infosDisplayBoard: StaticUiElement = UiManager.createUiElement(infosDisplaySprite, LAYER_STATIC_UI_0)
+    val infosDisplayWave: StaticUiElement = UiManager.createUiElement(blankSprite, LAYER_STATIC_UI_1, offsetX = 20, offsetY = 40, color = Color.WHITE)
+    val infosDisplayKills: StaticUiElement = UiManager.createUiElement(blankSprite, LAYER_STATIC_UI_1, offsetX = 20, offsetY = 70, color = Color.YELLOW)
+    infosDisplayWave.addLogic(() => {
+      val status: String = s"Wave : $waveCounter"
+      if(infosDisplayWave.text.text != status){
+        infosDisplayWave.text.text = status
+      }
+    })
+    infosDisplayKills.addLogic(() => {
+      val status: String = s"Kills : ${EntitiesManager.enemiesKilled}"
+      if(infosDisplayKills.text.text != status){
+        infosDisplayKills.text.text = status
+      }
     })
 
   }
