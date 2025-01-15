@@ -65,8 +65,7 @@ object GameManager {
     changeCursor(CURSOR_DEFAULT)
 
     this.setInputListeners()
-    val spriteUi: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
-    UI_Manager.createUiElement(spriteUi, LAYER_STATIC_UI_0, "LIIIFE")
+    this.createHUD()
     fg.displayFPS(true)
 
     initialized = true
@@ -85,6 +84,11 @@ object GameManager {
 
   private def changeCursor(cursor: Cursor): Unit = {
     fg.mainFrame.getComponent(0).setCursor(cursor)
+  }
+
+  private def createHUD(): Unit = {
+    val spriteUi: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
+    UI_Manager.createUiElement(spriteUi, LAYER_STATIC_UI_0, "LIIIFE")
   }
 
   def startWave(): Unit = {
