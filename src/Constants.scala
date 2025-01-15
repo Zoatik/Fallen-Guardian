@@ -124,18 +124,18 @@ object Constants {
   val UI_BOARD: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/board.png")
 
   //* ------------------------* */
-    // Player spawn constants
+    // Player constants
   val PLAYER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
-  val PLAYER_DEFAULT_HP: Int = 50
-  val PLAYER_DEFAULT_ARMOR: Int = 0
+  val PLAYER_DEFAULT_HP: Int = 30
+  val PLAYER_DEFAULT_ARMOR: Int = 3
 
   val PLAYER_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Characters/Soldier/idle/soldierIdle_0.png")
   val PLAYER_DEFAULT_VELOCITY: Double = 4.0
   val PLAYER_DEFAULT_DAMAGE: Int = 2
-  val PLAYER_DEFAULT_COINS: Int = 1000000
+  val PLAYER_DEFAULT_COINS: Int = 100
 
   //* ------------------------* */
-    // Tower constants
+    // Enemy constants
   val ENEMY_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
   val ENEMY_DEFAULT_HP: Int = 5
   val ENEMY_DEFAULT_ARMOR: Int = 1
@@ -147,8 +147,8 @@ object Constants {
   //* ------------------------* */
     // Tower constants
   val TOWER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
-  val TOWER_DEFAULT_HP: Int = 100
-  val TOWER_DEFAULT_ARMOR: Int = 50
+  val TOWER_DEFAULT_HP: Int = 75
+  val TOWER_DEFAULT_ARMOR: Int = 25
 
   val TOWER_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Tower/IdleAnimation/tower_00.png")
   val TOWER_DEFAULT_DAMAGE: Int = 1
@@ -158,14 +158,14 @@ object Constants {
   //* ------------------------* */
     // Tower bullet constants
   val BULLET_VELOCITY: Int = 5
-  val BULLET_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Tower/Bullet/bullet_0.png")//"/res/Tower/bullet/bullet_0.png"
+  val BULLET_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Tower/Bullet/bullet_0.png")
 
   //* ------------------------* */
     // Base constants
   val BASE_DEFAULT_POS: (Int, Int) = (29, 29)
   val BASE_DEFAULT_HP: Int = 100
   val BASE_DEFAULT_ARMOR: Int = 0
-  val BASE_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Base/base_0.png")//"/res/Tower/bullet/bullet_0.png"
+  val BASE_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Base/base_0.png")
 
   //* ------------------------* */
     // Build system constants

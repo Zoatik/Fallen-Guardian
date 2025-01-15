@@ -48,7 +48,7 @@ abstract class Entity(
   def isAlive: Boolean = hp > 0
 
   def takeDamage(amount: Int, source: Entity): Boolean = {
-    val effectiveAmount = Math.max(amount - armor, 0)
+    val effectiveAmount = Math.max(amount - armor, 1)
     hp -= effectiveAmount
     if (hp <= 0)
       hp = 0
