@@ -1,6 +1,6 @@
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
 import Constants._
-import UI_Manager.{StaticUiElement, Ui_text}
+import UiManager.{StaticUiElement, Ui_text}
 import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.{Color, Component, Cursor}
@@ -32,7 +32,7 @@ object GameManager {
 
   InputManager.bindKey(KeyEvent.VK_B, (_, pressed) => if(!pressed) changeGameMode())
   InputManager.bindKey(KeyEvent.VK_ESCAPE, (_, pressed) => if(!pressed) isPaused = !isPaused)
-  InputManager.bindKey(KeyEvent.VK_ENTER, (_, pressed) => if(!pressed) isReadyToStart = true)
+  InputManager.bindKey(KeyEvent.VK_ENTER, (_, pressed) => if(!pressed) ready())
 
   private def changeGameMode(): Unit = {
 
@@ -92,7 +92,7 @@ object GameManager {
   private def createHUD(): Unit = {
     /** BASE LIFE BAR */
     val baseLifeBarSprite: Sprite = new Sprite(Constants.UI_BASE_LIFE_100,(WINDOW_WIDTH/2, 40))
-    val baseLifeBar = UI_Manager.createUiElement(baseLifeBarSprite, LAYER_STATIC_UI_0, color = Color.WHITE)
+    val baseLifeBar = UiManager.createUiElement(baseLifeBarSprite, LAYER_STATIC_UI_0, color = Color.WHITE)
     baseLifeBar.addAnimation("lowLife", new Animation(
       spriteTarget = baseLifeBar.sprite,
       imagesBitmapArray = AnimationsResources.ANIM_UI_BASE_LOW,
@@ -126,9 +126,9 @@ object GameManager {
 
     /** USER INFOS */
     val playerDisplaySprite: Sprite = new Sprite(UI_PLAYER_DISPLAY,(20, WINDOW_HEIGHT - UI_PLAYER_DISPLAY.getHeight - 20))
-    val playerSprite: Sprite = new Sprite(PLAYER_DEFAULT_IMAGE_BITMAP, (45, WINDOW_HEIGHT - PLAYER_DEFAULT_IMAGE_BITMAP.getHeight - 38))
-    val playerDisplay = UI_Manager.createUiElement(playerDisplaySprite, LAYER_STATIC_UI_0, offsetX = 110, offsetY = 66, color = Color.WHITE)
-    val playerUI = UI_Manager.createUiElement(playerSprite, LAYER_STATIC_UI_1)
+    val playerSprite: Sprite = new Sprite(PLAYER_DEFAULT_IMAGE_BITMAP, (30 + PLAYER_DEFAULT_IMAGE_BITMAP.getWidth, WINDOW_HEIGHT - 38), _anchor = ANCHOR_BOTTOM_MIDDLE)
+    val playerDisplay = UiManager.createUiElement(playerDisplaySprite, LAYER_STATIC_UI_0, offsetX = 110, offsetY = 66, color = Color.WHITE)
+    val playerUI = UiManager.createUiElement(playerSprite, LAYER_STATIC_UI_1)
     playerDisplay.addLogic(() => {
       if(EntitiesManager.player.isDefined){
         val player: Player = EntitiesManager.player.get
@@ -145,6 +145,53 @@ object GameManager {
         }
       }
     })
+
+    /** General Infos */
+    val generalInfosSprite: Sprite = new Sprite(UI_BLANK,(WINDOW_WIDTH/2, WINDOW_HEIGHT/2), _anchor = ANCHOR_MIDDLE)
+    val generalInfos = UiManager.createUiElement(generalInfosSprite, LAYER_STATIC_UI_0, color = Color.WHITE, font = pixelFontEnormous)
+    generalInfos.addLogic(() => {
+      val timer: Double = 10 - (gameTimer - prevWaveEndedTime)/1000.0
+      if(timer <= 5 && !isWavePlaying && isReadyToStart) {
+        if (timer > 4) {
+          if(generalInfos.text.text != "5") {
+            generalInfos.text.text = "5"
+            new BetterAudio(UI_COUNTER_AUDIO).play()
+          }
+        } else if (timer > 3) {
+          if(generalInfos.text.text != "4") {
+            generalInfos.text.text = "4"
+            new BetterAudio(UI_COUNTER_AUDIO).play()
+          }
+        } else if (timer > 2) {
+            if(generalInfos.text.text != "3") {
+              generalInfos.text.text = "3"
+              new BetterAudio(UI_COUNTER_AUDIO).play()
+            }
+        } else if (timer > 1) {
+            if(generalInfos.text.text != "2") {
+              generalInfos.text.text = "2"
+              new BetterAudio(UI_COUNTER_AUDIO).play()
+            }
+        } else if (timer > 0) {
+            if(generalInfos.text.text != "1") {
+              generalInfos.text.text = "1"
+              new BetterAudio(UI_COUNTER_AUDIO).play()
+            }
+        }
+      }
+      else
+        generalInfos.text.text = ""
+
+    })
+
+  }
+
+  def ready(): Unit = {
+    if(!isReadyToStart) {
+      isReadyToStart = true
+      prevWaveEndedTime = gameTimer
+      println("ready : " + gameTimer)
+    }
   }
 
   def startWave(): Unit = {
@@ -203,7 +250,7 @@ object GameManager {
         gameTimer += System.currentTimeMillis() - prevTime
         prevTime = System.currentTimeMillis()
         GameManager.update()
-        UI_Manager.updateLogics()
+        UiManager.updateLogics()
       }
       AnimationsManager.run()
 

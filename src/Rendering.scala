@@ -1,5 +1,5 @@
 import Constants.{ANCHOR_BOTTOM_MIDDLE, ANCHOR_MIDDLE, ANCHOR_TOP_LEFT, LAYER_ENTITIES, LAYER_UI_MOBILE, NUMBER_OF_LAYERS, NUMBER_OF_STATIC_UI_LAYERS, WINDOW_HEIGHT, WINDOW_WIDTH, pixelFont}
-import UI_Manager.StaticUiElement
+import UiManager.StaticUiElement
 import hevs.graphics.FunGraphics
 
 import java.awt.{Color, Font}

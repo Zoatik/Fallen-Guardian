@@ -19,10 +19,12 @@ object Constants {
   val pixelFont: Font = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(18f)
   val pixelFontSmall: Font = pixelFont.deriveFont(12f)
   val pixelFontBig: Font = pixelFont.deriveFont(24f)
+  val pixelFontEnormous: Font = pixelFont.deriveFont(100f)
   fontStream.close() // Fermez le flux après utilisation
   GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFont)
   GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFontSmall)
   GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFontBig)
+  GraphicsEnvironment.getLocalGraphicsEnvironment.registerFont(pixelFontEnormous)
 
 
   //*-------------------------*//
@@ -114,6 +116,7 @@ object Constants {
   val TOWER_HP_BAR_4: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/TowerHealth/towerHealth4.png")
   val TOWER_HP_BAR_5: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/TowerHealth/towerHealth5.png")
 
+  val UI_BLANK: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/blank.png")
   val UI_PLAYER_DISPLAY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/playerStats.png")
   val UI_BASE_LIFE_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_0.png")
   val UI_BASE_LIFE_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life1_0.png")
@@ -202,5 +205,7 @@ object Constants {
   val TOWER_PLACEMENT_AUDIO: String = "/res/Audio/Interactions/towerPlacement.wav"
   val TOWER_LEVEL_UP_AUDIO: String = "/res/Audio/Interactions/towerLevelUp.wav"
   val SELL_AUDIO: String = "/res/Audio/Interactions/sellAudio.wav"
+
+  val UI_COUNTER_AUDIO: String = "/res/Audio/OtherSoundEffects/counterImpact.wav"
 }
 

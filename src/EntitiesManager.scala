@@ -163,7 +163,7 @@ object EntitiesManager {
 
     player.get.moveToTarget()
     player.get.tryToAttack()
-    UI_Manager.updateUI()
+    UiManager.updateUI()
 
     towers.foreach(tower => {
       tower.towerTryToAttack()

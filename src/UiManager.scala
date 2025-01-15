@@ -4,7 +4,7 @@ import EntitiesManager.{enemies, player, towers}
 import java.awt.{Color, Font}
 import scala.collection.mutable
 
-object UI_Manager {
+object UiManager {
 
   private val staticUiElements: mutable.ListBuffer[StaticUiElement] = mutable.ListBuffer()
 
