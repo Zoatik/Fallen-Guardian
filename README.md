@@ -20,7 +20,7 @@ Si le joueur se fait éliminer, son niveau baisse de 1.
 
 Le jeu se termine lorsque les goblins parviennent à détruire la base/monument centrale.
 
-b. 
+Screenshots:
 
 # Tutorial:
 
