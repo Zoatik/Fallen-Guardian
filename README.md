@@ -21,11 +21,11 @@ Si le joueur se fait éliminer, son niveau baisse de 1.
 Le jeu se termine lorsque les goblins parviennent à détruire la base/monument centrale.
 
 # Screenshots
-#### Loading screen
+#### Start screen
 ![Screenshot1.png](src%2Fres%2FScreenshots%2FScreenshot1.png)
 #### Enemy spawn
 ![Screenshot2.png](src%2Fres%2FScreenshots%2FScreenshot2.png)
-#### Loading screen
+#### Tower spawn
 ![Screenshot3.png](src%2Fres%2FScreenshots%2FScreenshot3.png)
 #### Wave screen
 ![Screenshot4.png](src%2Fres%2FScreenshots%2FScreenshot4.png)
@@ -65,22 +65,44 @@ Le jeu se termine lorsque les goblins parviennent à détruire la base/monument 
 # Structure du code
 Avec plusieurs fonctionalités prémédités, une base solide a été bati pour <br>
 
+## Structure générale
 La structure générale du projet est séparée en 4 grandes parties : <br>
 1) Ressources et données constantes
 2) Outils de développement 
 3) Game Manager qui s'occupe du déroulement global du jeu
 4) Classes et objets servant à construire le jeu
 
-L'objet Constants, stocke 
-1) Toutes les données fixes, comme la taille de la fenêtre par exemple
-2) Toutes les valeurs par défaut du joueur, ennemies, tours, balles et base
-3) Toutes les images du UI
-4) Tous les clips audio
-<br><br>
+## Points clés
+1) Le Main initialise le game manager commence la boucle de jeu gérée par ce dernier. 
 
-Pour la gestion de tous les objets dynamiques, la classe Entity est au summume.<br>
-Les trois sous-classes, sont 
-1) Character, qui parente la classe Player et Enemy
-2) Building, qui parente Tower
-3) Bullet
-4) Base
+2) L'objet Game Manager se charge :
+   - d'initialiser la fenêtre graphique, la grille de jeu, la caméra, etc.
+   - de créer le HUD
+   - de lier tous les input listeners aux fonctions concernées
+   - de gérer la logique du jeu
+     
+3) L'objet Enities Manager gère :
+   - l'ensemble des entités présentes dans le jeu
+   - l'apparition et la destructions de ses entités
+   - la logique des actions de ses entités
+     
+4) La classe mère abstraite "Entity" :
+    - est la classe de référence pour l'ensemble des classes pouvant intéragir avec <br>
+    l'environnement de jeu
+    - englobe Character (abstraite) -> Player, Enemy
+    - englobe Building -> Tower
+    - englobe Base, Bullet
+      
+5) Le Grid qui s'occupe:
+    - de la gestion spatiale des entités
+    - de la logique de path finding
+  
+6) Les outils:
+    - Rendering -> plusieurs layers, Sprites, ancres personalisées, optimisation pour afficher <br>
+    tout le contenu visuel
+    - InputManager -> système d'events avec subscribers
+    - Shapes -> Collision manager avec formes simples (box2d)
+    - AnimationsManager -> Crée des animations et les gère efficacement
+    - BetterFunGraphics et BetterAudio -> Quelques modifications de la librairie FunGraphics
+    - UiManager -> permet la création de UI simples avec sprites et textes. Peut notemment appliquer <br>
+    une logique externe à ses éléments. P.ex. lier la vie du personnage avec du texte
