@@ -140,7 +140,9 @@ object EntitiesManager {
     val currentTime = GameManager.gameTimer
     if(currentTime - prevCoinTime > 1000) {
       prevCoinTime = currentTime
-      player.get.coins += 1
+      if(GameManager.isWavePlaying) {
+        player.get.coins += 1
+      }
     }
 
     if(currentTime - prevUpdateTime > 200) {

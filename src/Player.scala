@@ -84,7 +84,7 @@ class Player(
     super.attack()
     if(target.isDefined)
       if(target.get.takeDamage(damage, this)){
-        coins += target.get.asInstanceOf[Enemy].getLvl
+        coins += target.get.asInstanceOf[Enemy].getLvl * 2
         gainXP(100)
         EntitiesManager.destroyEntity(target.get)
         println(s"COINS : $coins")

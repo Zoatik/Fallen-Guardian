@@ -36,7 +36,7 @@ class Tower(
     hp = maxHp
     damage = Constants.TOWER_DEFAULT_DAMAGE * lvl
     range = Constants.TOWER_DEFAULT_RANGE * (1 + lvl / 5)
-    attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED / (1 + lvl)
+    attackSpeed = Constants.TOWER_DEFAULT_ATTACK_SPEED / (2 + lvl)
   }
 
   override def destroy(): Unit = {

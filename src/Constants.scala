@@ -127,7 +127,7 @@ object Constants {
     // Player constants
   val PLAYER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
   val PLAYER_DEFAULT_HP: Int = 30
-  val PLAYER_DEFAULT_ARMOR: Int = 3
+  val PLAYER_DEFAULT_ARMOR: Int = 1
 
   val PLAYER_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Characters/Soldier/idle/soldierIdle_0.png")
   val PLAYER_DEFAULT_VELOCITY: Double = 4.0
@@ -153,7 +153,7 @@ object Constants {
   val TOWER_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Tower/IdleAnimation/tower_00.png")
   val TOWER_DEFAULT_DAMAGE: Int = 1
   val TOWER_DEFAULT_RANGE: Int = 128
-  val TOWER_DEFAULT_ATTACK_SPEED: Double = 3000
+  val TOWER_DEFAULT_ATTACK_SPEED: Double = 4000
 
   //* ------------------------* */
     // Tower bullet constants
