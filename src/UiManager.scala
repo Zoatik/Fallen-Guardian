@@ -8,14 +8,11 @@ object UiManager {
 
   private val staticUiElements: mutable.ListBuffer[StaticUiElement] = mutable.ListBuffer()
 
+  /**------------MOBILE UI---------------**/
   def updateUI(): Unit = {
     checkPlayerUI()
     checkEnemyUI()
     checkTowerUI()
-  }
-
-  def updateLogics(): Unit = {
-    staticUiElements.foreach(_.playLogics())
   }
 
   def checkPlayerUI(): Unit = {
@@ -78,6 +75,25 @@ object UiManager {
     }
   }
 
+  /**------------STATIC UI---------------**/
+  /**
+   * Calls the functions bound to all staticUiElement
+   */
+  def updateLogics(): Unit = {
+    staticUiElements.foreach(_.playLogics())
+  }
+
+  /**
+   * Creates a StaticUIElement
+   * @param sprite sprite
+   * @param z layer height
+   * @param textStr string text
+   * @param offsetX text offset x
+   * @param offsetY text offset y
+   * @param color text color
+   * @param font text font
+   * @return StaticUiElement
+   */
   def createUiElement(sprite: Sprite,
                       z: Int, textStr: String = "",
                       offsetX: Int = 0,
@@ -90,12 +106,25 @@ object UiManager {
     uiElement
   }
 
+  /**
+   * Ui text class
+   * @param text string text
+   * @param offsetX text offset x
+   * @param offsetY text offset y
+   * @param color text color
+   * @param font text font
+   */
   class Ui_text(var text: String = "",
                 var offsetX: Int = 0,
                 var offsetY: Int = 0,
                 var color: Color = Color.BLACK,
                 var font: Font = pixelFont){}
 
+  /**
+   * Static UI element class
+   * @param sprite sprite
+   * @param text UI text
+   */
   class StaticUiElement(var sprite : Sprite, var text: Ui_text = new Ui_text()) {
     val logics: mutable.ListBuffer[() => Unit] = mutable.ListBuffer()
     val animations: mutable.Map[String, Animation] = mutable.Map()
