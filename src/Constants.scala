@@ -147,8 +147,8 @@ object Constants {
   //* ------------------------* */
     // Tower constants
   val TOWER_DEFAULT_POS: (Int, Int) = (1*CELL_SIZE, 1*CELL_SIZE)
-  val TOWER_DEFAULT_HP: Int = 75
-  val TOWER_DEFAULT_ARMOR: Int = 25
+  val TOWER_DEFAULT_HP: Int = 25
+  val TOWER_DEFAULT_ARMOR: Int = 5
 
   val TOWER_DEFAULT_IMAGE_BITMAP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/Tower/IdleAnimation/tower_00.png")
   val TOWER_DEFAULT_DAMAGE: Int = 1

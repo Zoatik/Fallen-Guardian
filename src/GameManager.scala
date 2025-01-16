@@ -25,7 +25,7 @@ object GameManager {
   var isReadyToStart: Boolean = false
   var isGameOver: Boolean = false
 
-  InputManager.bindKey(KeyEvent.VK_B, (_, pressed) => if(!pressed) changeGameMode())
+  InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) changeGameMode())
   InputManager.bindKey(KeyEvent.VK_ESCAPE, (_, pressed) => if(!pressed) isPaused = !isPaused)
   InputManager.bindKey(KeyEvent.VK_ENTER, (_, pressed) => if(!pressed) ready())
 
@@ -315,10 +315,11 @@ object GameManager {
       InputManager.handleMouse()
       if(!isPaused && !isGameOver) {
         gameTimer += System.currentTimeMillis() - prevTime
-        prevTime = System.currentTimeMillis()
+
         GameManager.update()
         UiManager.updateLogics()
       }
+      prevTime = System.currentTimeMillis()
       AnimationsManager.run()
 
       Renderer.render(fg)

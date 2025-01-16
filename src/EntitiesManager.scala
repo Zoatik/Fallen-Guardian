@@ -21,12 +21,6 @@ object EntitiesManager {
 
   var enemiesKilled: Int = 0
 
-  // DEBUG
-  InputManager.bindKey(KeyEvent.VK_Q, (_, pressed) => if(!pressed) spawnEnemy((20,20)))
-  InputManager.bindKey(KeyEvent.VK_E, (_, pressed) => if(!pressed) destroyEntity(enemies.head))
-  InputManager.bindKey(KeyEvent.VK_Z, (_, pressed) => if(!pressed) BetterAudio.playNewAudio("main theme",new BetterAudio(Constants.THEME_SONG_CHILL)))
-  InputManager.bindKey(KeyEvent.VK_U, (_, pressed) => if(!pressed) BetterAudio.stop("main theme"))
-
   private def spawnEnemy(pos: (Int, Int)): Unit = {
     val oscour: Enemy = new Enemy(pos, waveCounter)
     enemies += oscour
@@ -61,7 +55,6 @@ object EntitiesManager {
     waveTimer = 0
     this.waveCounter = waveCounter
     maxEnemies += 5 * (waveCounter - 1)
-    println("NEW WAVE STARTED : " + waveCounter)
   }
 
   def updateWave(): Boolean = {
