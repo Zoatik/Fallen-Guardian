@@ -1,3 +1,5 @@
+package scripts.tools
+
 import javax.sound.sampled.{AudioSystem, Clip}
 class Audio (path : String) {
   var audioClip: Clip = _

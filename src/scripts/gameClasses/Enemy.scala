@@ -1,4 +1,9 @@
-import Constants._
+package scripts.gameClasses
+
+import scripts.data.Constants._
+import scripts.data.{AnimationsResources, Constants}
+import scripts.managers.{EntitiesManager, GameManager}
+import scripts.tools._
 class Enemy(
              _pos: (Int, Int),
              _maxHp: Int,

@@ -1,5 +1,10 @@
-import Constants.pixelFont
-import EntitiesManager.{enemies, player, towers}
+package scripts.managers
+
+import scripts.gameClasses._
+import scripts.data.Constants
+import scripts.data.Constants.pixelFont
+import scripts.managers.EntitiesManager.{enemies, player, towers}
+import scripts.tools.{Animation, BetterGraphicsBitmap, Layers, Sprite}
 
 import java.awt.{Color, Font}
 import scala.collection.mutable

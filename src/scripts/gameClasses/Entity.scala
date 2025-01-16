@@ -1,4 +1,9 @@
-import Constants._
+package scripts.gameClasses
+
+import scripts.data.Constants
+import scripts.data.Constants._
+import scripts.managers.GameManager
+import scripts.tools._
 
 import scala.collection.mutable
 /**

@@ -1,3 +1,8 @@
+package scripts.tools
+
+import scripts.data.Constants
+import scripts.managers.{GameManager, InputManager}
+
 import java.awt.event.MouseEvent
 import scala.collection.mutable
 

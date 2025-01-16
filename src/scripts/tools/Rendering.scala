@@ -1,8 +1,11 @@
-import Constants._
-import UiManager.StaticUiElement
+package scripts.tools
+
+import scripts.data.Constants._
+import scripts.managers.UiManager.StaticUiElement
 
 import java.awt.{Color, Font}
 import scala.collection.mutable
+
 
 /**
  * Ready to render sprite class

@@ -1,8 +1,13 @@
+package scripts.managers
+
+import scripts.gameClasses._
+import scripts.data.Constants._
+import scripts.data.{AnimationsResources, Constants}
+import scripts.managers.UiManager.StaticUiElement
+import scripts.tools._
+
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
-import Constants._
-import UiManager.{StaticUiElement, Ui_text}
-import hevs.graphics.utils.GraphicsBitmap
-import java.awt.{Color, Component, Cursor}
+import java.awt.{Color, Cursor}
 import javax.sound.sampled.Clip.LOOP_CONTINUOUSLY
 
 /**

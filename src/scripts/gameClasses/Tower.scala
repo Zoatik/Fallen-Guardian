@@ -1,3 +1,8 @@
+package scripts.gameClasses
+
+import scripts.data.{AnimationsResources, Constants}
+import scripts.managers.{EntitiesManager, GameManager}
+import scripts.tools._
 
 class Tower(
              _pos: (Int, Int),

@@ -1,3 +1,5 @@
+package scripts.tools
+
 import scala.collection.mutable
 
 object BetterAudio {

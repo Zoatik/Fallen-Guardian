@@ -1,4 +1,8 @@
-import Constants.COLLISION_LAYER_BUILDING
+package scripts.gameClasses
+
+import scripts.data.Constants.COLLISION_LAYER_BUILDING
+import scripts.data.{AnimationsResources, Constants}
+import scripts.tools._
 
 class Base(
             _pos: (Int, Int),

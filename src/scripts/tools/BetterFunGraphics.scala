@@ -1,9 +1,10 @@
+package scripts.tools
+
 import hevs.graphics.FunGraphics
-import hevs.graphics.utils.GraphicsBitmap
 
 import java.awt.geom.AffineTransform
-import java.awt.{GraphicsConfiguration, GraphicsEnvironment}
 import java.awt.image.BufferedImage
+import java.awt.{GraphicsConfiguration, GraphicsEnvironment}
 import javax.imageio.ImageIO
 
 class BetterFunGraphics(_width: Int, _height: Int, _title: String, _highQuality: Boolean)

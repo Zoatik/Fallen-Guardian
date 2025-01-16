@@ -1,3 +1,9 @@
+package scripts.gameClasses
+
+import scripts.data.Constants
+import scripts.managers.GameManager
+import scripts.tools.{BetterGraphicsBitmap, Renderer}
+
 import scala.collection.mutable
 
 abstract class Character(

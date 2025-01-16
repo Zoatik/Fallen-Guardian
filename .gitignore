@@ -69,3 +69,4 @@ project/**/metals.sbt
 .bsp
 .history
 
+/src/META-INF

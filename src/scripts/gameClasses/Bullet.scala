@@ -1,4 +1,9 @@
-import Constants._
+package scripts.gameClasses
+
+import scripts.data.Constants._
+import scripts.data.{AnimationsResources, Constants}
+import scripts.managers.EntitiesManager
+import scripts.tools._
 
 import scala.collection.mutable
 

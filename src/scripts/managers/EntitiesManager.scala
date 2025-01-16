@@ -1,6 +1,10 @@
-import java.awt.event.KeyEvent
+package scripts.managers
+
+import scripts.gameClasses._
+import scripts.data.Constants
+import scripts.tools.{Audio, Renderer}
+
 import scala.collection.mutable
-import javax.sound.sampled.Clip.LOOP_CONTINUOUSLY
 import scala.util.Random
 
 object EntitiesManager {

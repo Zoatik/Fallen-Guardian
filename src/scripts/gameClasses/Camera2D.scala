@@ -1,4 +1,9 @@
-import GameManager.{mouseX, mouseY}
+package scripts.gameClasses
+
+import scripts.data.Constants
+import scripts.managers.GameManager.{mouseX, mouseY}
+import scripts.managers.InputManager
+import scripts.tools.{CollisionBox2DManager, Renderer}
 
 /**
  * Defines a 2D topDown camera for the funGraphics library

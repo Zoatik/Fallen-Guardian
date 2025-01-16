@@ -1,4 +1,7 @@
-import java.awt.event.MouseEvent
+package scripts.managers
+
+import scripts.data.Constants
+
 import scala.collection.mutable
 
 /**

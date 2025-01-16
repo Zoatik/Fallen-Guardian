@@ -1,4 +1,6 @@
-import scala.collection.mutable
+package scripts.data
+
+import scripts.tools.BetterGraphicsBitmap
 
 object AnimationsResources {
 
@@ -11,9 +13,9 @@ object AnimationsResources {
 
   val ANIM_SOLDIER_HURT: Array[BetterGraphicsBitmap] = {
     Array(
-      new BetterGraphicsBitmap("/res/Characters/soldier/hurt/soldierHurt_0.png"),
-      new BetterGraphicsBitmap("/res/Characters/soldier/hurt/soldierHurt_1.png"),
-      new BetterGraphicsBitmap("/res/Characters/soldier/hurt/soldierHurt_2.png")
+      new BetterGraphicsBitmap("/res/Characters/Soldier/hurt/soldierHurt_0.png"),
+      new BetterGraphicsBitmap("/res/Characters/Soldier/hurt/soldierHurt_1.png"),
+      new BetterGraphicsBitmap("/res/Characters/Soldier/hurt/soldierHurt_2.png")
     )}
 
   val ANIM_SOLDIER_WALK: Array[BetterGraphicsBitmap] = {
@@ -27,12 +29,12 @@ object AnimationsResources {
 
   val ANIM_SOLDIER_ATTACK_1: Array[BetterGraphicsBitmap] = {
     Array(
-      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/SoldierAttack1_0.png"),
-      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/SoldierAttack1_1.png"),
-      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/SoldierAttack1_2.png"),
-      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/SoldierAttack1_3.png"),
-      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/SoldierAttack1_4.png"),
-      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/SoldierAttack1_5.png")
+      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/soldierAttack1_0.png"),
+      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/soldierAttack1_1.png"),
+      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/soldierAttack1_2.png"),
+      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/soldierAttack1_3.png"),
+      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/soldierAttack1_4.png"),
+      new BetterGraphicsBitmap("/res/Characters/Soldier/attack1/soldierAttack1_5.png")
     )}
 
 

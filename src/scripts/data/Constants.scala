@@ -1,8 +1,11 @@
+package scripts.data
 
-import java.awt.{Cursor, Font, GraphicsEnvironment, Point, Toolkit}
+
+import scripts.tools.BetterGraphicsBitmap
+
 import java.awt.event.KeyEvent
+import java.awt._
 import javax.imageio.ImageIO
-import java.io.File
 
 object Constants {
   val WINDOW_WIDTH: Int = 1400//1920//1400//1600
@@ -64,14 +67,14 @@ object Constants {
 
   //* ------------------------* */
     // UI Constants
-  private val cursorDefaultImage = ImageIO.read(getClass.getResource("res/Cursors/defaultCursor.png"))
-  private val cursorBuildImage = ImageIO.read(getClass.getResource("res/Cursors/buildCursor.png"))
-  private val cursorNoBuildImage = ImageIO.read(getClass.getResource("res/Cursors/noBuildCursor.png"))
-  private val cursorUpgradeImage = ImageIO.read(getClass.getResource("res/Cursors/upgradeCursor.png"))
-  private val cursorNoUpgradeImage = ImageIO.read(getClass.getResource("res/Cursors/noUpgradeCursor.png"))
-  private val cursorSellImage = ImageIO.read(getClass.getResource("res/Cursors/sellCursor.png"))
-  private val cursorNoSellImage = ImageIO.read(getClass.getResource("res/Cursors/noSellCursor.png"))
-  private val cursorAttackImage = ImageIO.read(getClass.getResource("res/Cursors/attackCursor.png"))
+  private val cursorDefaultImage = ImageIO.read(getClass.getResource("/res/Cursors/defaultCursor.png"))
+  private val cursorBuildImage = ImageIO.read(getClass.getResource("/res/Cursors/buildCursor.png"))
+  private val cursorNoBuildImage = ImageIO.read(getClass.getResource("/res/Cursors/noBuildCursor.png"))
+  private val cursorUpgradeImage = ImageIO.read(getClass.getResource("/res/Cursors/upgradeCursor.png"))
+  private val cursorNoUpgradeImage = ImageIO.read(getClass.getResource("/res/Cursors/noUpgradeCursor.png"))
+  private val cursorSellImage = ImageIO.read(getClass.getResource("/res/Cursors/sellCursor.png"))
+  private val cursorNoSellImage = ImageIO.read(getClass.getResource("/res/Cursors/noSellCursor.png"))
+  private val cursorAttackImage = ImageIO.read(getClass.getResource("/res/Cursors/attackCursor.png"))
 
   private val hotspotTopLeft = new Point(0,0)
   private val hotspotCenter = new Point(16,16)

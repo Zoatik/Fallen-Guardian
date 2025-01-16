@@ -1,4 +1,7 @@
-import Constants._
+package scripts.gameClasses
+
+import scripts.data.Constants._
+import scripts.tools.{BetterGraphicsBitmap, Box, CollisionBox2D, CollisionBox2DManager}
 
 class Building(_pos: (Int, Int),
                _maxHp: Int,
