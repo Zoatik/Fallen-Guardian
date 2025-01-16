@@ -20,7 +20,19 @@ Si le joueur se fait éliminer, son niveau baisse de 1.
 
 Le jeu se termine lorsque les goblins parviennent à détruire la base/monument centrale.
 
-Screenshots:
+# Screenshots
+#### Loading screen
+![Screenshot1.png](src%2Fres%2FScreenshots%2FScreenshot1.png)
+#### Enemy spawn
+![Screenshot2.png](src%2Fres%2FScreenshots%2FScreenshot2.png)
+#### Loading screen
+![Screenshot3.png](src%2Fres%2FScreenshots%2FScreenshot3.png)
+#### Wave screen
+![Screenshot4.png](src%2Fres%2FScreenshots%2FScreenshot4.png)
+#### Base loosing hp
+![Screenshot5.png](src%2Fres%2FScreenshots%2FScreenshot5.png)
+#### End screen
+![Screenshot6.png](src%2Fres%2FScreenshots%2FScreenshot6.png)
 
 # Tutorial:
 
@@ -47,7 +59,7 @@ Screenshots:
 
     Buy 1 tower => -50 coins
     Sell 1 tower => +25 coins
-    Upgrade tower => -50 coins every upgrade
+    Upgrade tower => -50 (-25 coins on top, every upgrade)
 
 
 # Structure du code
