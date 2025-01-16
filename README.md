@@ -53,7 +53,11 @@ Screenshots:
 # Structure du code
 Avec plusieurs fonctionalités prémédités, une base solide a été bati pour <br>
 
-aucune idée pour la structure des buffers, listeners, renderer...
+La structure générale du projet est séparée en 4 grandes parties : <br>
+1) Ressources et données constantes
+2) Outils de développement 
+3) Game Manager qui s'occupe du déroulement global du jeu
+4) Classes et objets servant à construire le jeu
 
 L'objet Constants, stocke 
 1) Toutes les données fixes, comme la taille de la fenêtre par exemple
