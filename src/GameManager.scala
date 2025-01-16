@@ -116,10 +116,18 @@ object GameManager {
     })
 
     /** USER INFOS */
-    val playerDisplaySprite: Sprite = new Sprite(UI_PLAYER_DISPLAY,(20, WINDOW_HEIGHT - UI_PLAYER_DISPLAY.getHeight - 20))
-    val playerSprite: Sprite = new Sprite(PLAYER_DEFAULT_IMAGE_BITMAP, (30 + PLAYER_DEFAULT_IMAGE_BITMAP.getWidth, WINDOW_HEIGHT - 38), _anchor = ANCHOR_BOTTOM_MIDDLE)
-    val playerDisplay = UiManager.createUiElement(playerDisplaySprite, LAYER_STATIC_UI_0, offsetX = 110, offsetY = 66, color = Color.WHITE)
+    val playerDisplaySprite: Sprite = new Sprite(UI_PLAYER_DISPLAY,
+                                                  (20, WINDOW_HEIGHT - UI_PLAYER_DISPLAY.getHeight - 20))
+    val playerSprite: Sprite = new Sprite(PLAYER_DEFAULT_IMAGE_BITMAP,
+                                          (30 + PLAYER_DEFAULT_IMAGE_BITMAP.getWidth, WINDOW_HEIGHT - 38),
+                                          _anchor = ANCHOR_BOTTOM_MIDDLE)
+    val playerDisplaySupSprite: Sprite = new Sprite(UI_PLAYER_DISPLAY_SUP,
+                                                    (102, WINDOW_HEIGHT - UI_PLAYER_DISPLAY_SUP.getHeight - 58))
+    val playerDisplay = UiManager.createUiElement(playerDisplaySprite, LAYER_STATIC_UI_0,
+                                                  offsetX = 110, offsetY = 66, color = Color.WHITE)
     val playerUI = UiManager.createUiElement(playerSprite, LAYER_STATIC_UI_1)
+    val playerDisplaySup = UiManager.createUiElement(playerDisplaySupSprite, LAYER_STATIC_UI_1,
+                                                     offsetX = 5, offsetY = 30, color = Color.WHITE)
     playerDisplay.addLogic(() => {
       if(EntitiesManager.player.isDefined){
         val player: Player = EntitiesManager.player.get
@@ -137,9 +145,23 @@ object GameManager {
       }
     })
 
+    playerDisplaySup.addLogic(() => {
+      if(EntitiesManager.player.isDefined){
+        val player: Player = EntitiesManager.player.get
+        playerDisplaySup.text.text = s"LVL : ${player.getLvl.toString}"
+      }
+    })
+
     /** General Infos */
-    val generalInfosSprite: Sprite = new Sprite(UI_BLANK,(WINDOW_WIDTH/2, WINDOW_HEIGHT/2), _anchor = ANCHOR_MIDDLE)
-    val generalInfos = UiManager.createUiElement(generalInfosSprite, LAYER_STATIC_UI_0, color = Color.WHITE, font = pixelFontEnormous)
+    val generalInfosSprite: Sprite =
+      new Sprite(UI_BLANK,(WINDOW_WIDTH/2, WINDOW_HEIGHT/2), _anchor = ANCHOR_MIDDLE)
+    val enterKeySprite: Sprite =
+      new Sprite(UI_ENTER_KEY,(WINDOW_WIDTH/2 -50, WINDOW_HEIGHT/2 - 100), _anchor = ANCHOR_MIDDLE)
+    val enterKey =
+      UiManager.createUiElement(enterKeySprite, LAYER_STATIC_UI_0, color = Color.WHITE, font = pixelFontBig)
+    val generalInfos =
+      UiManager.createUiElement(generalInfosSprite, LAYER_STATIC_UI_0, color = Color.WHITE, font = pixelFontEnormous)
+
     generalInfos.addLogic(() => {
       val timer: Double = 10 - (gameTimer - prevWaveEndedTime)/1000.0
       if(timer <= 5 && !isWavePlaying && isReadyToStart) {
@@ -196,14 +218,21 @@ object GameManager {
     })
     generalInfos.addLogic(() => {
       if(!isReadyToStart){
-        if(generalInfos.text.text != "Press Enter To Begin"){
-          generalInfos.text.offsetX = -100
-          generalInfos.text.offsetY = -100
+        if(generalInfos.text.text != "To Start The Wave"){
+          enterKey.text.offsetX = -80
+          enterKey.text.offsetY = 32
+          enterKey.text.text = "Press"
+          generalInfos.text.offsetX = -10
+          generalInfos.text.offsetY = -85
           generalInfos.text.font = pixelFontBig
-          generalInfos.text.text = "Press Enter To Begin"
+          generalInfos.text.text = "To Start The Wave"
         }
       }
+      else
+        enterKey.hide()
     })
+
+    /** Game Over UI */
     val gameOverText: StaticUiElement = UiManager.createUiElement(generalInfosSprite, LAYER_STATIC_UI_0)
     val wavesClearedText: StaticUiElement = UiManager.createUiElement(generalInfosSprite, LAYER_STATIC_UI_1)
     val killsText: StaticUiElement = UiManager.createUiElement(generalInfosSprite, LAYER_STATIC_UI_1)
@@ -211,7 +240,7 @@ object GameManager {
       if(isGameOver){
         if(gameOverText.text.text != "GAME OVER !"){
           gameOverText.text.text = "GAME OVER !"
-          BetterAudio.playNewAudio("main theme", new BetterAudio(THEME_SONG_CHILL), LOOP_CONTINUOUSLY)
+          BetterAudio.playNewAudio("main theme", new BetterAudio(THEME_SONG_CHILL_MOD), LOOP_CONTINUOUSLY)
           new BetterAudio(BAKA_AUDIO).play()
           gameOverText.text.font = pixelFontEnormous
           gameOverText.text.offsetX = -300
@@ -234,12 +263,14 @@ object GameManager {
       }
     })
 
-    /** Infos Display */
+    /** Infos Waves + Kills Display */
     val infosDisplaySprite: Sprite = new Sprite(UI_BOARD, (20,20))
     val blankSprite: Sprite = new Sprite(UI_BLANK,(20,20), _anchor = ANCHOR_MIDDLE)
     val infosDisplayBoard: StaticUiElement = UiManager.createUiElement(infosDisplaySprite, LAYER_STATIC_UI_0)
-    val infosDisplayWave: StaticUiElement = UiManager.createUiElement(blankSprite, LAYER_STATIC_UI_1, offsetX = 20, offsetY = 40, color = Color.WHITE)
-    val infosDisplayKills: StaticUiElement = UiManager.createUiElement(blankSprite, LAYER_STATIC_UI_1, offsetX = 20, offsetY = 70, color = Color.YELLOW)
+    val infosDisplayWave: StaticUiElement = UiManager.createUiElement(blankSprite, LAYER_STATIC_UI_1,
+                                                                      offsetX = 20, offsetY = 40, color = Color.WHITE)
+    val infosDisplayKills: StaticUiElement = UiManager.createUiElement(blankSprite, LAYER_STATIC_UI_1,
+                                                                       offsetX = 20, offsetY = 70, color = Color.YELLOW)
     infosDisplayWave.addLogic(() => {
       val status: String = s"Wave : $waveCounter"
       if(infosDisplayWave.text.text != status){
@@ -252,6 +283,11 @@ object GameManager {
         infosDisplayKills.text.text = status
       }
     })
+
+    val buildButtonSprite: Sprite = new Sprite(UI_Q_KEY, (250, WINDOW_HEIGHT - UI_Q_KEY.getHeight - 20))
+    val buildButton = UiManager.createUiElement(buildButtonSprite, LAYER_STATIC_UI_0,
+                                                "Build Tower", 80, UI_Q_KEY.getHeight/2 + 16, Color.WHITE, pixelFont)
+
 
   }
 

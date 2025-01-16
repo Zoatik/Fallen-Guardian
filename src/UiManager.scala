@@ -103,6 +103,12 @@ object UiManager {
       logics += f
     }
 
+    def hide(): Unit = {
+      Layers.removeStaticUiElement(this)
+    }
+
+    def show(z: Int): Unit = Layers.addStaticUiElement(z, this)
+
     def playLogics(): Unit = {
       logics.foreach(_())
     }

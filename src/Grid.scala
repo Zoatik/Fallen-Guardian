@@ -113,7 +113,8 @@ object Grid {
    * @param ignoreCollisions if true, ignores the states of all cells
    * @return if path exists, returns an array of cells, otherwise None
    */
-  def findPath(start: Cell, target: Cell, ignoreTargetCollision: Boolean = true, ignoreCollisions: Boolean = false): Option[Array[Cell]] = {
+  def findPath(start: Cell, target: Cell, ignoreTargetCollision: Boolean = true,
+               ignoreCollisions: Boolean = false): Option[Array[Cell]] = {
     ensureInitialized()
 
     val openSet: mutable.PriorityQueue[(Cell, Double)] =
@@ -173,7 +174,8 @@ object Grid {
    * @param cell the central cell
    * @return an Array of cells that are neighbours to the given cell
    */
-  private def getNeighbours(cell: Cell, target: Cell, ignoreTargetCollision: Boolean, ignoreCollision: Boolean): Array[(Cell, Double)] = {
+  private def getNeighbours(cell: Cell, target: Cell, ignoreTargetCollision: Boolean,
+                            ignoreCollision: Boolean): Array[(Cell, Double)] = {
     val neighbours = mutable.ListBuffer[(Cell, Double)]()
     for (i <- -1 to 1; j <- -1 to 1) {
       if (!(i == 0 && j == 0)) {

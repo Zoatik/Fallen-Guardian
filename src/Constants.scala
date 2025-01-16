@@ -114,6 +114,7 @@ object Constants {
 
   val UI_BLANK: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/blank.png")
   val UI_PLAYER_DISPLAY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/playerStats.png")
+  val UI_PLAYER_DISPLAY_SUP: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/playerStatsLvl.png")
   val UI_BASE_LIFE_0: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_0.png")
   val UI_BASE_LIFE_1: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life1_0.png")
   val UI_BASE_LIFE_1_HIGHLIGHTED: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life1_1.png")
@@ -122,6 +123,10 @@ object Constants {
   val UI_BASE_LIFE_75: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_75.png")
   val UI_BASE_LIFE_100: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/life_100.png")
   val UI_BOARD: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/board.png")
+
+  val UI_ENTER_KEY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/Enter-Key.png")
+  val UI_ESC_KEY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/Esc-Key.png")
+  val UI_Q_KEY: BetterGraphicsBitmap = new BetterGraphicsBitmap("/res/UI/Static/Q-Key.png")
 
   //* ------------------------* */
     // Player constants
@@ -184,6 +189,7 @@ object Constants {
   val THEME_SONG_CHILL: String = "/res/Audio/MainTheme/MainThemeChill.wav"
   val THEME_SONG_HARD: String = "/res/Audio/MainTheme/MainThemeHard.wav"
   val THEME_SONG_TRANS: String = "/res/Audio/MainTheme/MainThemeTrans.wav"
+  val THEME_SONG_CHILL_MOD: String = "/res/Audio/MainTheme/MainThemeChillModified.wav"
 
   val PLAYER_MOVE_AUDIO: String  = "/res/Audio/PlayerAudio/WalkAudio/Walk_-1.wav"
   val PLAYER_HIT_AUDIO: String = "/res/Audio/PlayerAudio/player_hit.wav"

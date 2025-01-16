@@ -31,7 +31,8 @@ object EntitiesManager {
     if(buildType == Constants.BUILD_TOWER){
       towers += new Tower(cell.pos, lvl)
       cell.entityPlaced = Some(towers.last)
-      towers.last.collisionBox2D.checkMouseCollision(GameManager.mouseX - Renderer.offsetX, GameManager.mouseY - Renderer.offsetY)
+      towers.last.collisionBox2D.checkMouseCollision(GameManager.mouseX - Renderer.offsetX,
+                                                      GameManager.mouseY - Renderer.offsetY)
     }
   }
 
@@ -117,7 +118,7 @@ object EntitiesManager {
       this.player = None
     }
     else {
-      val newLvl: Int = if (player.get.getLvl > 5) player.get.getLvl - 5 else 1
+      val newLvl: Int = if (player.get.getLvl > 1) player.get.getLvl - 1 else 1
       val newPos: (Int, Int) = base.get.getPosition()
       player = Some(new Player(_pos = newPos, _lvl = newLvl))
       new Audio(Constants.PLAYER_DEATH_AUDIO).play()
