@@ -74,7 +74,7 @@ La structure générale du projet est séparée en 4 grandes parties : <br>
 4) Classes et objets servant à construire le jeu
 
 ## Points clés
-1) Le Main initialise le game manager commence la boucle de jeu gérée par ce dernier.
+1) Le Main initialise le game manager et commence la boucle de jeu gérée par ce dernier.
    <br><br>
 2) L'objet Game Manager se charge :
    - d'initialiser la fenêtre graphique, la grille de jeu, la caméra, etc.
@@ -94,7 +94,7 @@ La structure générale du projet est séparée en 4 grandes parties : <br>
     - englobe Building -> Tower
     - englobe Base, Bullet
       <br><br>
-5) Le Grid qui s'occupe:
+5) Le Grid s'occupe:
     - de la gestion spatiale des entités
     - de la logique de path finding
   <br><br>
