@@ -19,6 +19,7 @@ augement proportionellement.
 Si le joueur se fait éliminer, son niveau baisse de 1.
 
 Le jeu se termine lorsque les goblins parviennent à détruire la base/monument centrale.
+Le but est de survivre le plus longtemps et d'obtenir le meilleur score !
 
 # Screenshots
 #### Start screen
