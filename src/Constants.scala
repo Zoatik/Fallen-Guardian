@@ -202,5 +202,6 @@ object Constants {
   val SELL_AUDIO: String = "/res/Audio/Interactions/sellAudio.wav"
 
   val UI_COUNTER_AUDIO: String = "/res/Audio/OtherSoundEffects/counterImpact.wav"
+  val BAKA_AUDIO: String = "/res/Audio/OtherSoundEffects/baka.wav"
 }
 

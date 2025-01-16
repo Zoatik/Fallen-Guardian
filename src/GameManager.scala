@@ -190,6 +190,7 @@ object GameManager {
       else {
         generalInfos.text.text = ""
         generalInfos.text.offsetX = 0
+        generalInfos.text.offsetY = 0
       }
 
     })
@@ -197,8 +198,38 @@ object GameManager {
       if(!isReadyToStart){
         if(generalInfos.text.text != "Press Enter To Begin"){
           generalInfos.text.offsetX = -100
+          generalInfos.text.offsetY = -100
           generalInfos.text.font = pixelFontBig
           generalInfos.text.text = "Press Enter To Begin"
+        }
+      }
+    })
+    val gameOverText: StaticUiElement = UiManager.createUiElement(generalInfosSprite, LAYER_STATIC_UI_0)
+    val wavesClearedText: StaticUiElement = UiManager.createUiElement(generalInfosSprite, LAYER_STATIC_UI_1)
+    val killsText: StaticUiElement = UiManager.createUiElement(generalInfosSprite, LAYER_STATIC_UI_1)
+    gameOverText.addLogic(() => {
+      if(isGameOver){
+        if(gameOverText.text.text != "GAME OVER !"){
+          gameOverText.text.text = "GAME OVER !"
+          BetterAudio.playNewAudio("main theme", new BetterAudio(THEME_SONG_CHILL), LOOP_CONTINUOUSLY)
+          new BetterAudio(BAKA_AUDIO).play()
+          gameOverText.text.font = pixelFontEnormous
+          gameOverText.text.offsetX = -300
+          gameOverText.text.offsetY = -200
+        }
+        if(wavesClearedText.text.text != s"WAVES CLEARED: ${waveCounter-1}"){
+          wavesClearedText.text.text = s"WAVES CLEARED: ${waveCounter-1}"
+          wavesClearedText.text.font = pixelFontBig
+          wavesClearedText.text.color = Color.WHITE
+          wavesClearedText.text.offsetX = -100
+          wavesClearedText.text.offsetY = -150
+        }
+        if(killsText.text.text != s"ENEMIES KILLED: ${EntitiesManager.enemiesKilled}"){
+          killsText.text.text = s"ENEMIES KILLED: ${EntitiesManager.enemiesKilled}"
+          killsText.text.font = pixelFontBig
+          killsText.text.color = Color.WHITE
+          killsText.text.offsetX = -100
+          killsText.text.offsetY = -100
         }
       }
     })
