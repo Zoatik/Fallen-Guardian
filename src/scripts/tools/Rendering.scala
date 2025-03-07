@@ -206,6 +206,9 @@ object Renderer {
    * @param layers  layers to render
    */
   def render(fg: BetterFunGraphics): Unit = {
+    WINDOW_WIDTH = fg.mainFrame.getWidth
+    WINDOW_HEIGHT = fg.mainFrame.getHeight
+    println(fg.mainFrame.getWidth)
     fg.frontBuffer.synchronized {
       fg.clear(Color.white)
       for (layer <- Layers.layerArray) {

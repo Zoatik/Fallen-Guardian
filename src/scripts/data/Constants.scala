@@ -8,8 +8,8 @@ import java.awt._
 import javax.imageio.ImageIO
 
 object Constants {
-  val WINDOW_WIDTH: Int = 1400//1920//1400//1600
-  val WINDOW_HEIGHT: Int = 1000//1080//1000//1200
+  var WINDOW_WIDTH: Int = 1400//1920//1400//1600
+  var WINDOW_HEIGHT: Int = 1000//1080//1000//1200
   val GRID_SIZE: Int = 60
   val CELL_SIZE: Int = 32
   val MAX_INPUT_BUFFER_SIZE: Int = 10
@@ -31,10 +31,10 @@ object Constants {
 
   //*-------------------------*//
     // Camera constants
-  val CAMERA_UP = KeyEvent.VK_W
-  val CAMERA_DOWN = KeyEvent.VK_S
-  val CAMERA_LEFT = KeyEvent.VK_A
-  val CAMERA_RIGHT = KeyEvent.VK_D
+  val CAMERA_UP: Int = KeyEvent.VK_W
+  val CAMERA_DOWN: Int = KeyEvent.VK_S
+  val CAMERA_LEFT: Int = KeyEvent.VK_A
+  val CAMERA_RIGHT: Int = KeyEvent.VK_D
 
   //*-------------------------*//
     // Layers Constants

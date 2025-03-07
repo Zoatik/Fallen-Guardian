@@ -7,7 +7,7 @@ import scripts.managers.UiManager.StaticUiElement
 import scripts.tools._
 
 import java.awt.event.{KeyAdapter, KeyEvent, MouseAdapter, MouseEvent}
-import java.awt.{Color, Cursor}
+import java.awt.{Color, Cursor, GraphicsEnvironment, Transparency}
 import javax.sound.sampled.Clip.LOOP_CONTINUOUSLY
 
 /**
@@ -15,6 +15,7 @@ import javax.sound.sampled.Clip.LOOP_CONTINUOUSLY
  */
 object GameManager {
   val fg = new BetterFunGraphics(WINDOW_WIDTH, WINDOW_HEIGHT, "Fallen Guardian", false)
+  fg.mainFrame.setResizable(true)
 
   val camera2D: Camera2D = new Camera2D()
   var mouseX: Int = 0

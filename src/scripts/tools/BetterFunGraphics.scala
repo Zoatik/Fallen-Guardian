@@ -4,17 +4,32 @@ import hevs.graphics.FunGraphics
 
 import java.awt.geom.AffineTransform
 import java.awt.image.BufferedImage
-import java.awt.{GraphicsConfiguration, GraphicsEnvironment}
+import java.awt.{Graphics2D, GraphicsConfiguration, GraphicsEnvironment, Transparency}
 import javax.imageio.ImageIO
 
 class BetterFunGraphics(_width: Int, _height: Int, _title: String, _highQuality: Boolean)
   extends FunGraphics(width = _width, height = _height, title = _title, high_quality = _highQuality){
+
+  val env = GraphicsEnvironment.getLocalGraphicsEnvironment
+  val device = env.getDefaultScreenDevice
+  val gc = device.getDefaultConfiguration
+
+  frontBuffer = gc.createCompatibleImage(1920, 1080, Transparency.TRANSLUCENT)
+  backBuffer = gc.createCompatibleImage(1920, 1080, Transparency.OPAQUE)
+  frontg2d = frontBuffer.getGraphics.asInstanceOf[Graphics2D]
+  backg2d = backBuffer.getGraphics.asInstanceOf[Graphics2D]
+  // Sets active g2d to front and make the front layer transparent
+  frontg2d.setBackground(TRANSPARENT)
+  frontg2d.clearRect(0, 0, 1920, 1920)
+  g2d = frontg2d
+
   def drawTransformedPicture(posX: Int, posY: Int, angle: Double, scale: Double, bitmap: BetterGraphicsBitmap): Unit = {
     val t = new AffineTransform
     t.rotate(angle, posX, posY)
     t.translate(posX - bitmap.getWidth / 2 * scale, posY - bitmap.getHeight / 2 * scale)
     t.scale(scale, scale)
     g2d.drawImage(bitmap.mBitmap, t, null)
+
   }
 }
 

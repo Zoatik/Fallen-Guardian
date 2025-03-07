@@ -108,7 +108,7 @@ class Player(
     }
     if(coins >= price) {
       coins -= price
-      Grid.build(cell, buildSelected, lvl)
+      Grid.build(cell, buildSelected, 1)
       return true
     }
     false
